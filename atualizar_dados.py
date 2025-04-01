@@ -389,8 +389,24 @@ def processar_cdi():
     try:
         print("\nObtendo dados do CDI via Banco Central do Brasil...")
         
-        # Verificar a última data no banco
+        # Verificar a última data e o último valor no banco
         ultima_data = obter_ultimo_registro_data('CDI')
+        ultimo_valor = None
+        
+        if ultima_data:
+            # Buscar o último valor para usar como base de continuidade
+            try:
+                response = supabase.table('dados_historicos') \
+                    .select('fechamento_ajustado') \
+                    .eq('ticker', 'CDI') \
+                    .eq('data', ultima_data) \
+                    .execute()
+                
+                if response.data and len(response.data) > 0:
+                    ultimo_valor = response.data[0]['fechamento_ajustado']
+                    print(f"  Último valor do CDI no banco: {ultimo_valor} em {ultima_data}")
+            except Exception as e:
+                print(f"  ⚠️ Erro ao buscar último valor do CDI: {str(e)}")
         
         # Definir data inicial
         if ultima_data:
@@ -418,9 +434,18 @@ def processar_cdi():
             # Convertendo taxa diária para valores acumulados
             cdi_diario['CDI_Acumulado'] = (1 + cdi_diario['CDI']/100).cumprod()
             
-            # Normalizando para começar em 100
-            primeiro_valor = cdi_diario['CDI_Acumulado'].iloc[0]
-            cdi_diario['CDI_Indice'] = cdi_diario['CDI_Acumulado'] / primeiro_valor * 100
+            # Se temos um valor anterior, usamos ele como base para manter a continuidade
+            if ultimo_valor is not None:
+                # Normalizando para manter a continuidade com o valor existente
+                primeiro_valor_novo = cdi_diario['CDI_Acumulado'].iloc[0] / (1 + cdi_diario['CDI'].iloc[0]/100)
+                fator_ajuste = ultimo_valor / 100
+                cdi_diario['CDI_Indice'] = cdi_diario['CDI_Acumulado'] / primeiro_valor_novo * ultimo_valor
+                print(f"  Mantendo continuidade com valor anterior: {ultimo_valor}")
+            else:
+                # Se não temos valor anterior, começamos de 100
+                primeiro_valor = cdi_diario['CDI_Acumulado'].iloc[0]
+                cdi_diario['CDI_Indice'] = cdi_diario['CDI_Acumulado'] / primeiro_valor * 100
+                print("  Iniciando série do CDI com base 100")
             
             # Adicionando colunas para compatibilidade
             cdi_diario['Open'] = cdi_diario['CDI_Indice']
@@ -431,6 +456,9 @@ def processar_cdi():
 
             # Calcular retorno diário com base no 'Close'
             cdi_diario['Retorno_Diario'] = cdi_diario['Close'].pct_change() * 100
+            # Colocar o valor correto para o primeiro dia
+            if not cdi_diario.empty:
+                cdi_diario.loc[cdi_diario.index[0], 'Retorno_Diario'] = cdi_diario['CDI'].iloc[0]
             
             return cdi_diario
         else:
@@ -440,7 +468,6 @@ def processar_cdi():
     except Exception as e:
         print(f"⚠️ Erro ao obter dados do CDI: {str(e)}")
         return None
-
 # Função principal para atualizar dados
 def atualizar_dados():
     """Função principal que coordena a atualização de todos os dados"""
