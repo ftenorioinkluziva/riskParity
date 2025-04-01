@@ -316,7 +316,7 @@ def upsert_ativo(info_ativo):
     
     try:
         # Usar upsert para inserir ou atualizar
-        resultado = supabase.table('ativos').upsert(info_ativo).execute()
+        resultado = supabase.table('ativos').upsert(info_ativo, on_conflict='ticker').execute()
             
         print(f"✅ Informações básicas de {info_ativo['nome']} inseridas/atualizadas na tabela ativos")
         return True
@@ -327,16 +327,6 @@ def upsert_ativo(info_ativo):
 
 # Inserir dados históricos - versão otimizada usando upsert em lotes
 def inserir_dados_historicos(dados_historicos, ticker):
-    """
-    Insere dados históricos no banco de dados usando upsert em lotes
-    
-    Args:
-        dados_historicos (list): Lista de dicionários com dados históricos
-        ticker (str): O ticker do ativo
-        
-    Returns:
-        bool: True se a operação foi bem-sucedida, False caso contrário
-    """
     if not dados_historicos:
         return False
     
@@ -344,10 +334,10 @@ def inserir_dados_historicos(dados_historicos, ticker):
         print(f"Inserindo dados históricos para {ticker}...")
         print(f"Total de registros a processar: {len(dados_historicos)}")
         
-        # Verificar se há registros para inserir
-        if len(dados_historicos) == 0:
-            print(f"✅ Nenhum novo registro para inserir para {ticker}")
-            return True
+        # Imprimir exemplo de registro para depuração
+        if len(dados_historicos) > 0:
+            print("Amostra de registro a ser inserido:")
+            print({k: str(v) if v is not None else None for k, v in dados_historicos[0].items()})
         
         # Processar em lotes para melhor performance
         tamanho_lote = 100
@@ -356,10 +346,28 @@ def inserir_dados_historicos(dados_historicos, ticker):
         for i in range(0, len(dados_historicos), tamanho_lote):
             lote = dados_historicos[i:i+tamanho_lote]
             
-            # Usar upsert para inserir ou atualizar dados
-            # O conflito é determinado pela combinação de ticker e data
+            # Garantir que cada registro tenha apenas as colunas existentes na tabela
+            lote_filtrado = []
+            for registro in lote:
+                registro_filtrado = {
+                    'ticker': registro.get('ticker'),
+                    'nome_ativo': registro.get('nome_ativo'),
+                    'data': registro.get('data'),
+                    'abertura': registro.get('abertura'),
+                    'maxima': registro.get('maxima'),
+                    'minima': registro.get('minima'),
+                    'fechamento': registro.get('fechamento'),
+                    'fechamento_ajustado': registro.get('fechamento_ajustado'),
+                    'volume': registro.get('volume'),
+                    'retorno_diario': registro.get('retorno_diario'),
+                    'pico': registro.get('pico'),
+                    'drawdown': registro.get('drawdown')
+                }
+                lote_filtrado.append(registro_filtrado)
+            
+            # Usar upsert com as colunas de conflito corretas
             supabase.table('dados_historicos').upsert(
-                lote, 
+                lote_filtrado, 
                 on_conflict='ticker,data'
             ).execute()
             
@@ -370,7 +378,6 @@ def inserir_dados_historicos(dados_historicos, ticker):
     except Exception as e:
         print(f"⚠️ Erro ao inserir dados históricos de {ticker}: {str(e)}")
         return False
-
 # Processar dados do CDI do Banco Central
 def processar_cdi():
     """
