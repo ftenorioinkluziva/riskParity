@@ -679,6 +679,286 @@ def excluir_cesta(id):
         return jsonify({"mensagem": "Cesta excluída com sucesso"})
     except Exception as e:
         return jsonify({"erro": str(e)}), 500
+    
+# Rotas para gerenciar transações
+@app.route('/api/transacoes', methods=['GET'])
+def get_transacoes():
+    """Endpoint para obter todas as transações"""
+    if not supabase:
+        return jsonify({"erro": "Conexão com Supabase não estabelecida"}), 500
+    
+    try:
+        # Buscar todas as transações do usuário atual
+        response = supabase.table('transacoes').select('*').order('date', desc=True).execute()
+        
+        if response.data:
+            # Adicionar o campo totalValue calculado na resposta
+            for item in response.data:
+                item['totalValue'] = float(item['quantity']) * float(item['price'])
+            return jsonify(response.data)
+        return jsonify([])
+    except Exception as e:
+        print(f"⚠️ Erro ao buscar transações: {str(e)}")
+        return jsonify({"erro": str(e)}), 500
+
+@app.route('/api/transacoes', methods=['POST'])
+def add_transacao():
+    """Endpoint para adicionar uma nova transação"""
+    if not supabase:
+        return jsonify({"erro": "Conexão com Supabase não estabelecida"}), 500
+    
+    try:
+        # Obter dados da requisição
+        dados = request.json
+        
+        if not dados:
+            return jsonify({"erro": "Dados não fornecidos"}), 400
+        
+        # Validar campos obrigatórios
+        campos_obrigatorios = ['type', 'asset', 'quantity', 'price', 'date']
+        for campo in campos_obrigatorios:
+            if campo not in dados:
+                return jsonify({"erro": f"Campo obrigatório {campo} não fornecido"}), 400
+        
+        # Validar tipo de transação
+        if dados['type'] not in ['buy', 'sell']:
+            return jsonify({"erro": "Tipo de transação deve ser 'buy' ou 'sell'"}), 400
+        
+        # Validar valores numéricos
+        try:
+            quantidade = float(dados['quantity'])
+            preco = float(dados['price'])
+            
+            if quantidade <= 0 or preco <= 0:
+                return jsonify({"erro": "Quantidade e preço devem ser valores positivos"}), 400
+            
+            # Calcular valor total - mas não vamos salvar, apenas calcular quando necessário
+            total_value = quantidade * preco
+        except ValueError:
+            return jsonify({"erro": "Quantidade e preço devem ser valores numéricos"}), 400
+        
+        # Validar data
+        try:
+            data_transacao = datetime.strptime(dados['date'], '%Y-%m-%d')
+            data_atual = datetime.now()
+            
+            if data_transacao > data_atual:
+                return jsonify({"erro": "A data da transação não pode ser no futuro"}), 400
+            
+            # Converter para string ISO
+            dados['date'] = data_transacao.strftime('%Y-%m-%d')
+        except ValueError:
+            return jsonify({"erro": "Formato de data inválido. Use YYYY-MM-DD"}), 400
+        
+        # Se for venda, validar se há quantidade suficiente
+        if dados['type'] == 'sell':
+            asset = dados['asset']
+            
+            # Buscar transações anteriores deste ativo
+            response = supabase.table('transacoes').select('*').eq('asset', asset).execute()
+            
+            if response.data:
+                # Calcular quantidade atual do ativo
+                quantidade_atual = 0
+                for transacao in response.data:
+                    if transacao['type'] == 'buy':
+                        quantidade_atual += float(transacao['quantity'])
+                    else:
+                        quantidade_atual -= float(transacao['quantity'])
+                
+                if quantidade_atual < quantidade:
+                    return jsonify({
+                        "erro": f"Quantidade insuficiente para venda. Você possui {quantidade_atual} unidades de {asset}"
+                    }), 400
+        
+        # Adicionar data de criação
+        dados['created_at'] = datetime.now().isoformat()
+        
+        # Converter totalValue para totalvalue (ajustando ao nome da coluna no banco)
+        if 'totalValue' in dados:
+            dados['totalvalue'] = dados['totalValue']
+            del dados['totalValue']
+        else:
+            # Sempre calcular e adicionar o totalvalue
+            dados['totalvalue'] = quantidade * preco
+        
+        # Inserir no banco de dados
+        response = supabase.table('transacoes').insert(dados).execute()
+        
+        if response.data:
+            # Converter totalvalue para totalValue nas respostas (para manter compatibilidade com o frontend)
+            for item in response.data:
+                if 'totalvalue' in item:
+                    item['totalValue'] = float(item['totalvalue'])
+                else:
+                    item['totalValue'] = float(item['quantity']) * float(item['price'])
+                
+            return jsonify(response.data[0]), 201
+        else:
+            return jsonify({"erro": "Erro ao inserir transação"}), 500
+    except Exception as e:
+        print(f"⚠️ Erro ao adicionar transação: {str(e)}")
+        return jsonify({"erro": str(e)}), 500
+    
+@app.route('/api/transacoes/<int:id>', methods=['DELETE'])
+def delete_transacao(id):
+    """Endpoint para excluir uma transação"""
+    if not supabase:
+        return jsonify({"erro": "Conexão com Supabase não estabelecida"}), 500
+    
+    try:
+        # Verificar se a transação existe
+        response = supabase.table('transacoes').select('*').eq('id', id).execute()
+        
+        if not response.data or len(response.data) == 0:
+            return jsonify({"erro": "Transação não encontrada"}), 404
+        
+        # Obter informações da transação para validação
+        transacao = response.data[0]
+        
+        # Se for uma compra, verificar se há vendas dependentes desta compra
+        if transacao['type'] == 'buy':
+            asset = transacao['asset']
+            quantidade_compra = float(transacao['quantity'])
+            
+            # Buscar todas as transações deste ativo
+            response_todas = supabase.table('transacoes').select('*').eq('asset', asset).execute()
+            
+            if response_todas.data:
+                # Calcular o saldo de compras excluindo esta transação
+                total_compras = 0
+                total_vendas = 0
+                
+                for t in response_todas.data:
+                    if t['id'] == id:
+                        continue  # Ignorar a transação que será excluída
+                        
+                    if t['type'] == 'buy':
+                        total_compras += float(t['quantity'])
+                    else:
+                        total_vendas += float(t['quantity'])
+                
+                # Se o saldo após remover esta compra for negativo, não permite exclusão
+                if total_compras < total_vendas:
+                    return jsonify({
+                        "erro": "Não é possível excluir esta compra pois há vendas que dependem dela."
+                    }), 400
+        
+        # Excluir a transação
+        supabase.table('transacoes').delete().eq('id', id).execute()
+        
+        return jsonify({"mensagem": "Transação excluída com sucesso"})
+    except Exception as e:
+        print(f"⚠️ Erro ao excluir transação: {str(e)}")
+        return jsonify({"erro": str(e)}), 500
+
+@app.route('/api/carteira', methods=['GET'])
+def get_carteira():
+    """Endpoint para obter o resumo da carteira"""
+    if not supabase:
+        return jsonify({"erro": "Conexão com Supabase não estabelecida"}), 500
+    
+    try:
+        # Buscar todas as transações
+        response = supabase.table('transacoes').select('*').execute()
+        
+        if not response.data:
+            return jsonify({"ativos": [], "total": 0})
+        
+        # Buscar preços atuais dos ativos
+        response_ativos = supabase.table('ativos').select('*').execute()
+        
+        # Criar mapa de ticker para preço atual
+        precos_atuais = {}
+        if response_ativos.data:
+            for ativo in response_ativos.data:
+                precos_atuais[ativo['ticker']] = {
+                    'preco_atual': ativo['preco_atual'],
+                    'nome': ativo['nome']
+                }
+        
+        # Calcular a carteira
+        carteira = {}
+        
+        for transacao in response.data:
+            asset = transacao['asset']
+            
+            if asset not in carteira:
+                carteira[asset] = {
+                    'asset': asset,
+                    'nome': precos_atuais.get(asset, {}).get('nome', asset),
+                    'quantidade': 0,
+                    'preco_medio': 0,
+                    'total_investido': 0,
+                    'preco_atual': precos_atuais.get(asset, {}).get('preco_atual', 0),
+                    'valor_atual': 0,
+                    'lucro': 0,
+                    'rendimento': 0
+                }
+            
+            ativo = carteira[asset]
+            
+            if transacao['type'] == 'buy':
+                # Cálculo do preço médio para compras
+                quantidade_antiga = ativo['quantidade']
+                valor_antigo = quantidade_antiga * ativo['preco_medio']
+                quantidade_nova = float(transacao['quantity'])
+                valor_novo = quantidade_nova * float(transacao['price'])
+                quantidade_total = quantidade_antiga + quantidade_nova
+                
+                if quantidade_total > 0:
+                    ativo['preco_medio'] = (valor_antigo + valor_novo) / quantidade_total
+                
+                ativo['quantidade'] += quantidade_nova
+                ativo['total_investido'] += valor_novo
+            else:  # sell
+                ativo['quantidade'] -= float(transacao['quantity'])
+                
+                # Ajustar o valor investido proporcionalmente
+                if ativo['quantidade'] > 0:
+                    ativo['total_investido'] = ativo['quantidade'] * ativo['preco_medio']
+                else:
+                    ativo['quantidade'] = 0
+                    ativo['total_investido'] = 0
+        
+        # Calcular valores atuais e rendimentos
+        for asset, ativo in carteira.items():
+            ativo['valor_atual'] = ativo['quantidade'] * ativo['preco_atual']
+            ativo['lucro'] = ativo['valor_atual'] - ativo['total_investido']
+            
+            if ativo['total_investido'] > 0:
+                ativo['rendimento'] = (ativo['lucro'] / ativo['total_investido']) * 100
+            else:
+                ativo['rendimento'] = 0
+        
+        # Filtrar apenas ativos com quantidade > 0
+        carteira_filtrada = [ativo for ativo in carteira.values() if ativo['quantidade'] > 0]
+        
+        # Calcular totais
+        total_investido = sum(ativo['total_investido'] for ativo in carteira_filtrada)
+        valor_atual = sum(ativo['valor_atual'] for ativo in carteira_filtrada)
+        lucro_total = sum(ativo['lucro'] for ativo in carteira_filtrada)
+        
+        rendimento_carteira = 0
+        if total_investido > 0:
+            rendimento_carteira = (lucro_total / total_investido) * 100
+        
+        # Preparar resposta
+        resposta = {
+            "ativos": carteira_filtrada,
+            "totais": {
+                "investido": total_investido,
+                "atual": valor_atual,
+                "lucro": lucro_total,
+                "rendimento": rendimento_carteira
+            }
+        }
+        
+        return jsonify(resposta)
+    except Exception as e:
+        print(f"⚠️ Erro ao calcular carteira: {str(e)}")
+        return jsonify({"erro": str(e)}), 500
+
 
 if __name__ == '__main__':
     print("\n🚀 Iniciando servidor de API...\n")
