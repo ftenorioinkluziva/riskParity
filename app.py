@@ -7,6 +7,7 @@ from dateutil.relativedelta import relativedelta
 import pandas as pd
 import numpy as np
 from dotenv import load_dotenv
+import json
 
 # Carregar variáveis do arquivo .env
 load_dotenv()
@@ -539,6 +540,145 @@ def api_resumo_varios():
         'periodo_anos': periodo_anos,
         'total_ativos': len(resultados)
     })
+
+# =========================
+# Novas rotas para gerenciar cestas de ativos
+# =========================
+
+# Rota para obter todas as cestas
+@app.route('/api/cestas', methods=['GET'])
+def obter_cestas():
+    """Endpoint para obter todas as cestas do usuário"""
+    if not supabase:
+        return jsonify({"erro": "Conexão com Supabase não estabelecida"}), 500
+    
+    try:
+        response = supabase.table('cestas').select('*').execute()
+        return jsonify(response.data)
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+
+# Rota para obter uma cesta específica
+@app.route('/api/cesta/<int:id>', methods=['GET'])
+def obter_cesta(id):
+    """Endpoint para obter detalhes de uma cesta específica"""
+    if not supabase:
+        return jsonify({"erro": "Conexão com Supabase não estabelecida"}), 500
+    
+    try:
+        response = supabase.table('cestas').select('*').eq('id', id).execute()
+        if response.data and len(response.data) > 0:
+            return jsonify(response.data[0])
+        return jsonify({"erro": "Cesta não encontrada"}), 404
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+
+# Rota para criar uma nova cesta
+@app.route('/api/cesta', methods=['POST'])
+def criar_cesta():
+    """Endpoint para criar uma nova cesta"""
+    if not supabase:
+        return jsonify({"erro": "Conexão com Supabase não estabelecida"}), 500
+    
+    try:
+        # Obter dados da requisição
+        dados = request.json
+        
+        if not dados or not dados.get('nome') or not dados.get('ativos'):
+            return jsonify({"erro": "Dados incompletos para criação da cesta"}), 400
+        
+        # Verificar se ativos é um objeto JSON válido
+        if isinstance(dados.get('ativos'), dict):
+            # Se já é um dicionário, mantemos assim
+            ativos_json = dados.get('ativos')
+        else:
+            # Se é uma string, tentamos converter para JSON
+            try:
+                ativos_json = json.loads(dados.get('ativos'))
+            except:
+                return jsonify({"erro": "O campo 'ativos' deve ser um objeto JSON válido"}), 400
+        
+        # Criar nova cesta
+        nova_cesta = {
+            'nome': dados.get('nome'),
+            'descricao': dados.get('descricao', ''),
+            'ativos': ativos_json,
+            'data_criacao': datetime.now().isoformat(),
+            'data_atualizacao': datetime.now().isoformat()
+        }
+        
+        response = supabase.table('cestas').insert(nova_cesta).execute()
+        
+        if response.data and len(response.data) > 0:
+            return jsonify(response.data[0]), 201
+        return jsonify({"erro": "Erro ao criar cesta"}), 500
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+
+# Rota para atualizar uma cesta existente
+@app.route('/api/cesta/<int:id>', methods=['PUT'])
+def atualizar_cesta(id):
+    """Endpoint para atualizar uma cesta existente"""
+    if not supabase:
+        return jsonify({"erro": "Conexão com Supabase não estabelecida"}), 500
+    
+    try:
+        # Verificar se a cesta existe
+        response = supabase.table('cestas').select('*').eq('id', id).execute()
+        if not response.data or len(response.data) == 0:
+            return jsonify({"erro": "Cesta não encontrada"}), 404
+        
+        # Obter dados da requisição
+        dados = request.json
+        
+        if not dados:
+            return jsonify({"erro": "Dados não fornecidos para atualização"}), 400
+        
+        # Verificar se ativos é um objeto JSON válido, se fornecido
+        if 'ativos' in dados:
+            if isinstance(dados.get('ativos'), dict):
+                # Se já é um dicionário, mantemos assim
+                ativos_json = dados.get('ativos')
+            else:
+                # Se é uma string, tentamos converter para JSON
+                try:
+                    ativos_json = json.loads(dados.get('ativos'))
+                except:
+                    return jsonify({"erro": "O campo 'ativos' deve ser um objeto JSON válido"}), 400
+            
+            dados['ativos'] = ativos_json
+        
+        # Adicionar data de atualização
+        dados['data_atualizacao'] = datetime.now().isoformat()
+        
+        # Atualizar cesta
+        response = supabase.table('cestas').update(dados).eq('id', id).execute()
+        
+        if response.data and len(response.data) > 0:
+            return jsonify(response.data[0])
+        return jsonify({"erro": "Erro ao atualizar cesta"}), 500
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+
+# Rota para excluir uma cesta
+@app.route('/api/cesta/<int:id>', methods=['DELETE'])
+def excluir_cesta(id):
+    """Endpoint para excluir uma cesta"""
+    if not supabase:
+        return jsonify({"erro": "Conexão com Supabase não estabelecida"}), 500
+    
+    try:
+        # Verificar se a cesta existe
+        response = supabase.table('cestas').select('*').eq('id', id).execute()
+        if not response.data or len(response.data) == 0:
+            return jsonify({"erro": "Cesta não encontrada"}), 404
+        
+        # Excluir cesta
+        supabase.table('cestas').delete().eq('id', id).execute()
+        
+        return jsonify({"mensagem": "Cesta excluída com sucesso"})
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
 
 if __name__ == '__main__':
     print("\n🚀 Iniciando servidor de API...\n")
