@@ -213,3 +213,22 @@
 2025-04-04 17:11:56: [INFO] Command sent: SQT XFIX11 N
 2025-04-04 17:11:56: [INFO] Command sent: SQT USD/BRL N
 2025-04-04 17:11:57: [INFO] Command sent: SQT CDI N
+2025-04-04 17:20:30: [INFO] CD3Connector initialized for user 'fernando_cd3_python'
+2025-04-04 17:20:30: [INFO] Connecting to address: datafeed1.cedrotech.com
+2025-04-04 17:20:31: [INFO] Socket connected to datafeed1.cedrotech.com
+2025-04-04 17:20:31: [INFO] Connected to Diffuser.
+2025-04-04 17:20:32: [INFO] Command sent: SQT BOVA11 N
+2025-04-04 17:20:32: [INFO] Command sent: SQT IB5M11 N
+2025-04-04 17:20:33: [INFO] Command sent: SQT B5P211 N
+2025-04-04 17:20:33: [INFO] Command sent: SQT FIXA11 N
+2025-04-04 17:20:34: [INFO] Command sent: SQT XFIX11 N
+2025-04-04 17:20:34: [INFO] Command sent: SQT USD/BRL N
+2025-04-04 17:20:35: [INFO] Command sent: SQT CDI N
+2025-04-04 17:20:58: [INFO] Command sent: SYN
+2025-04-04 17:21:18: [INFO] Command sent: SYN
+2025-04-04 17:21:38: [INFO] Command sent: SYN
+2025-04-04 17:21:58: [INFO] Command sent: SYN
+2025-04-04 17:22:18: [INFO] Command sent: SYN
+2025-04-04 17:22:38: [INFO] Command sent: SYN
+2025-04-04 17:22:58: [INFO] Command sent: SYN
+2025-04-04 17:23:18: [INFO] Command sent: SYN
