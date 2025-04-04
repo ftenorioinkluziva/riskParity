@@ -172,3 +172,44 @@
 2025-04-04 16:50:17: [INFO] Command sent: SYN
 2025-04-04 16:50:37: [INFO] Command sent: SYN
 2025-04-04 16:50:57: [INFO] Command sent: SYN
+2025-04-04 17:01:06: [INFO] CD3Connector initialized for user 'fernando_cd3_python'
+2025-04-04 17:01:07: [INFO] Connecting to address: datafeed2.cedrotech.com
+2025-04-04 17:01:07: [INFO] Socket connected to datafeed2.cedrotech.com
+2025-04-04 17:01:08: [INFO] Connected to Diffuser.
+2025-04-04 17:01:09: [INFO] Command sent: SQT BOVA11 N
+2025-04-04 17:01:09: [INFO] Command sent: SQT IB5M11 N
+2025-04-04 17:01:10: [INFO] Command sent: SQT B5P211 N
+2025-04-04 17:01:10: [INFO] Command sent: SQT FIXA11 N
+2025-04-04 17:01:11: [INFO] Command sent: SQT XFIX11 N
+2025-04-04 17:01:11: [INFO] Command sent: SQT USD/BRL N
+2025-04-04 17:01:12: [INFO] Command sent: SQT CDI N
+2025-04-04 17:01:23: [INFO] Command sent: SYN
+2025-04-04 17:01:43: [INFO] Command sent: SYN
+2025-04-04 17:02:03: [INFO] Command sent: SYN
+2025-04-04 17:02:23: [INFO] Command sent: SYN
+2025-04-04 17:02:43: [INFO] Command sent: SYN
+2025-04-04 17:03:03: [INFO] Command sent: SYN
+2025-04-04 17:03:23: [INFO] Command sent: SYN
+2025-04-04 17:03:43: [INFO] Command sent: SYN
+2025-04-04 17:04:03: [INFO] Command sent: SYN
+2025-04-04 17:04:23: [INFO] Command sent: SYN
+2025-04-04 17:04:43: [INFO] Command sent: SYN
+2025-04-04 17:05:03: [INFO] Command sent: SYN
+2025-04-04 17:05:23: [INFO] Command sent: SYN
+2025-04-04 17:05:43: [INFO] Command sent: SYN
+2025-04-04 17:06:03: [INFO] Command sent: SYN
+2025-04-04 17:06:23: [INFO] Command sent: SYN
+2025-04-04 17:06:43: [INFO] Command sent: SYN
+2025-04-04 17:07:03: [INFO] Command sent: SYN
+2025-04-04 17:07:23: [INFO] Command sent: SYN
+2025-04-04 17:11:52: [INFO] CD3Connector initialized for user 'fernando_cd3_python'
+2025-04-04 17:11:52: [INFO] Connecting to address: datafeed1.cedrotech.com
+2025-04-04 17:11:53: [INFO] Socket connected to datafeed1.cedrotech.com
+2025-04-04 17:11:53: [INFO] Connected to Diffuser.
+2025-04-04 17:11:54: [INFO] Command sent: SQT BOVA11 N
+2025-04-04 17:11:54: [INFO] Command sent: SQT IB5M11 N
+2025-04-04 17:11:55: [INFO] Command sent: SQT B5P211 N
+2025-04-04 17:11:55: [INFO] Command sent: SQT FIXA11 N
+2025-04-04 17:11:56: [INFO] Command sent: SQT XFIX11 N
+2025-04-04 17:11:56: [INFO] Command sent: SQT USD/BRL N
+2025-04-04 17:11:57: [INFO] Command sent: SQT CDI N
