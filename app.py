@@ -683,123 +683,142 @@ def excluir_cesta(id):
 # Rotas para gerenciar transações
 @app.route('/api/transacoes', methods=['GET'])
 def get_transacoes():
-    """Endpoint para obter todas as transações"""
+    """Endpoint to get all transactions with asset details"""
     if not supabase:
-        return jsonify({"erro": "Conexão com Supabase não estabelecida"}), 500
+        return jsonify({"erro": "Supabase connection not established"}), 500
     
     try:
-        # Buscar todas as transações do usuário atual
+        # Get all transactions, ordered by date (newest first)
         response = supabase.table('transacoes').select('*').order('date', desc=True).execute()
         
-        if response.data:
-            # Adicionar o campo totalValue calculado na resposta
-            for item in response.data:
-                item['totalValue'] = float(item['quantity']) * float(item['price'])
-            return jsonify(response.data)
-        return jsonify([])
+        if not response.data:
+            return jsonify([])
+        
+        transactions = response.data
+        
+        # Get all assets for lookup
+        assets_response = supabase.table('ativos').select('*').execute()
+        
+        if assets_response.data:
+            # Create a lookup dictionary for quick asset access
+            assets_lookup = {asset['id']: asset for asset in assets_response.data}
+            
+            # Enhance each transaction with asset details
+            for transaction in transactions:
+                ativo_id = transaction.get('ativo_id')
+                
+                if ativo_id and ativo_id in assets_lookup:
+                    transaction['asset_details'] = assets_lookup[ativo_id]
+                else:
+                    transaction['asset_details'] = {"ticker": "Unknown", "nome": "Unknown Asset"}
+        
+        # Calculate totalValue for consistency if not already present
+        for transaction in transactions:
+            if 'totalValue' not in transaction and 'quantity' in transaction and 'price' in transaction:
+                transaction['totalValue'] = float(transaction['quantity']) * float(transaction['price'])
+        
+        return jsonify(transactions)
     except Exception as e:
-        print(f"⚠️ Erro ao buscar transações: {str(e)}")
-        return jsonify({"erro": str(e)}), 500
-
+        print(f"Error fetching transactions: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+    
 @app.route('/api/transacoes', methods=['POST'])
 def add_transacao():
-    """Endpoint para adicionar uma nova transação"""
+    """Endpoint to add a new transaction with asset relationship"""
     if not supabase:
-        return jsonify({"erro": "Conexão com Supabase não estabelecida"}), 500
+        return jsonify({"erro": "Supabase connection not established"}), 500
     
     try:
-        # Obter dados da requisição
-        dados = request.json
+        data = request.json
         
-        if not dados:
-            return jsonify({"erro": "Dados não fornecidos"}), 400
+        if not data:
+            return jsonify({"error": "No data provided"}), 400
         
-        # Validar campos obrigatórios
-        campos_obrigatorios = ['type', 'asset', 'quantity', 'price', 'date']
-        for campo in campos_obrigatorios:
-            if campo not in dados:
-                return jsonify({"erro": f"Campo obrigatório {campo} não fornecido"}), 400
+        # Validate required fields
+        required_fields = ['type', 'ativo_id', 'quantity', 'price', 'date']
+        for field in required_fields:
+            if field not in data:
+                return jsonify({"error": f"Required field '{field}' is missing"}), 400
         
-        # Validar tipo de transação
-        if dados['type'] not in ['buy', 'sell']:
-            return jsonify({"erro": "Tipo de transação deve ser 'buy' ou 'sell'"}), 400
+        # Validate transaction type
+        if data['type'] not in ['buy', 'sell']:
+            return jsonify({"error": "Transaction type must be 'buy' or 'sell'"}), 400
         
-        # Validar valores numéricos
+        # Validate numeric values
         try:
-            quantidade = float(dados['quantity'])
-            preco = float(dados['price'])
+            quantity = float(data['quantity'])
+            price = float(data['price'])
             
-            if quantidade <= 0 or preco <= 0:
-                return jsonify({"erro": "Quantidade e preço devem ser valores positivos"}), 400
-            
-            # Calcular valor total - mas não vamos salvar, apenas calcular quando necessário
-            total_value = quantidade * preco
+            if quantity <= 0 or price <= 0:
+                return jsonify({"error": "Quantity and price must be positive values"}), 400
         except ValueError:
-            return jsonify({"erro": "Quantidade e preço devem ser valores numéricos"}), 400
+            return jsonify({"error": "Quantity and price must be numeric values"}), 400
         
-        # Validar data
+        # Validate date
         try:
-            data_transacao = datetime.strptime(dados['date'], '%Y-%m-%d')
-            data_atual = datetime.now()
+            transaction_date = datetime.strptime(data['date'], '%Y-%m-%d')
+            current_date = datetime.now()
             
-            if data_transacao > data_atual:
-                return jsonify({"erro": "A data da transação não pode ser no futuro"}), 400
+            if transaction_date > current_date:
+                return jsonify({"error": "Transaction date cannot be in the future"}), 400
             
-            # Converter para string ISO
-            dados['date'] = data_transacao.strftime('%Y-%m-%d')
+            # Convert to ISO string for storage
+            data['date'] = transaction_date.strftime('%Y-%m-%d')
         except ValueError:
-            return jsonify({"erro": "Formato de data inválido. Use YYYY-MM-DD"}), 400
+            return jsonify({"error": "Invalid date format. Use YYYY-MM-DD"}), 400
         
-        # Se for venda, validar se há quantidade suficiente
-        if dados['type'] == 'sell':
-            asset = dados['asset']
+        # Verify asset exists
+        ativo_id = data['ativo_id']
+        asset_response = supabase.table('ativos').select('*').eq('id', ativo_id).execute()
+        
+        if not asset_response.data:
+            return jsonify({"error": f"Asset with ID {ativo_id} not found"}), 404
+        
+        # If selling, verify sufficient quantity
+        if data['type'] == 'sell':
+            # Get all previous transactions for this asset
+            prev_transactions = supabase.table('transacoes').select('*').eq('ativo_id', ativo_id).execute()
             
-            # Buscar transações anteriores deste ativo
-            response = supabase.table('transacoes').select('*').eq('asset', asset).execute()
-            
-            if response.data:
-                # Calcular quantidade atual do ativo
-                quantidade_atual = 0
-                for transacao in response.data:
-                    if transacao['type'] == 'buy':
-                        quantidade_atual += float(transacao['quantity'])
+            if prev_transactions.data:
+                # Calculate current quantity
+                current_quantity = 0
+                for tx in prev_transactions.data:
+                    if tx['type'] == 'buy':
+                        current_quantity += float(tx['quantity'])
                     else:
-                        quantidade_atual -= float(transacao['quantity'])
+                        current_quantity -= float(tx['quantity'])
                 
-                if quantidade_atual < quantidade:
+                if current_quantity < quantity:
                     return jsonify({
-                        "erro": f"Quantidade insuficiente para venda. Você possui {quantidade_atual} unidades de {asset}"
+                        "error": f"Insufficient quantity for sale. You have {current_quantity} units of this asset"
                     }), 400
         
-        # Adicionar data de criação
-        dados['created_at'] = datetime.now().isoformat()
+        # Add creation timestamp
+        data['created_at'] = datetime.now().isoformat()
         
-        # Converter totalValue para totalvalue (ajustando ao nome da coluna no banco)
-        if 'totalValue' in dados:
-            dados['totalvalue'] = dados['totalValue']
-            del dados['totalValue']
-        else:
-            # Sempre calcular e adicionar o totalvalue
-            dados['totalvalue'] = quantidade * preco
+        # Remove totalvalue if it exists in the input data
+        if 'totalvalue' in data:
+            del data['totalvalue']
         
-        # Inserir no banco de dados
-        response = supabase.table('transacoes').insert(dados).execute()
+        # Insert into database
+        response = supabase.table('transacoes').insert(data).execute()
         
         if response.data:
-            # Converter totalvalue para totalValue nas respostas (para manter compatibilidade com o frontend)
-            for item in response.data:
-                if 'totalvalue' in item:
-                    item['totalValue'] = float(item['totalvalue'])
-                else:
-                    item['totalValue'] = float(item['quantity']) * float(item['price'])
-                
-            return jsonify(response.data[0]), 201
+            # Add asset details to response
+            transaction = response.data[0]
+            transaction['asset_details'] = asset_response.data[0]
+            
+            # Calculate totalValue for the response
+            transaction['totalValue'] = float(transaction['quantity']) * float(transaction['price'])
+            
+            return jsonify(transaction), 201
         else:
-            return jsonify({"erro": "Erro ao inserir transação"}), 500
+            return jsonify({"error": "Failed to insert transaction"}), 500
+        
     except Exception as e:
-        print(f"⚠️ Erro ao adicionar transação: {str(e)}")
-        return jsonify({"erro": str(e)}), 500
-    
+        print(f"Error adding transaction: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
 @app.route('/api/transacoes/<int:id>', methods=['DELETE'])
 def delete_transacao(id):
     """Endpoint para excluir uma transação"""
