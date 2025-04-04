@@ -978,6 +978,236 @@ def get_carteira():
         print(f"⚠️ Erro ao calcular carteira: {str(e)}")
         return jsonify({"erro": str(e)}), 500
 
+# =========================
+# Endpoints para Fundos de Investimento
+# =========================
+
+@app.route('/api/investment-funds', methods=['GET'])
+def get_investment_funds():
+    """Endpoint para obter todos os fundos de investimento"""
+    if not supabase:
+        return jsonify({"erro": "Conexão com Supabase não estabelecida"}), 500
+    
+    try:
+        response = supabase.table('investment_funds').select('*').order('name', desc=False).execute()
+        return jsonify(response.data)
+    except Exception as e:
+        print(f"Erro ao buscar fundos de investimento: {str(e)}")
+        return jsonify({"erro": str(e)}), 500
+
+
+@app.route('/api/investment-funds', methods=['POST'])
+def create_investment_fund():
+    """Endpoint para criar um novo fundo de investimento"""
+    if not supabase:
+        return jsonify({"erro": "Conexão com Supabase não estabelecida"}), 500
+    
+    try:
+        data = request.json
+        
+        # Validar dados recebidos
+        required_fields = ['name', 'initial_investment', 'current_value', 'investment_date']
+        for field in required_fields:
+            if field not in data:
+                return jsonify({"erro": f"Campo obrigatório '{field}' não informado"}), 400
+        
+        # Validar valores numéricos
+        try:
+            initial_investment = float(data['initial_investment'])
+            current_value = float(data['current_value'])
+            
+            if initial_investment < 0 or current_value < 0:
+                return jsonify({"erro": "Valores de investimento não podem ser negativos"}), 400
+        except ValueError:
+            return jsonify({"erro": "Valores de investimento devem ser numéricos"}), 400
+        
+        # Validar data
+        try:
+            investment_date = datetime.strptime(data['investment_date'], '%Y-%m-%d')
+            if investment_date > datetime.now():
+                return jsonify({"erro": "Data de investimento não pode ser futura"}), 400
+            
+            # Formatando a data para o formato ISO
+            data['investment_date'] = investment_date.strftime('%Y-%m-%d')
+        except ValueError:
+            return jsonify({"erro": "Formato de data inválido. Use YYYY-MM-DD"}), 400
+        
+        # Adicionar timestamps
+        data['created_at'] = datetime.now().isoformat()
+        data['updated_at'] = datetime.now().isoformat()
+        
+        # Inserir no banco de dados
+        response = supabase.table('investment_funds').insert(data).execute()
+        
+        if response.data and len(response.data) > 0:
+            return jsonify(response.data[0]), 201
+        else:
+            return jsonify({"erro": "Erro ao inserir fundo de investimento"}), 500
+            
+    except Exception as e:
+        print(f"Erro ao criar fundo de investimento: {str(e)}")
+        return jsonify({"erro": str(e)}), 500
+
+
+@app.route('/api/investment-funds/<int:fund_id>', methods=['PUT'])
+def update_investment_fund(fund_id):
+    """Endpoint para atualizar um fundo de investimento existente"""
+    if not supabase:
+        return jsonify({"erro": "Conexão com Supabase não estabelecida"}), 500
+    
+    try:
+        data = request.json
+        
+        # Verificar se o fundo existe
+        check_response = supabase.table('investment_funds').select('*').eq('id', fund_id).execute()
+        if not check_response.data or len(check_response.data) == 0:
+            return jsonify({"erro": "Fundo de investimento não encontrado"}), 404
+            
+        # Validar valores numéricos se fornecidos
+        if 'initial_investment' in data:
+            try:
+                initial_investment = float(data['initial_investment'])
+                if initial_investment < 0:
+                    return jsonify({"erro": "Valor de investimento inicial não pode ser negativo"}), 400
+            except ValueError:
+                return jsonify({"erro": "Valor de investimento inicial deve ser numérico"}), 400
+                
+        if 'current_value' in data:
+            try:
+                current_value = float(data['current_value'])
+                if current_value < 0:
+                    return jsonify({"erro": "Valor atual não pode ser negativo"}), 400
+            except ValueError:
+                return jsonify({"erro": "Valor atual deve ser numérico"}), 400
+                
+        # Validar data se fornecida
+        if 'investment_date' in data:
+            try:
+                investment_date = datetime.strptime(data['investment_date'], '%Y-%m-%d')
+                if investment_date > datetime.now():
+                    return jsonify({"erro": "Data de investimento não pode ser futura"}), 400
+                
+                # Formatando a data para o formato ISO
+                data['investment_date'] = investment_date.strftime('%Y-%m-%d')
+            except ValueError:
+                return jsonify({"erro": "Formato de data inválido. Use YYYY-MM-DD"}), 400
+        
+        # Atualizar timestamp
+        data['updated_at'] = datetime.now().isoformat()
+        
+        # Atualizar no banco de dados
+        response = supabase.table('investment_funds').update(data).eq('id', fund_id).execute()
+        
+        if response.data and len(response.data) > 0:
+            return jsonify(response.data[0])
+        else:
+            return jsonify({"erro": "Erro ao atualizar fundo de investimento"}), 500
+            
+    except Exception as e:
+        print(f"Erro ao atualizar fundo de investimento: {str(e)}")
+        return jsonify({"erro": str(e)}), 500
+
+
+@app.route('/api/investment-funds/<int:fund_id>', methods=['DELETE'])
+def delete_investment_fund(fund_id):
+    """Endpoint para excluir um fundo de investimento"""
+    if not supabase:
+        return jsonify({"erro": "Conexão com Supabase não estabelecida"}), 500
+    
+    try:
+        # Verificar se o fundo existe
+        check_response = supabase.table('investment_funds').select('*').eq('id', fund_id).execute()
+        if not check_response.data or len(check_response.data) == 0:
+            return jsonify({"erro": "Fundo de investimento não encontrado"}), 404
+            
+        # Excluir do banco de dados
+        supabase.table('investment_funds').delete().eq('id', fund_id).execute()
+        
+        return jsonify({"mensagem": "Fundo de investimento excluído com sucesso"})
+            
+    except Exception as e:
+        print(f"Erro ao excluir fundo de investimento: {str(e)}")
+        return jsonify({"erro": str(e)}), 500
+
+
+# =========================
+# Endpoints para Saldo em Caixa
+# =========================
+
+@app.route('/api/cash-balance', methods=['GET'])
+def get_cash_balance():
+    """Endpoint para obter o saldo em caixa atual"""
+    if not supabase:
+        return jsonify({"erro": "Conexão com Supabase não estabelecida"}), 500
+    
+    try:
+        response = supabase.table('cash_balance').select('*').order('id', desc=True).limit(1).execute()
+        
+        if response.data and len(response.data) > 0:
+            return jsonify(response.data[0])
+        else:
+            # Se não houver registro, retornar valor zero
+            return jsonify({"value": 0.00, "last_update": datetime.now().isoformat()})
+            
+    except Exception as e:
+        print(f"Erro ao buscar saldo em caixa: {str(e)}")
+        return jsonify({"erro": str(e)}), 500
+
+
+@app.route('/api/cash-balance', methods=['PUT'])
+def update_cash_balance():
+    """Endpoint para atualizar o saldo em caixa"""
+    if not supabase:
+        return jsonify({"erro": "Conexão com Supabase não estabelecida"}), 500
+    
+    try:
+        data = request.json
+        
+        # Validar dados recebidos
+        if 'value' not in data:
+            return jsonify({"erro": "Valor do saldo em caixa não informado"}), 400
+            
+        # Validar valor numérico
+        try:
+            cash_value = float(data['value'])
+            if cash_value < 0:
+                return jsonify({"erro": "Valor do saldo em caixa não pode ser negativo"}), 400
+        except ValueError:
+            return jsonify({"erro": "Valor do saldo em caixa deve ser numérico"}), 400
+            
+        # Verificar se já existe registro
+        check_response = supabase.table('cash_balance').select('*').order('id', desc=True).limit(1).execute()
+        
+        if check_response.data and len(check_response.data) > 0:
+            # Atualizar registro existente
+            update_data = {
+                'value': cash_value,
+                'last_update': datetime.now().isoformat()
+            }
+            
+            response = supabase.table('cash_balance').update(update_data).eq('id', check_response.data[0]['id']).execute()
+            
+            if response.data and len(response.data) > 0:
+                return jsonify(response.data[0])
+            else:
+                return jsonify({"erro": "Erro ao atualizar saldo em caixa"}), 500
+        else:
+            # Criar novo registro
+            insert_data = {
+                'value': cash_value,
+                'last_update': datetime.now().isoformat()
+            }
+            
+            response = supabase.table('cash_balance').insert(insert_data).execute()
+            
+            if response.data and len(response.data) > 0:
+                return jsonify(response.data[0])
+            else:
+                return jsonify({"erro": "Erro ao inserir saldo em caixa"}), 500
+                
+    except Exception as e:
+        print(f"Erro ao atualizar saldo em caixa: {str(e)}")
+        return jsonify({"erro": str(e)}), 500
 
 if __name__ == '__main__':
     print("\n🚀 Iniciando servidor de API...\n")
