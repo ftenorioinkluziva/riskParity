@@ -1,0 +1,126 @@
+2025-04-04 19:06:21,016 - INFO - 
+============================================================
+2025-04-04 19:06:21,021 - INFO - ============================================================
+
+2025-04-04 19:06:21,711 - INFO - HTTP Request: GET https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?select=%2A "HTTP/2 200 OK"
+2025-04-04 19:08:57,311 - INFO - 
+============================================================
+2025-04-04 19:08:57,316 - INFO - ============================================================
+
+2025-04-04 19:08:58,001 - INFO - HTTP Request: GET https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?select=%2A "HTTP/2 200 OK"
+2025-04-04 19:08:58,642 - ERROR - Critical error received (E:6 Duplicate Login). Closing connection.
+2025-04-04 19:08:58,642 - WARNING - Destroying the connector instance...
+2025-04-04 19:08:58,642 - WARNING - Connector instance destroyed. It cannot be restarted.
+2025-04-04 19:08:58,643 - WARNING - This CD3Connector instance has been destroyed and cannot be used
+2025-04-04 19:08:58,643 - ERROR - Exception in receiving: This CD3Connector instance has been destroyed and cannot be used.
+2025-04-04 19:08:58,643 - WARNING - This CD3Connector instance has been destroyed and cannot be used
+2025-04-04 19:08:58,649 - WARNING - This CD3Connector instance has been destroyed and cannot be used
+2025-04-04 19:08:58,653 - WARNING - This CD3Connector instance has been destroyed and cannot be used
+2025-04-04 19:08:58,656 - WARNING - This CD3Connector instance has been destroyed and cannot be used
+2025-04-04 19:08:58,659 - WARNING - This CD3Connector instance has been destroyed and cannot be used
+2025-04-04 19:08:58,664 - WARNING - This CD3Connector instance has been destroyed and cannot be used
+2025-04-04 19:09:28,814 - WARNING - This CD3Connector instance has been destroyed and cannot be used
+2025-04-04 19:21:43,188 - INFO - ============================================================
+2025-04-04 19:21:43,188 - INFO - Iniciando atualizador de preços via Cedro CD3
+2025-04-04 19:21:43,188 - INFO - Modo: Execução única
+2025-04-04 19:21:43,188 - INFO - Usuário: fernando_cd3_python
+2025-04-04 19:21:43,189 - INFO - ============================================================
+2025-04-04 19:21:43,189 - INFO - Aviso: CDI e USDBRL não estão disponíveis na Cedro e serão ignorados
+2025-04-04 19:21:43,445 - INFO - Conexão com Supabase estabelecida com sucesso.
+2025-04-04 19:21:43,837 - INFO - HTTP Request: GET https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?select=%2A "HTTP/2 200 OK"
+2025-04-04 19:21:43,849 - INFO - Carregados 7 ativos do banco de dados.
+2025-04-04 19:21:43,849 - INFO - Executando atualização única...
+2025-04-04 19:21:43,849 - INFO - Conectando com o usuário fernando_cd3_python_5303
+2025-04-04 19:21:48,378 - ERROR - Connection error: Invalid Login.
+2025-04-04 19:21:48,428 - WARNING - No data received. Closing socket.
+2025-04-04 19:21:48,428 - WARNING - Desconectado do servidor CD3
+2025-04-04 19:21:58,464 - ERROR - Timeout ao aguardar conexão
+2025-04-04 19:21:59,465 - INFO - Solicitando snapshot para BOVA11
+2025-04-04 19:21:59,766 - INFO - Solicitando snapshot para B5P211
+2025-04-04 19:22:00,066 - INFO - Solicitando snapshot para FIXA11
+2025-04-04 19:22:00,367 - INFO - Solicitando snapshot para XFIX11
+2025-04-04 19:22:00,667 - INFO - Solicitando snapshot para IB5M11
+2025-04-04 19:22:31,100 - WARNING - Timeout atingido ao aguardar cotações
+2025-04-04 19:22:31,100 - WARNING - Não recebemos todas as cotações esperadas: 0/5
+2025-04-04 19:22:31,100 - WARNING - Connection not started or already stopped.
+2025-04-04 19:22:31,100 - INFO - Conexão CD3 encerrada
+2025-04-04 19:22:31,100 - INFO - Atualização única completada!
+2025-04-04 19:22:31,100 - INFO - Obrigado por usar o atualizador de preços via Cedro CD3!
+2025-04-04 19:26:35,254 - INFO - ============================================================
+2025-04-04 19:26:35,254 - INFO - Iniciando atualizador de preços via Cedro CD3
+2025-04-04 19:26:35,254 - INFO - Modo: Execução única
+2025-04-04 19:26:35,254 - INFO - Usuário: fernando_cd3_python
+2025-04-04 19:26:35,255 - INFO - ============================================================
+2025-04-04 19:26:35,255 - INFO - Aviso: CDI e USDBRL não estão disponíveis na Cedro e serão ignorados
+2025-04-04 19:26:35,519 - INFO - Conexão com Supabase estabelecida com sucesso.
+2025-04-04 19:26:35,929 - INFO - HTTP Request: GET https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?select=%2A "HTTP/2 200 OK"
+2025-04-04 19:26:35,932 - INFO - Carregados 7 ativos do banco de dados.
+2025-04-04 19:26:35,932 - INFO - Executando atualização única...
+2025-04-04 19:26:35,932 - INFO - Conectando com o usuário fernando_cd3_python_5595
+2025-04-04 19:26:40,163 - ERROR - Connection error: Invalid Login.
+2025-04-04 19:26:40,212 - WARNING - No data received. Closing socket.
+2025-04-04 19:26:40,212 - WARNING - Desconectado do servidor CD3
+2025-04-04 19:26:50,248 - ERROR - Timeout ao aguardar conexão
+2025-04-04 19:26:51,249 - INFO - Solicitando snapshot para BOVA11
+2025-04-04 19:26:51,555 - INFO - Solicitando snapshot para B5P211
+2025-04-04 19:26:51,856 - INFO - Solicitando snapshot para FIXA11
+2025-04-04 19:26:52,157 - INFO - Solicitando snapshot para XFIX11
+2025-04-04 19:26:52,458 - INFO - Solicitando snapshot para IB5M11
+2025-04-04 19:27:22,888 - WARNING - Timeout atingido ao aguardar cotações
+2025-04-04 19:27:22,889 - WARNING - Não recebemos todas as cotações esperadas: 0/5
+2025-04-04 19:27:22,889 - WARNING - Connection not started or already stopped.
+2025-04-04 19:27:22,889 - INFO - Conexão CD3 encerrada
+2025-04-04 19:27:22,890 - INFO - Atualização única completada!
+2025-04-04 19:27:22,890 - INFO - Obrigado por usar o atualizador de preços via Cedro CD3!
+2025-04-04 21:23:07,306 - INFO - ============================================================
+2025-04-04 21:23:07,306 - INFO - Iniciando atualizador de preços via Cedro CD3
+2025-04-04 21:23:07,306 - INFO - Modo: Execução única
+2025-04-04 21:23:07,306 - INFO - Usuário: fernando_cd3_python
+2025-04-04 21:23:07,307 - INFO - ============================================================
+2025-04-04 21:23:07,307 - INFO - Aviso: CDI e USDBRL não estão disponíveis na Cedro e serão ignorados
+2025-04-04 21:23:07,558 - INFO - Conexão com Supabase estabelecida com sucesso.
+2025-04-04 21:23:08,087 - INFO - HTTP Request: GET https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?select=%2A "HTTP/2 200 OK"
+2025-04-04 21:23:08,090 - INFO - Carregados 7 ativos do banco de dados.
+2025-04-04 21:23:08,090 - INFO - Executando atualização única...
+2025-04-04 21:23:08,090 - INFO - Conectando com o usuário fernando_cd3_python_2588
+2025-04-04 21:23:13,105 - ERROR - Connection error: Invalid Login.
+2025-04-04 21:23:13,154 - WARNING - No data received. Closing socket.
+2025-04-04 21:23:13,154 - WARNING - Desconectado do servidor CD3
+2025-04-04 21:23:23,190 - ERROR - Timeout ao aguardar conexão
+2025-04-04 21:23:24,190 - INFO - Solicitando snapshot para BOVA11
+2025-04-04 21:23:24,491 - INFO - Solicitando snapshot para B5P211
+2025-04-04 21:23:24,791 - INFO - Solicitando snapshot para FIXA11
+2025-04-04 21:23:25,092 - INFO - Solicitando snapshot para XFIX11
+2025-04-04 21:23:25,392 - INFO - Solicitando snapshot para IB5M11
+2025-04-04 21:23:55,881 - WARNING - Timeout atingido ao aguardar cotações
+2025-04-04 21:23:55,881 - WARNING - Não recebemos todas as cotações esperadas: 0/5
+2025-04-04 21:23:55,881 - WARNING - Connection not started or already stopped.
+2025-04-04 21:23:55,881 - INFO - Conexão CD3 encerrada
+2025-04-04 21:23:55,881 - INFO - Atualização única completada!
+2025-04-04 21:23:55,881 - INFO - Obrigado por usar o atualizador de preços via Cedro CD3!
+2025-04-04 21:24:11,410 - INFO - ============================================================
+2025-04-04 21:24:11,410 - INFO - Iniciando atualizador de preços via Cedro CD3
+2025-04-04 21:24:11,410 - INFO - Modo: Execução única
+2025-04-04 21:24:11,410 - INFO - Usuário: fernando_cd3_python
+2025-04-04 21:24:11,410 - INFO - ============================================================
+2025-04-04 21:24:11,410 - INFO - Aviso: CDI e USDBRL não estão disponíveis na Cedro e serão ignorados
+2025-04-04 21:24:11,678 - INFO - Conexão com Supabase estabelecida com sucesso.
+2025-04-04 21:24:12,091 - INFO - HTTP Request: GET https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?select=%2A "HTTP/2 200 OK"
+2025-04-04 21:24:12,094 - INFO - Carregados 7 ativos do banco de dados.
+2025-04-04 21:24:12,094 - INFO - Executando atualização única...
+2025-04-04 21:24:12,094 - INFO - Conectando com o usuário fernando_cd3_python_2652
+2025-04-04 21:24:16,290 - ERROR - Connection error: Invalid Login.
+2025-04-04 21:24:16,339 - WARNING - No data received. Closing socket.
+2025-04-04 21:24:16,339 - WARNING - Desconectado do servidor CD3
+2025-04-04 21:24:26,373 - ERROR - Timeout ao aguardar conexão
+2025-04-04 21:24:27,374 - INFO - Solicitando snapshot para BOVA11
+2025-04-04 21:24:27,674 - INFO - Solicitando snapshot para B5P211
+2025-04-04 21:24:27,976 - INFO - Solicitando snapshot para FIXA11
+2025-04-04 21:24:28,277 - INFO - Solicitando snapshot para XFIX11
+2025-04-04 21:24:28,577 - INFO - Solicitando snapshot para IB5M11
+2025-04-04 21:24:59,010 - WARNING - Timeout atingido ao aguardar cotações
+2025-04-04 21:24:59,010 - WARNING - Não recebemos todas as cotações esperadas: 0/5
+2025-04-04 21:24:59,010 - WARNING - Connection not started or already stopped.
+2025-04-04 21:24:59,010 - INFO - Conexão CD3 encerrada
+2025-04-04 21:24:59,010 - INFO - Atualização única completada!
+2025-04-04 21:24:59,011 - INFO - Obrigado por usar o atualizador de preços via Cedro CD3!

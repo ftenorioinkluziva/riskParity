@@ -1208,6 +1208,74 @@ def update_cash_balance():
     except Exception as e:
         print(f"Erro ao atualizar saldo em caixa: {str(e)}")
         return jsonify({"erro": str(e)}), 500
+    
+
+@app.route('/api/update-prices', methods=['POST'])
+def update_prices():
+    """Endpoint para atualizar preços dos ativos utilizando o CD3 Connector"""
+    if not supabase:
+        return jsonify({"erro": "Conexão com Supabase não estabelecida"}), 500
+    
+    try:
+        # Requisição assíncrona para o script de atualização
+        import subprocess
+        import os
+        import sys
+        
+        # Caminho para o script de atualização
+        script_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "atualizar_precos_cedro.py")
+        
+        # Verificar se o script existe
+        if not os.path.exists(script_path):
+            return jsonify({"erro": f"Script de atualização não encontrado em {script_path}"}), 404
+        
+        # Usar sys.executable para garantir que o mesmo Python seja usado
+        python_exe = sys.executable
+        
+        # Iniciar o processo em segundo plano
+        subprocess.Popen([
+            python_exe, 
+            script_path, 
+            '--single-run',
+            '--timeout', '30'
+        ], 
+        # Redirecionar saída para um arquivo
+        stdout=open('atualizador_output.log', 'w'),
+        stderr=subprocess.STDOUT
+        )
+        
+        return jsonify({
+            "mensagem": "Processo de atualização de preços iniciado com sucesso",
+            "status": "processing",
+            "timestamp": datetime.now().isoformat()
+        })
+    except Exception as e:
+        print(f"Erro ao iniciar atualização de preços: {str(e)}")
+        return jsonify({"erro": str(e)}), 500
+
+@app.route('/api/last-update', methods=['GET'])
+def get_last_update():
+    """Endpoint para obter a data da última atualização de preços"""
+    if not supabase:
+        return jsonify({"erro": "Conexão com Supabase não estabelecida"}), 500
+    
+    try:
+        # Obter todos os ativos ordenados pela data de atualização (mais recente primeiro)
+        response = supabase.table('ativos').select('data_atualizacao').order('data_atualizacao', desc=True).limit(1).execute()
+        
+        resultado = {
+            "timestamp": datetime.now().isoformat()
+        }
+        
+        if response.data and len(response.data) > 0:
+            resultado["last_update"] = response.data[0]['data_atualizacao']
+        else:
+            resultado["last_update"] = None
+        
+        return jsonify(resultado)
+    except Exception as e:
+        print(f"Erro ao obter última atualização: {str(e)}")
+        return jsonify({"erro": str(e)}), 500
 
 if __name__ == '__main__':
     print("\n🚀 Iniciando servidor de API...\n")
