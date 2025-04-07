@@ -24,7 +24,7 @@ CD3_PASSWORD = os.environ.get('CD3_PASSWORD', 'c3&Rss')
 # Configuração de logging
 LOG_FILENAME = "preco_update.log"
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.DEBUG,  # Alterado para DEBUG para obter mais informações
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
         # Usar encoding utf-8 para o arquivo de log
@@ -34,6 +34,7 @@ logging.basicConfig(
     ]
 )
 logger = logging.getLogger("atualizador_precos")
+
 
 class CedroUpdater:
     def __init__(self, user, password, interval_seconds=60, timeout=20):
@@ -46,7 +47,6 @@ class CedroUpdater:
             interval_seconds (int): Intervalo entre atualizações em segundos
             timeout (int): Tempo máximo para receber cotações em segundos
         """
-        # Armazenar parâmetros
         self.user = user
         self.password = password
         self.interval_seconds = interval_seconds
@@ -66,7 +66,8 @@ class CedroUpdater:
         self._tempo_inicio = 0
         self._ultima_atualizacao = 0
         self._connected = False
-        
+        self._syn_sent = False  # Flag para garantir que o comando SYN seja enviado apenas uma vez
+
         # Conexão com Supabase
         try:
             self.supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
@@ -149,52 +150,37 @@ class CedroUpdater:
         self._running = False
         self._signal.set()
         logger.info("Parando atualizador...")
-    
+
     def _update_loop(self):
         """Loop de atualização de preços"""
         try:
             while self._running:
-                # Registrar início do ciclo
                 self._tempo_inicio = time.time()
                 now = time.strftime("%Y-%m-%d %H:%M:%S")
                 logger.info(f"Iniciando ciclo de atualização em {now}")
                 
-                # Reiniciar contadores
                 self._atualizacoes_recebidas = 0
                 self._queue = Queue()
                 
-                # Iniciar conexão
-                self._iniciar_conexao()
+                if not self._iniciar_conexao():
+                    logger.error("Falha ao estabelecer conexão. Abortando atualização.")
+                    break
                 
-                # Enviar comandos de consulta
                 self._solicitar_cotacoes()
-                
-                # Aguardar as cotações
                 self._aguardar_cotacoes()
-                
-                # Finalizar conexão
                 self._finalizar_conexao()
                 
-                # Registrar fim do ciclo
                 elapsed = time.time() - self._tempo_inicio
                 logger.info(f"Ciclo de atualização concluído em {elapsed:.1f} segundos")
                 logger.info(f"Atualizações recebidas: {self._atualizacoes_recebidas}/{self._atualizacoes_esperadas}")
-                
-                # Atualizar timestamp da última atualização
                 self._ultima_atualizacao = time.time()
                 
-                # Calcular tempo até a próxima atualização
                 next_update = self.interval_seconds - elapsed
                 if next_update > 0:
                     next_time = time.strftime("%H:%M:%S", time.localtime(time.time() + next_update))
                     logger.info(f"Próxima atualização às {next_time} ({next_update:.1f} segundos)")
-                    
-                    # Aguardar até o próximo ciclo, a menos que seja solicitado para parar
                     self._signal.wait(next_update)
                     
-                    # Se o sinal foi disparado, verificar se ainda estamos em execução
-                    if not self._running:
-                        break
                 else:
                     logger.warning("Ciclo de atualização demorou mais que o intervalo configurado")
                     
@@ -204,43 +190,30 @@ class CedroUpdater:
             logger.info("Loop de atualização encerrado")
     
     def _iniciar_conexao(self):
-        """Inicia uma nova conexão com o servidor CD3"""
+        """Inicia a conexão com o servidor CD3"""
         try:
-            # Adicionar um sufixo único ao usuário para evitar erro de 'Duplicate Login'
-            # Isso ajuda quando a conexão anterior não foi encerrada corretamente
-            timestamp = int(time.time()) % 10000  # Um número entre 0 e 9999
-            username_com_sufixo = f"{self.user}_{timestamp}"
-            
-            logger.info(f"Conectando com o usuário {username_com_sufixo}")
-            
-            # Usar o nome de usuário exato, sem sufixo
             self._conn = cd3_connector.CD3Connector(
-                self.user, self.password,  # sem sufixo
+                self.user, self.password, 
                 self._on_disconnect, 
                 self._on_message, 
                 self._on_connect,
-                log_level=logging.WARNING,
+                log_level=logging.DEBUG,  # Aumentado para DEBUG
                 log_path=self.log_path
             )
             
-            # Iniciar conexão
             self._conn.start()
             
-            # Aguardar conexão com verificação de sucesso
             start_time = time.time()
             while not self._connected and time.time() - start_time < 10:
                 time.sleep(0.1)
             
-            # Verificar se a conexão foi bem-sucedida antes de continuar
             if not self._connected:
-                logger.error("Falha ao estabelecer conexão")
+                logger.error("Falha ao estabelecer conexão com o CD3 Connector.")
                 self._conn = None
                 return False
                 
-            # Aguardar um pouco para a conexão estabilizar
             time.sleep(1)
             return True
-            
         except Exception as e:
             logger.error(f"Erro ao iniciar conexão CD3: {str(e)}")
             self._conn = None
@@ -258,6 +231,8 @@ class CedroUpdater:
     
     def _solicitar_cotacoes(self):
         """Solicita cotações para todos os ativos usando o modo snapshot (N)"""
+        logger.info("Iniciando envio de comandos para obter cotações")
+
         if not self._conn:
             logger.error("Não foi possível solicitar cotações - conexão CD3 não estabelecida")
             return
@@ -265,10 +240,8 @@ class CedroUpdater:
         try:
             for ticker_cedro in self.tickers_cedro:
                 try:
-                    # Usar o modo snapshot com o parâmetro N
                     logger.info(f"Solicitando snapshot para {ticker_cedro}")
                     self._conn.send_command(f"SQT {ticker_cedro} N")
-                    # Pequena pausa para não sobrecarregar o servidor
                     time.sleep(0.3)
                 except Exception as e:
                     logger.error(f"Erro ao solicitar cotação para {ticker_cedro}: {str(e)}")
@@ -281,20 +254,17 @@ class CedroUpdater:
             timeout_time = time.time() + self.timeout
             
             while time.time() < timeout_time and self._atualizacoes_recebidas < self._atualizacoes_esperadas:
-                # Processar mensagens recebidas
                 try:
                     msg = self._queue.get(timeout=0.5)
                     self._process_message(msg)
                     self._queue.task_done()
                 except Empty:
-                    # Timeout da fila, verificar se atingimos o timeout total
                     if time.time() >= timeout_time:
                         logger.warning(f"Timeout atingido ao aguardar cotações")
                         break
                 except Exception as e:
                     logger.error(f"Erro ao processar mensagem da fila: {str(e)}")
             
-            # Verificar se recebemos todas as cotações esperadas
             if self._atualizacoes_recebidas < self._atualizacoes_esperadas:
                 logger.warning(f"Não recebemos todas as cotações esperadas: {self._atualizacoes_recebidas}/{self._atualizacoes_esperadas}")
                 
@@ -305,6 +275,9 @@ class CedroUpdater:
         """Callback executado quando a conexão com CD3 é estabelecida"""
         logger.info("Conectado ao servidor CD3")
         self._connected = True
+       
+        # Solicitar as cotações após a conexão ser estabelecida
+        self._solicitar_cotacoes()
     
     def _on_disconnect(self):
         """Callback executado quando a conexão com CD3 é perdida"""
@@ -312,69 +285,44 @@ class CedroUpdater:
         self._connected = False
     
     def _on_message(self, msg: str):
-        """
-        Callback executado quando uma mensagem é recebida do CD3
-        
-        Args:
-            msg (str): Mensagem recebida
-        """
-        # Adicionar mensagem à fila para processamento
+        """Callback executado quando uma mensagem é recebida do CD3"""
         if msg and msg.strip():
             self._queue.put(msg)
     
     def _process_message(self, msg: str):
-        """
-        Processa uma mensagem recebida do CD3
-        
-        Args:
-            msg (str): Mensagem recebida
-        """
+        """Processa uma mensagem recebida do CD3"""
         try:
-            # Verificar mensagens de erro
             if msg.startswith("E:"):
                 logger.warning(f"Erro na cotação: {msg}")
                 return
-                
-            # Processar mensagem de cotação
             self._process_quote_message(msg)
-                
         except Exception as e:
             logger.error(f"Erro ao processar mensagem: {str(e)}")
             logger.error(f"Mensagem: {msg}")
     
     def _process_quote_message(self, msg: str):
-        """
-        Processa uma mensagem de cotação do CD3 e atualiza o banco de dados
-        
-        Args:
-            msg (str): Mensagem de cotação
-        """
+        """Processa uma mensagem de cotação do CD3 e atualiza o banco de dados"""
         try:
             # Verifica se a mensagem contém dados de cotação
             if not msg or len(msg) < 10:
                 return
-                
+
             # Verificar se é uma resposta no formato T: (Tick) conforme documentação Cedro
-            # Formato: T:TICKER:TIMESTAMP:1:DATA:2:LAST_PRICE:3:BID:4:ASK:...
             if msg.startswith("T:"):
                 # Dividir a mensagem por :
                 parts = msg.split(":")
-                
-                # O ticker está na posição 1 (após o T:)
                 if len(parts) < 2:
                     return
-                    
-                symbol = parts[1]
-                
-                # De acordo com a documentação, o índice 2 é o preço do último negócio
-                # Procuramos pelo campo ":2:" na mensagem
+
+                symbol = parts[1]  # Ticker do ativo
+
+                # Procuramos pelo campo ":2:" na mensagem que é o preço de venda
                 if ":2:" in msg:
-                    # Encontrar o índice onde começa ":2:"
                     field_marker = ":2:"
                     idx = msg.find(field_marker)
                     if idx == -1:
                         return
-                        
+
                     # O valor começa após ":2:"
                     idx += len(field_marker)
                     
@@ -382,68 +330,52 @@ class CedroUpdater:
                     end_idx = msg.find(":", idx)
                     if end_idx == -1:
                         end_idx = len(msg)
-                        
+                    
                     # Extrair e converter o valor
                     try:
                         price_str = msg[idx:end_idx]
                         last_price = float(price_str)
-                        
+
                         # Verificar se o preço é válido
                         if last_price <= 0:
                             logger.warning(f"Preço inválido para {symbol}: {last_price}")
                             return
-                            
-                        # Encontrar o ticker completo (com sufixo) no mapeamento
+
                         original_ticker = self.ticker_map.get(symbol)
-                        
                         if not original_ticker:
                             logger.warning(f"Ticker não encontrado no mapeamento: {symbol}")
                             return
                         
+                        # Chama a função de atualização de preço
                         logger.info(f"Preço de {symbol} ({original_ticker}): R$ {last_price:.2f}")
-                        
-                        # Atualizar o preço no banco de dados
                         self._update_price(original_ticker, last_price)
-                        
-                        # Incrementar contador de atualizações recebidas
                         self._atualizacoes_recebidas += 1
-                        
                     except ValueError:
                         logger.warning(f"Não foi possível converter o preço: {msg[idx:end_idx]}")
-                else:
-                    # Se não encontrar o campo 2, é uma atualização parcial
-                    logger.debug(f"Mensagem de atualização parcial ignorada: {msg}")
-                    
         except Exception as e:
             logger.error(f"Erro ao processar mensagem de cotação: {str(e)}")
             logger.error(f"Mensagem: {msg}")
-    
+
     def _update_price(self, ticker: str, price: float):
-        """
-        Atualiza o preço de um ativo no banco de dados
-        
-        Args:
-            ticker (str): Ticker do ativo
-            price (float): Novo preço
-        """
+        """Atualiza o preço de um ativo no banco de dados"""
         if not self.supabase:
             logger.error("Supabase não inicializado. Não é possível atualizar preços.")
             return
-            
+
         try:
-            # Atualizar o preço e a data de atualização
             update_data = {
                 'preco_atual': price,
-                'data_atualizacao': datetime.now().isoformat()
+                'data_atualizacao': datetime.now().isoformat()  # Atualizando a data da cotação
             }
-            
-            # Executar atualização
+
+            # Realiza a atualização no banco de dados
             response = self.supabase.table('ativos').update(update_data).eq('ticker', ticker).execute()
-            
+
+            # Verifica se a atualização foi realizada com sucesso
             if response.data and len(response.data) > 0:
                 logger.info(f"Preço atualizado para {ticker}: R$ {price:.2f}")
-                
-                # Atualizar o objeto local também para manter consistência
+
+                # Atualiza o objeto local também para manter a consistência
                 for ativo in self.ativos:
                     if ativo['ticker'] == ticker:
                         ativo['preco_atual'] = price
@@ -451,13 +383,11 @@ class CedroUpdater:
                         break
             else:
                 logger.warning(f"Nenhum registro atualizado para {ticker}")
-                
         except Exception as e:
             logger.error(f"Erro ao atualizar preço para {ticker}: {str(e)}")
 
 
 def main():
-    # Criar parser para argumentos de linha de comando
     parser = argparse.ArgumentParser(description='Atualizador de preços via Cedro CD3')
     parser.add_argument('--interval', type=int, default=60,
                       help='Intervalo entre atualizações em segundos (padrão: 60)')
@@ -468,7 +398,6 @@ def main():
     
     args = parser.parse_args()
     
-    # Configurar intervalo e timeout
     INTERVALO = args.interval
     TIMEOUT = args.timeout
     SINGLE_RUN = args.single_run
@@ -482,46 +411,30 @@ def main():
     logger.info(f"Usuário: {CD3_USERNAME}")
     logger.info("=" * 60)
     
-    # Aviso sobre tickers não disponíveis
     logger.info("Aviso: CDI e USDBRL não estão disponíveis na Cedro e serão ignorados")
     
-    # Criar o atualizador
     updater = CedroUpdater(CD3_USERNAME, CD3_PASSWORD, interval_seconds=INTERVALO, timeout=TIMEOUT)
     
     if SINGLE_RUN:
-        # Execução única - não iniciar o loop
         logger.info("Executando atualização única...")
-        
-        # Iniciar conexão
         updater._iniciar_conexao()
-        
-        if updater._conn:  # Verificar se a conexão foi estabelecida com sucesso
-            # Enviar comandos de consulta
+        if updater._conn:
             updater._solicitar_cotacoes()
-            
-            # Aguardar as cotações
             updater._aguardar_cotacoes()
-            
-            # Finalizar conexão
             updater._finalizar_conexao()
-            
             logger.info("Atualização única completada!")
         else:
             logger.error("Falha ao estabelecer conexão. Atualização cancelada.")
     else:
-        # Modo loop contínuo
         updater.start()
-        
         try:
-            # Manter o programa em execução até Ctrl+C
             while True:
                 time.sleep(1)
         except KeyboardInterrupt:
             logger.info("Interrupção detectada. Finalizando...")
         finally:
-            # Garantir que o atualizador seja corretamente finalizado
             updater.stop()
-    
+
     logger.info("Obrigado por usar o atualizador de preços via Cedro CD3!")
 
 
