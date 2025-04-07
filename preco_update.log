@@ -1129,3 +1129,141 @@ porque o host conectado não respondeu
 2025-04-07 11:26:39,227 - INFO - Interrupção detectada. Finalizando...
 2025-04-07 11:26:39,228 - INFO - Parando atualizador...
 2025-04-07 11:26:39,228 - INFO - Obrigado por usar o atualizador de preços via Cedro CD3!
+2025-04-07 11:26:54,463 - INFO - ============================================================
+2025-04-07 11:26:54,463 - INFO - Iniciando atualizador de preços via Cedro CD3
+2025-04-07 11:26:54,463 - INFO - Intervalo: 60 segundos | Timeout: 20 segundos
+2025-04-07 11:26:54,463 - INFO - Usuário: fernando_cd3_python
+2025-04-07 11:26:54,464 - INFO - ============================================================
+2025-04-07 11:26:54,464 - INFO - Aviso: CDI e USDBRL não estão disponíveis na Cedro e serão ignorados
+2025-04-07 11:26:54,465 - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-07 11:26:54,466 - DEBUG - load_verify_locations cafile='C:\\Users\\Fernando\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python311\\site-packages\\certifi\\cacert.pem'
+2025-04-07 11:26:54,734 - INFO - Conexão com Supabase estabelecida com sucesso.
+2025-04-07 11:26:54,735 - DEBUG - load_ssl_context verify=True cert=None trust_env=True http2=False
+2025-04-07 11:26:54,736 - DEBUG - load_verify_locations cafile='C:\\Users\\Fernando\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python311\\site-packages\\certifi\\cacert.pem'
+2025-04-07 11:26:55,004 - DEBUG - connect_tcp.started host='dxwebxduuazebqtkumtv.supabase.co' port=443 local_address=None timeout=120 socket_options=None
+2025-04-07 11:26:55,037 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x00000107C4BF2610>
+2025-04-07 11:26:55,037 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x00000107C4A46840> server_hostname='dxwebxduuazebqtkumtv.supabase.co' timeout=120
+2025-04-07 11:26:55,059 - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x00000107C4B9EA10>
+2025-04-07 11:26:55,060 - DEBUG - send_connection_init.started request=<Request [b'GET']>
+2025-04-07 11:26:55,060 - DEBUG - send_connection_init.complete
+2025-04-07 11:26:55,060 - DEBUG - send_request_headers.started request=<Request [b'GET']> stream_id=1
+2025-04-07 11:26:55,061 - DEBUG - Adding (b':method', b'GET') to the header table, sensitive:False, huffman:True
+2025-04-07 11:26:55,061 - DEBUG - Encoding 2 with 7 bits
+2025-04-07 11:26:55,061 - DEBUG - Adding (b':authority', b'dxwebxduuazebqtkumtv.supabase.co') to the header table, sensitive:False, huffman:True
+2025-04-07 11:26:55,061 - DEBUG - Encoding 1 with 6 bits
+2025-04-07 11:26:55,062 - DEBUG - Encoding 24 with 7 bits
+2025-04-07 11:26:55,062 - DEBUG - Adding (b':scheme', b'https') to the header table, sensitive:False, huffman:True
+2025-04-07 11:26:55,062 - DEBUG - Encoding 7 with 7 bits
+2025-04-07 11:26:55,062 - DEBUG - Adding (b':path', b'/rest/v1/ativos?select=%2A') to the header table, sensitive:False, huffman:True
+2025-04-07 11:26:55,063 - DEBUG - Encoding 4 with 6 bits
+2025-04-07 11:26:55,063 - DEBUG - Encoding 19 with 7 bits
+2025-04-07 11:26:55,063 - DEBUG - Adding (b'accept', b'*/*') to the header table, sensitive:False, huffman:True
+2025-04-07 11:26:55,063 - DEBUG - Encoding 19 with 6 bits
+2025-04-07 11:26:55,064 - DEBUG - Encoding 3 with 7 bits
+2025-04-07 11:26:55,064 - DEBUG - Adding (b'accept-encoding', b'gzip, deflate') to the header table, sensitive:False, huffman:True
+2025-04-07 11:26:55,064 - DEBUG - Encoding 16 with 7 bits
+2025-04-07 11:26:55,064 - DEBUG - Adding (b'user-agent', b'python-httpx/0.26.0') to the header table, sensitive:False, huffman:True
+2025-04-07 11:26:55,064 - DEBUG - Encoding 58 with 6 bits
+2025-04-07 11:26:55,064 - DEBUG - Encoding 14 with 7 bits
+2025-04-07 11:26:55,065 - DEBUG - Adding (b'x-client-info', b'supabase-py/2.13.0') to the header table, sensitive:False, huffman:True
+2025-04-07 11:26:55,065 - DEBUG - Encoding 10 with 7 bits
+2025-04-07 11:26:55,065 - DEBUG - Encoding 13 with 7 bits
+2025-04-07 11:26:55,065 - DEBUG - Adding (b'apikey', b'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4d2VieGR1dWF6ZWJxdGt1bXR2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE1OTMxMzcsImV4cCI6MjA1NzE2OTEzN30.v53W6iz_BJup66qst03jWqjHzJ0DGKmUC6WrVGLpt-Y') to the header table, sensitive:False, huffman:True
+2025-04-07 11:26:55,065 - DEBUG - Encoding 5 with 7 bits
+2025-04-07 11:26:55,065 - DEBUG - Encoding 167 with 7 bits
+2025-04-07 11:26:55,066 - DEBUG - Adding (b'authorization', b'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4d2VieGR1dWF6ZWJxdGt1bXR2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE1OTMxMzcsImV4cCI6MjA1NzE2OTEzN30.v53W6iz_BJup66qst03jWqjHzJ0DGKmUC6WrVGLpt-Y') to the header table, sensitive:True, huffman:True
+2025-04-07 11:26:55,066 - DEBUG - Encoding 23 with 4 bits
+2025-04-07 11:26:55,066 - DEBUG - Encoding 172 with 7 bits
+2025-04-07 11:26:55,066 - DEBUG - Adding (b'accept-profile', b'public') to the header table, sensitive:False, huffman:True
+2025-04-07 11:26:55,066 - DEBUG - Encoding 10 with 7 bits
+2025-04-07 11:26:55,066 - DEBUG - Encoding 5 with 7 bits
+2025-04-07 11:26:55,066 - DEBUG - Adding (b'content-profile', b'public') to the header table, sensitive:False, huffman:True
+2025-04-07 11:26:55,068 - DEBUG - Encoding 11 with 7 bits
+2025-04-07 11:26:55,068 - DEBUG - Encoding 5 with 7 bits
+2025-04-07 11:26:55,068 - DEBUG - Encoded header block to b"\x82A\x98\x93\xcf\x82\xc7\xe6Km\x1f\xb2\xc7\xd9=m\xa5=\xd7E\xb5\x8e1\xa0\xab\x90\xff\x87D\x93b\xc2\xa1,w\x0b\x03I\xbb\x9d\x1f\xe2\x0bAH\x98\x15\x14?S\x83\xf9c\xe7\x90z\x8e\xaf\xd2g=KN\x94\xd7\xe5\x80.'\x17\x07@\x8a\xf2\xb1(1jJ\xc6\xaaS\xff\x8dE\xb5\x8e1\xa0\xabW\xe9\x81.\x16W\x07@\x85\x1df\xea__\xff(/\xac\xb3\xc7\x88\x86\xd4l\xb98{\xc8\x1d&\xc8\x8c\x95ml\x97\xb29\x93\xad\x7f\x9coe}r\xfa\xcbY\x19\xd0mF\xcb\xeeO\xcb\xb3\xf3\xa7\x0f\xbf\xdd\xd9\x11\x92\xac\xb4~\x9b#\x99)\xda\xd4\x82\xe2b\xe2\xda\x199as\xf7\x96_2bHc\xfc\xda,\x86\xf0bR\xfa?wds%8m\x8cM\x1b=\xec\xb5\xf3\xfc\xd8m]03\xa6\xfe\x00\xea\xdf\xa3\xce\x8fdFJx\xb4K\xd9\x1c\xd1\xd2\x10\xe9\xf7\x80Z\xb7\xe0\xf7\xa5\x90/\xdd\xb6y8oq]\xcbmn9\xd9\t\x03=9v\xe9\x8f\xdeP_\xc5\x9a\x9e\x17\x9c\xe5g\x1cY\xebJ\xdc\xff\x1f\x08\xff-\xbaQ\xd8[\x14/\xac\xb3\xc7\x88\x86\xd4l\xb98{\xc8\x1d&\xc8\x8c\x95ml\x97\xb29\x93\xad\x7f\x9coe}r\xfa\xcbY\x19\xd0mF\xcb\xeeO\xcb\xb3\xf3\xa7\x0f\xbf\xdd\xd9\x11\x92\xac\xb4~\x9b#\x99)\xda\xd4\x82\xe2b\xe2\xda\x199as\xf7\x96_2bHc\xfc\xda,\x86\xf0bR\xfa?wds%8m\x8cM\x1b=\xec\xb5\xf3\xfc\xd8m]03\xa6\xfe\x00\xea\xdf\xa3\xce\x8fdFJx\xb4K\xd9\x1c\xd1\xd2\x10\xe9\xf7\x80Z\xb7\xe0\xf7\xa5\x90/\xdd\xb6y8oq]\xcbmn9\xd9\t\x03=9v\xe9\x8f\xdeP_\xc5\x9a\x9e\x17\x9c\xe5g\x1cY\xebJ\xdc\xff@\x8a\x19\x08Z\xd2\xb5v\x1eSP_\x85\xae\xd8\xe81?@\x8b!\xeaIjJ\xd5\xd8yMA\x7f\x85\xae\xd8\xe81?"
+2025-04-07 11:26:55,069 - DEBUG - send_request_headers.complete
+2025-04-07 11:26:55,069 - DEBUG - send_request_body.started request=<Request [b'GET']> stream_id=1
+2025-04-07 11:26:55,069 - DEBUG - send_request_body.complete
+2025-04-07 11:26:55,069 - DEBUG - receive_response_headers.started request=<Request [b'GET']> stream_id=1
+2025-04-07 11:26:55,075 - DEBUG - receive_remote_settings.started
+2025-04-07 11:26:55,076 - DEBUG - receive_remote_settings.complete return_value=<RemoteSettingsChanged changed_settings:{ChangedSetting(setting=3, original_value=None, new_value=100), ChangedSetting(setting=4, original_value=65535, new_value=65536), ChangedSetting(setting=5, original_value=16384, new_value=16777215)}>
+2025-04-07 11:26:55,158 - DEBUG - Decoding b"?\xe1\x1f\x88a\x96\xd0z\xbe\x94\x03\xaaC]\x8a\x08\x02m@\xb5pN\\m\xb51h\xdf_\x96\x1du\xd0b\r&=LtA\xea\xfbP\x93\x8e\xc4\x150Z\x99V{^\x84\x02\xce1\xf3@\x85$\xabX?_\x8f|D\x1b,\x95\xb6\x86\x008'\xa5Z\xee\xeb\xbf@\x8a$\xab\x10d\x9c\xab!#M\xa8\x86\xbf\xcfL:2^Z\x83\x9b\xd9\xab]\x8d`i7s\xa3\xfcAh)\x13\x02\xa2\x87x\xa0\xa4~V\x1c\xc5\x81\x90\xb6\xcb\x80\x00>\xd45D\xa2\xd9\x0b\xba\xd8\xef\x9e\x91\x9a\xa4}\xa9]\x85\xa0\xe3\x93{\x8b\x84\x84-i[\x05D<\x86\xaao@\x8b!\xeaIjJ\xd5\xd8yMA\x7f\x85\xae\xd8\xe81?@\x8dDkL4\x97\xc0\xfd-\xdc\xb6 \xc7\xab\x011@\x8aDkWa\xfa\x14\x89Z\xc2\xcb\x90\x93\xcf\x82\xc7\xe6Km\x1f\xb2\xc7\xd9=m\xa5=\xff@\x90\xf2\xb1\x0fRKRVO\xaa\xca\xb1\xebI\x8fR?\x85\xa8\xe8\xa8\xd2\xcb@\x8f\xf2\xb1j\xee\x7fK\r)-5\xa5b\x1e\xda\x93\x011@\x95\xf2\xb1j\xee\x7fK[Z\x13aGJ\xc8-\x9d\xccB\xac\x93R_\x0216v\x87%\x07\xb6Ih\x1d\x85@\x85\x1d\tY\x1d\xc9\x90\x9d\x98?\x9b\x8d4\xcf\xf3\xf6\xa5#\x81\xe7\x1a\x00?"
+2025-04-07 11:26:55,159 - DEBUG - Decoded 4096, consumed 3 bytes
+2025-04-07 11:26:55,159 - DEBUG - Resizing header table to 4096 from 4096
+2025-04-07 11:26:55,159 - DEBUG - Decoded 8, consumed 1 bytes
+2025-04-07 11:26:55,159 - DEBUG - Decoded (b':status', b'200'), consumed 1
+2025-04-07 11:26:55,159 - DEBUG - Decoded 33, consumed 1 bytes
+2025-04-07 11:26:55,160 - DEBUG - Decoded 22, consumed 1 bytes
+2025-04-07 11:26:55,160 - DEBUG - Decoded (b'date', b'Mon, 07 Apr 2025 14:26:55 GMT'), total consumed 24 bytes, indexed True
+2025-04-07 11:26:55,160 - DEBUG - Decoded 31, consumed 1 bytes
+2025-04-07 11:26:55,160 - DEBUG - Decoded 22, consumed 1 bytes
+2025-04-07 11:26:55,160 - DEBUG - Decoded (b'content-type', b'application/json; charset=utf-8'), total consumed 24 bytes, indexed True
+2025-04-07 11:26:55,160 - DEBUG - Decoded 30, consumed 1 bytes
+2025-04-07 11:26:55,161 - DEBUG - Decoded 4, consumed 1 bytes
+2025-04-07 11:26:55,161 - DEBUG - Decoded (b'content-range', b'0-6/*'), total consumed 6 bytes, indexed True
+2025-04-07 11:26:55,161 - DEBUG - Decoded 5, consumed 1 bytes
+2025-04-07 11:26:55,161 - DEBUG - Decoded 15, consumed 1 bytes
+2025-04-07 11:26:55,161 - DEBUG - Decoded (b'cf-ray', b'92ca33e54a00628f-BSB'), total consumed 23 bytes, indexed True
+2025-04-07 11:26:55,161 - DEBUG - Decoded 10, consumed 1 bytes
+2025-04-07 11:26:55,161 - DEBUG - Decoded 6, consumed 1 bytes
+2025-04-07 11:26:55,161 - DEBUG - Decoded (b'cf-cache-status', b'DYNAMIC'), total consumed 19 bytes, indexed True
+2025-04-07 11:26:55,162 - DEBUG - Decoded 26, consumed 1 bytes
+2025-04-07 11:26:55,162 - DEBUG - Decoded 3, consumed 1 bytes
+2025-04-07 11:26:55,162 - DEBUG - Decoded (b'content-encoding', b'gzip'), total consumed 5 bytes, indexed True
+2025-04-07 11:26:55,162 - DEBUG - Decoded 29, consumed 1 bytes
+2025-04-07 11:26:55,162 - DEBUG - Decoded 13, consumed 1 bytes
+2025-04-07 11:26:55,162 - DEBUG - Decoded (b'content-location', b'/ativos?select=%2A'), total consumed 15 bytes, indexed True
+2025-04-07 11:26:55,162 - DEBUG - Decoded 56, consumed 1 bytes
+2025-04-07 11:26:55,162 - DEBUG - Decoded 32, consumed 1 bytes
+2025-04-07 11:26:55,162 - DEBUG - Decoded (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), total consumed 34 bytes, indexed True
+2025-04-07 11:26:55,163 - DEBUG - Decoded 59, consumed 1 bytes
+2025-04-07 11:26:55,163 - DEBUG - Decoded 11, consumed 1 bytes
+2025-04-07 11:26:55,163 - DEBUG - Decoded (b'vary', b'Accept-Encoding'), total consumed 13 bytes, indexed True
+2025-04-07 11:26:55,163 - DEBUG - Decoded 11, consumed 1 bytes
+2025-04-07 11:26:55,163 - DEBUG - Decoded 5, consumed 1 bytes
+2025-04-07 11:26:55,163 - DEBUG - Decoded (b'content-profile', b'public'), total consumed 19 bytes, indexed True
+2025-04-07 11:26:55,163 - DEBUG - Decoded 13, consumed 1 bytes
+2025-04-07 11:26:55,163 - DEBUG - Decoded 1, consumed 1 bytes
+2025-04-07 11:26:55,164 - DEBUG - Decoded (b'sb-gateway-version', <memory at 0x00000107C4CBC400>), total consumed 17 bytes, indexed True
+2025-04-07 11:26:55,164 - DEBUG - Decoded 10, consumed 1 bytes
+2025-04-07 11:26:55,164 - DEBUG - Decoded 16, consumed 1 bytes
+2025-04-07 11:26:55,164 - DEBUG - Decoded (b'sb-project-ref', b'dxwebxduuazebqtkumtv'), total consumed 29 bytes, indexed True
+2025-04-07 11:26:55,164 - DEBUG - Decoded 16, consumed 1 bytes
+2025-04-07 11:26:55,164 - DEBUG - Decoded 5, consumed 1 bytes
+2025-04-07 11:26:55,164 - DEBUG - Decoded (b'x-content-type-options', b'nosniff'), total consumed 24 bytes, indexed True
+2025-04-07 11:26:55,164 - DEBUG - Decoded 15, consumed 1 bytes
+2025-04-07 11:26:55,165 - DEBUG - Decoded 1, consumed 1 bytes
+2025-04-07 11:26:55,165 - DEBUG - Decoded (b'x-envoy-attempt-count', <memory at 0x00000107C4CBC340>), total consumed 19 bytes, indexed True
+2025-04-07 11:26:55,165 - DEBUG - Decoded 21, consumed 1 bytes
+2025-04-07 11:26:55,165 - DEBUG - Decoded 2, consumed 1 bytes
+2025-04-07 11:26:55,165 - DEBUG - Decoded (b'x-envoy-upstream-service-time', <memory at 0x00000107C4CBC580>), total consumed 26 bytes, indexed True
+2025-04-07 11:26:55,165 - DEBUG - Decoded 54, consumed 1 bytes
+2025-04-07 11:26:55,165 - DEBUG - Decoded 7, consumed 1 bytes
+2025-04-07 11:26:55,165 - DEBUG - Decoded (b'server', b'cloudflare'), total consumed 9 bytes, indexed True
+2025-04-07 11:26:55,165 - DEBUG - Decoded 5, consumed 1 bytes
+2025-04-07 11:26:55,165 - DEBUG - Decoded 16, consumed 1 bytes
+2025-04-07 11:26:55,165 - DEBUG - Decoded (b'alt-svc', b'h3=":443"; ma=86400'), total consumed 24 bytes, indexed True
+2025-04-07 11:26:55,166 - DEBUG - receive_response_headers.complete return_value=(200, [(b'date', b'Mon, 07 Apr 2025 14:26:55 GMT'), (b'content-type', b'application/json; charset=utf-8'), (b'content-range', b'0-6/*'), (b'cf-ray', b'92ca33e54a00628f-BSB'), (b'cf-cache-status', b'DYNAMIC'), (b'content-encoding', b'gzip'), (b'content-location', b'/ativos?select=%2A'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'vary', b'Accept-Encoding'), (b'content-profile', b'public'), (b'sb-gateway-version', b'1'), (b'sb-project-ref', b'dxwebxduuazebqtkumtv'), (b'x-content-type-options', b'nosniff'), (b'x-envoy-attempt-count', b'1'), (b'x-envoy-upstream-service-time', b'16'), (b'server', b'cloudflare'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2025-04-07 11:26:55,166 - INFO - HTTP Request: GET https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?select=%2A "HTTP/2 200 OK"
+2025-04-07 11:26:55,166 - DEBUG - receive_response_body.started request=<Request [b'GET']> stream_id=1
+2025-04-07 11:26:55,167 - DEBUG - receive_response_body.complete
+2025-04-07 11:26:55,167 - DEBUG - response_closed.started stream_id=1
+2025-04-07 11:26:55,167 - DEBUG - response_closed.complete
+2025-04-07 11:26:55,170 - DEBUG - Mapeamento: BOVA11.SA -> BOVA11
+2025-04-07 11:26:55,170 - DEBUG - Mapeamento: XFIX11.SA -> XFIX11
+2025-04-07 11:26:55,170 - DEBUG - Mapeamento: IB5M11.SA -> IB5M11
+2025-04-07 11:26:55,170 - DEBUG - Mapeamento: B5P211.SA -> B5P211
+2025-04-07 11:26:55,171 - DEBUG - Mapeamento: FIXA11.SA -> FIXA11
+2025-04-07 11:26:55,171 - DEBUG - Mapeamento: USDBRL=X -> USDBRL
+2025-04-07 11:26:55,171 - DEBUG - Mapeamento: CDI -> CDI
+2025-04-07 11:26:55,171 - INFO - Carregados 7 ativos do banco de dados.
+2025-04-07 11:26:55,171 - INFO - Iniciando loop de atualização a cada 60 segundos
+2025-04-07 11:26:55,171 - INFO - Timeout para receber cotações: 20 segundos
+2025-04-07 11:26:55,172 - INFO - Iniciando ciclo de atualização em 2025-04-07 11:26:55
+2025-04-07 11:26:55,173 - INFO - CD3Connector initialized for user 'fernando_cd3_python'
+2025-04-07 11:26:55,173 - INFO - Connecting to address: datafeed2.cedrotech.com
+2025-04-07 11:27:16,258 - ERROR - Erro ao iniciar conexão CD3: [WinError 10060] Uma tentativa de conexão falhou porque o componente conectado não respondeu
+corretamente após um período de tempo ou a conexão estabelecida falhou
+porque o host conectado não respondeu
+2025-04-07 11:27:16,258 - ERROR - Falha ao estabelecer conexão. Abortando atualização.
+2025-04-07 11:27:16,259 - INFO - Loop de atualização encerrado
