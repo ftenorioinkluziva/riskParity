@@ -213,32 +213,38 @@ class CedroUpdater:
             
             logger.info(f"Conectando com o usuário {username_com_sufixo}")
             
-            # Inicializar conexão
+            # Usar o nome de usuário exato, sem sufixo
             self._conn = cd3_connector.CD3Connector(
-                username_com_sufixo, self.password, 
+                self.user, self.password,  # sem sufixo
                 self._on_disconnect, 
                 self._on_message, 
                 self._on_connect,
-                log_level=logging.WARNING,  # Reduzir o nível de log para evitar poluição
+                log_level=logging.WARNING,
                 log_path=self.log_path
             )
             
             # Iniciar conexão
             self._conn.start()
             
-            # Aguardar conexão
+            # Aguardar conexão com verificação de sucesso
             start_time = time.time()
-            while not self._connected:
+            while not self._connected and time.time() - start_time < 10:
                 time.sleep(0.1)
-                if time.time() - start_time > 10:  # Timeout após 10 segundos
-                    logger.error("Timeout ao aguardar conexão")
-                    break
             
+            # Verificar se a conexão foi bem-sucedida antes de continuar
+            if not self._connected:
+                logger.error("Falha ao estabelecer conexão")
+                self._conn = None
+                return False
+                
             # Aguardar um pouco para a conexão estabilizar
             time.sleep(1)
+            return True
             
         except Exception as e:
             logger.error(f"Erro ao iniciar conexão CD3: {str(e)}")
+            self._conn = None
+            return False
     
     def _finalizar_conexao(self):
         """Finaliza a conexão com o servidor CD3"""
