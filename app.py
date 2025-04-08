@@ -1295,36 +1295,6 @@ def update_prices_rtd():
         print(f"Erro ao iniciar atualização de preços via RTD: {str(e)}")
         return jsonify({"erro": str(e)}), 500
 
-# Rota para iniciar um processo de atualização contínua
-@app.route('/api/start-rtd-service', methods=['POST'])
-def start_rtd_service():
-    """Inicia o serviço de atualização contínua de preços via RTD"""
-    if not supabase:
-        return jsonify({"erro": "Conexão com Supabase não estabelecida"}), 500
-    
-    try:
-        # Obter parâmetros da requisição
-        data = request.json or {}
-        api_url = data.get('api_url', 'http://localhost:5000/api/MarketData')
-        interval_seconds = data.get('interval', 60)  # Padrão: 1 minuto
-        
-        # Iniciar o processo em uma thread separada com loop contínuo
-        thread = threading.Thread(
-            target=atualizar_precos_rtd,
-            args=(supabase, api_url, False, interval_seconds)
-        )
-        thread.daemon = True
-        thread.start()
-        
-        return jsonify({
-            "mensagem": f"Serviço de atualização de preços iniciado com intervalo de {interval_seconds} segundos",
-            "status": "running",
-            "timestamp": datetime.now().isoformat()
-        })
-    except Exception as e:
-        print(f"Erro ao iniciar serviço de atualização: {str(e)}")
-        return jsonify({"erro": str(e)}), 500
-    
 # Função para atualizar preços usando a API RTD
 def atualizar_precos_rtd(supabase, api_url="http://localhost:5000/api/MarketData", single_run=True, interval_seconds=60):
     """
@@ -1339,7 +1309,7 @@ def atualizar_precos_rtd(supabase, api_url="http://localhost:5000/api/MarketData
     Returns:
         dict: Resultado da atualização com estatísticas
     """
-    print(f"Iniciando atualização de preços via API RTD...")
+    #print(f"Iniciando atualização de preços via API RTD...")
     start_time = time.time()
     
     # Tabela de equivalência específica entre tickers do banco e tickers da API RTD
@@ -1392,7 +1362,7 @@ def atualizar_precos_rtd(supabase, api_url="http://localhost:5000/api/MarketData
                 
                 try:
                     price = float(price_str)
-                    print(f"Preço obtido para {ticker_rtd} ({ticker_banco}): {price}")
+                    #print(f"Preço obtido para {ticker_rtd} ({ticker_banco}): {price}")
                     
                     # Atualizar no banco de dados
                     update_data = {
