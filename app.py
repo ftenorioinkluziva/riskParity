@@ -8,6 +8,9 @@ import pandas as pd
 import numpy as np
 from dotenv import load_dotenv
 import json
+import requests
+import threading
+import time
 
 # Carregar variáveis do arquivo .env
 load_dotenv()
@@ -1212,45 +1215,21 @@ def update_cash_balance():
 
 @app.route('/api/update-prices', methods=['POST'])
 def update_prices():
-    """Endpoint para atualizar preços dos ativos utilizando o CD3 Connector"""
+    """Endpoint para atualizar preços dos ativos (modificado para usar RTD)"""
     if not supabase:
         return jsonify({"erro": "Conexão com Supabase não estabelecida"}), 500
     
     try:
-        # Requisição assíncrona para o script de atualização
-        import subprocess
-        import os
-        import sys
-        
-        # Caminho para o script de atualização
-        script_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "atualizar_precos_cedro.py")
-        
-        # Verificar se o script existe
-        if not os.path.exists(script_path):
-            return jsonify({"erro": f"Script de atualização não encontrado em {script_path}"}), 404
-        
-        # Usar sys.executable para garantir que o mesmo Python seja usado
-        python_exe = sys.executable
-        
-        # Iniciar o processo em segundo plano
-        subprocess.Popen([
-            python_exe, 
-            script_path, 
-            '--single-run',
-            '--timeout', '30'
-        ], 
-        # Redirecionar saída para um arquivo
-        stdout=open('atualizador_output.log', 'w'),
-        stderr=subprocess.STDOUT
-        )
+        # Usar a nova função para atualizar via RTD
+        resultado = atualizar_precos_rtd(supabase)
         
         return jsonify({
-            "mensagem": "Processo de atualização de preços iniciado com sucesso",
-            "status": "processing",
+            "mensagem": "Atualização de preços concluída via API RTD",
+            "resultado": resultado,
             "timestamp": datetime.now().isoformat()
         })
     except Exception as e:
-        print(f"Erro ao iniciar atualização de preços: {str(e)}")
+        print(f"Erro ao atualizar preços: {str(e)}")
         return jsonify({"erro": str(e)}), 500
 
 @app.route('/api/last-update', methods=['GET'])
@@ -1277,6 +1256,203 @@ def get_last_update():
         print(f"Erro ao obter última atualização: {str(e)}")
         return jsonify({"erro": str(e)}), 500
 
+@app.route('/api/update-prices-rtd', methods=['POST'])
+def update_prices_rtd():
+    """Endpoint para atualizar preços dos ativos utilizando a API RTD"""
+    if not supabase:
+        return jsonify({"erro": "Conexão com Supabase não estabelecida"}), 500
+    
+    try:
+        # Obter parâmetros da requisição
+        data = request.json or {}
+        api_url = data.get('api_url', 'http://localhost:5000/api/MarketData')
+        background = data.get('background', False)
+        
+        if background:
+            # Iniciar o processo em uma thread separada
+            thread = threading.Thread(
+                target=atualizar_precos_rtd,
+                args=(supabase, api_url, True)
+            )
+            thread.daemon = True
+            thread.start()
+            
+            return jsonify({
+                "mensagem": "Processo de atualização de preços iniciado em segundo plano",
+                "status": "processing",
+                "timestamp": datetime.now().isoformat()
+            })
+        else:
+            # Executar de forma síncrona
+            resultado = atualizar_precos_rtd(supabase, api_url)
+            
+            return jsonify({
+                "mensagem": "Atualização de preços concluída",
+                "resultado": resultado,
+                "timestamp": datetime.now().isoformat()
+            })
+    except Exception as e:
+        print(f"Erro ao iniciar atualização de preços via RTD: {str(e)}")
+        return jsonify({"erro": str(e)}), 500
+
+# Rota para iniciar um processo de atualização contínua
+@app.route('/api/start-rtd-service', methods=['POST'])
+def start_rtd_service():
+    """Inicia o serviço de atualização contínua de preços via RTD"""
+    if not supabase:
+        return jsonify({"erro": "Conexão com Supabase não estabelecida"}), 500
+    
+    try:
+        # Obter parâmetros da requisição
+        data = request.json or {}
+        api_url = data.get('api_url', 'http://localhost:5000/api/MarketData')
+        interval_seconds = data.get('interval', 60)  # Padrão: 1 minuto
+        
+        # Iniciar o processo em uma thread separada com loop contínuo
+        thread = threading.Thread(
+            target=atualizar_precos_rtd,
+            args=(supabase, api_url, False, interval_seconds)
+        )
+        thread.daemon = True
+        thread.start()
+        
+        return jsonify({
+            "mensagem": f"Serviço de atualização de preços iniciado com intervalo de {interval_seconds} segundos",
+            "status": "running",
+            "timestamp": datetime.now().isoformat()
+        })
+    except Exception as e:
+        print(f"Erro ao iniciar serviço de atualização: {str(e)}")
+        return jsonify({"erro": str(e)}), 500
+    
+# Função para atualizar preços usando a API RTD
+def atualizar_precos_rtd(supabase, api_url="http://localhost:5000/api/MarketData", single_run=True, interval_seconds=60):
+    """
+    Atualiza os preços dos ativos usando a API RTD
+    
+    Args:
+        supabase: Cliente Supabase inicializado
+        api_url (str): URL base da API RTD
+        single_run (bool): Se True, executa apenas uma atualização. Se False, executa em loop
+        interval_seconds (int): Intervalo entre atualizações quando em loop
+    
+    Returns:
+        dict: Resultado da atualização com estatísticas
+    """
+    print(f"Iniciando atualização de preços via API RTD...")
+    start_time = time.time()
+    
+    # Tabela de equivalência específica entre tickers do banco e tickers da API RTD
+    equivalencia_tickers = {
+        'BOVA11.SA': 'BOVA11',
+        'XFIX11.SA': 'XFIX11',
+        'IB5M11.SA': 'IB5M11',
+        'B5P211.SA': 'B5P211',
+        'FIXA11.SA': 'FIXA11',
+        'USDBRL=X': 'DOLCV'
+    }
+    
+    # Carregar ativos do banco de dados
+    response = supabase.table('ativos').select('*').execute()
+    ativos = response.data if response.data else []
+    
+    # Estatísticas da atualização
+    stats = {
+        "iniciado_em": datetime.now().isoformat(),
+        "total_ativos": len(ativos),
+        "atualizados": 0,
+        "erros": 0
+    }
+    
+    # Função para atualizar um único ativo
+    def atualizar_ativo(ativo):
+        ticker_banco = ativo['ticker']
+        
+        # Usar a tabela de equivalência, se disponível
+        if ticker_banco in equivalencia_tickers:
+            ticker_rtd = equivalencia_tickers[ticker_banco]
+        else:
+            # Para outros casos, aplicar a regra geral (remover sufixos)
+            ticker_rtd = ticker_banco.split('.')[0].replace('=', '')
+        
+        # Tipo de dado fixo como 'ULT' para o último preço
+        data_type = "ULT"
+        
+        try:
+            # Fazer requisição HTTP para a API RTD
+            url = f"{api_url}/{ticker_rtd}/{data_type}"
+            response = requests.get(url, timeout=10)
+            
+            if response.status_code == 200:
+                data = response.json()
+                price_str = data.get('value', '')
+                
+                # Converter o valor para float, substituindo a vírgula por ponto se necessário
+                price_str = price_str.replace(',', '.')
+                
+                try:
+                    price = float(price_str)
+                    print(f"Preço obtido para {ticker_rtd} ({ticker_banco}): {price}")
+                    
+                    # Atualizar no banco de dados
+                    update_data = {
+                        'preco_atual': price,
+                        'data_atualizacao': datetime.now().isoformat()
+                    }
+                    
+                    supabase.table('ativos').update(update_data).eq('ticker', ticker_banco).execute()
+                    return True
+                except ValueError:
+                    print(f"Valor não numérico recebido para {ticker_rtd}: {price_str}")
+                    return False
+            else:
+                print(f"Erro ao obter cotação para {ticker_rtd}: {response.status_code}")
+                return False
+        except Exception as e:
+            print(f"Erro ao processar {ticker_rtd}: {str(e)}")
+            return False
+    
+    # Função de execução principal
+    def executar_atualizacao():
+        nonlocal stats
+        
+        while True:
+            stats["iniciado_em"] = datetime.now().isoformat()
+            stats["atualizados"] = 0
+            stats["erros"] = 0
+            
+            for ativo in ativos:
+                success = atualizar_ativo(ativo)
+                if success:
+                    stats["atualizados"] += 1
+                else:
+                    stats["erros"] += 1
+                # Pequeno delay entre requisições para não sobrecarregar a API
+                time.sleep(0.2)
+            
+            stats["finalizado_em"] = datetime.now().isoformat()
+            stats["duracao_segundos"] = time.time() - start_time
+            
+            if single_run:
+                break
+                
+            # Aguardar o próximo ciclo
+            time.sleep(interval_seconds)
+    
+    # Se for single_run, executar diretamente
+    if single_run:
+        executar_atualizacao()
+    else:
+        # Iniciar thread para execução em background
+        thread = threading.Thread(target=executar_atualizacao)
+        thread.daemon = True
+        thread.start()
+    
+    stats["finalizado_em"] = datetime.now().isoformat()
+    stats["duracao_segundos"] = time.time() - start_time
+    
+    return stats    
+
 if __name__ == '__main__':
     print("\n🚀 Iniciando servidor de API...\n")
     
@@ -1302,4 +1478,4 @@ if __name__ == '__main__':
     print("- GET /api/calculo/resumo/<ticker>?periodo=5 - Resumo completo de um ativo")
     print("- GET /api/calculo/resumo-varios?tickers=ticker1,ticker2&periodo=5 - Resumo de múltiplos ativos\n")
     
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=5001)

@@ -1,0 +1,963 @@
+2025-04-07 14:13:57,226 - INFO - ============================================================
+2025-04-07 14:13:57,226 - INFO - Iniciando atualizador de preços via API RTD
+2025-04-07 14:13:57,226 - INFO - Intervalo: 60 segundos | Timeout: 20 segundos
+2025-04-07 14:13:57,227 - INFO - API URL: http://localhost:5000/api/MarketData
+2025-04-07 14:13:57,227 - INFO - ============================================================
+2025-04-07 14:13:57,499 - INFO - Conexão com Supabase estabelecida com sucesso.
+2025-04-07 14:13:58,243 - INFO - HTTP Request: GET https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?select=%2A "HTTP/2 200 OK"
+2025-04-07 14:13:58,254 - INFO - Carregados 7 ativos do banco de dados.
+2025-04-07 14:13:58,254 - INFO - Iniciando loop de atualização a cada 60 segundos
+2025-04-07 14:13:58,254 - INFO - Timeout para receber cotações: 20 segundos
+2025-04-07 14:13:58,255 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:13:58
+2025-04-07 14:13:58,255 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:13:58,255 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:13:58,300 - INFO - Preço obtido para BOVA11: 122.68
+2025-04-07 14:13:58,456 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:13:58,456 - INFO - Preço atualizado para BOVA11.SA: R$ 122.68
+2025-04-07 14:13:58,658 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:13:58,686 - INFO - Preço obtido para XFIX11: 11.5
+2025-04-07 14:13:58,817 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:13:58,817 - INFO - Preço atualizado para XFIX11.SA: R$ 11.50
+2025-04-07 14:13:59,019 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:13:59,055 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:13:59,119 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:13:59,121 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:13:59,322 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:13:59,349 - INFO - Preço obtido para B5P211: 94.41
+2025-04-07 14:13:59,517 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:13:59,517 - INFO - Preço atualizado para B5P211.SA: R$ 94.41
+2025-04-07 14:13:59,718 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:13:59,738 - INFO - Preço obtido para FIXA11: 16.62
+2025-04-07 14:13:59,808 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:13:59,809 - INFO - Preço atualizado para FIXA11.SA: R$ 16.62
+2025-04-07 14:14:00,009 - INFO - Solicitando cotação para USDBRL (ULT)
+2025-04-07 14:14:00,012 - WARNING - Valor não numérico recebido para USDBRL: Ativo Inválido
+2025-04-07 14:14:00,213 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:14:00,233 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:14:00,435 - INFO - Ciclo de atualização concluído em 2.2 segundos
+2025-04-07 14:14:00,435 - INFO - Atualizações recebidas: 5/7
+2025-04-07 14:14:00,435 - INFO - Próxima atualização às 14:14:58 (57.8 segundos)
+2025-04-07 14:14:58,258 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:14:58
+2025-04-07 14:14:58,258 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:14:58,258 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:14:58,275 - INFO - Preço obtido para BOVA11: 122.83
+2025-04-07 14:14:58,426 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:14:58,429 - INFO - Preço atualizado para BOVA11.SA: R$ 122.83
+2025-04-07 14:14:58,631 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:14:58,638 - INFO - Preço obtido para XFIX11: 11.5
+2025-04-07 14:14:58,717 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:14:58,736 - INFO - Preço atualizado para XFIX11.SA: R$ 11.50
+2025-04-07 14:14:58,936 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:14:58,946 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:14:59,011 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:14:59,011 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:14:59,212 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:14:59,229 - INFO - Preço obtido para B5P211: 94.41
+2025-04-07 14:14:59,297 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:14:59,298 - INFO - Preço atualizado para B5P211.SA: R$ 94.41
+2025-04-07 14:14:59,499 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:14:59,533 - INFO - Preço obtido para FIXA11: 16.62
+2025-04-07 14:14:59,607 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:14:59,608 - INFO - Preço atualizado para FIXA11.SA: R$ 16.62
+2025-04-07 14:14:59,809 - INFO - Solicitando cotação para USDBRL (ULT)
+2025-04-07 14:14:59,830 - WARNING - Valor não numérico recebido para USDBRL: Ativo Inválido
+2025-04-07 14:15:00,031 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:15:00,059 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:15:00,261 - INFO - Ciclo de atualização concluído em 2.0 segundos
+2025-04-07 14:15:00,262 - INFO - Atualizações recebidas: 5/7
+2025-04-07 14:15:00,263 - INFO - Próxima atualização às 14:15:58 (58.0 segundos)
+2025-04-07 14:15:17,438 - INFO - Interrupção detectada. Finalizando...
+2025-04-07 14:15:17,438 - INFO - Parando atualizador...
+2025-04-07 14:15:17,438 - INFO - Loop de atualização encerrado
+2025-04-07 14:15:17,438 - INFO - Obrigado por usar o atualizador de preços via API RTD!
+2025-04-07 14:15:27,376 - INFO - ============================================================
+2025-04-07 14:15:27,377 - INFO - Iniciando atualizador de preços via API RTD
+2025-04-07 14:15:27,377 - INFO - Intervalo: 60 segundos | Timeout: 20 segundos
+2025-04-07 14:15:27,377 - INFO - API URL: http://localhost:5000/api/MarketData
+2025-04-07 14:15:27,377 - INFO - ============================================================
+2025-04-07 14:15:27,665 - INFO - Conexão com Supabase estabelecida com sucesso.
+2025-04-07 14:15:28,076 - INFO - HTTP Request: GET https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?select=%2A "HTTP/2 200 OK"
+2025-04-07 14:15:28,079 - INFO - Carregados 7 ativos do banco de dados.
+2025-04-07 14:15:28,079 - INFO - Iniciando loop de atualização a cada 60 segundos
+2025-04-07 14:15:28,079 - INFO - Timeout para receber cotações: 20 segundos
+2025-04-07 14:15:28,080 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:15:28
+2025-04-07 14:15:28,080 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:15:28,081 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:15:28,108 - INFO - Preço obtido para B5P211: 94.41
+2025-04-07 14:15:28,182 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:15:28,183 - INFO - Preço atualizado para B5P211.SA: R$ 94.41
+2025-04-07 14:15:28,384 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:15:28,405 - INFO - Preço obtido para FIXA11: 16.62
+2025-04-07 14:15:28,473 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:15:28,475 - INFO - Preço atualizado para FIXA11.SA: R$ 16.62
+2025-04-07 14:15:28,676 - INFO - Solicitando cotação para USD/BRL (ULT)
+2025-04-07 14:15:28,703 - ERROR - Erro ao obter cotação para USD/BRL: 404
+2025-04-07 14:15:28,904 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:15:28,927 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:15:29,129 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:15:29,156 - INFO - Preço obtido para BOVA11: 122.78
+2025-04-07 14:15:29,225 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:15:29,228 - INFO - Preço atualizado para BOVA11.SA: R$ 122.78
+2025-04-07 14:15:29,429 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:15:29,452 - INFO - Preço obtido para XFIX11: 11.5
+2025-04-07 14:15:29,532 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:15:29,533 - INFO - Preço atualizado para XFIX11.SA: R$ 11.50
+2025-04-07 14:15:29,733 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:15:29,755 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:15:29,832 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:15:29,833 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:15:30,036 - INFO - Ciclo de atualização concluído em 2.0 segundos
+2025-04-07 14:15:30,037 - INFO - Atualizações recebidas: 5/7
+2025-04-07 14:15:30,038 - INFO - Próxima atualização às 14:16:28 (58.0 segundos)
+2025-04-07 14:16:28,090 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:16:28
+2025-04-07 14:16:28,091 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:16:28,092 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:16:28,105 - INFO - Preço obtido para B5P211: 94.41
+2025-04-07 14:16:28,466 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:16:28,467 - INFO - Preço atualizado para B5P211.SA: R$ 94.41
+2025-04-07 14:16:28,667 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:16:28,671 - INFO - Preço obtido para FIXA11: 16.65
+2025-04-07 14:16:28,754 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:16:28,755 - INFO - Preço atualizado para FIXA11.SA: R$ 16.65
+2025-04-07 14:16:28,956 - INFO - Solicitando cotação para USD/BRL (ULT)
+2025-04-07 14:16:28,982 - ERROR - Erro ao obter cotação para USD/BRL: 404
+2025-04-07 14:16:29,184 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:16:29,187 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:16:29,388 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:16:29,412 - INFO - Preço obtido para BOVA11: 122.93
+2025-04-07 14:16:29,481 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:16:29,481 - INFO - Preço atualizado para BOVA11.SA: R$ 122.93
+2025-04-07 14:16:29,682 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:16:29,707 - INFO - Preço obtido para XFIX11: 11.5
+2025-04-07 14:16:29,782 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:16:29,788 - INFO - Preço atualizado para XFIX11.SA: R$ 11.50
+2025-04-07 14:16:29,989 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:16:30,013 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:16:30,100 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:16:30,100 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:16:30,302 - INFO - Ciclo de atualização concluído em 2.2 segundos
+2025-04-07 14:16:30,303 - INFO - Atualizações recebidas: 5/7
+2025-04-07 14:16:30,303 - INFO - Próxima atualização às 14:17:28 (57.8 segundos)
+2025-04-07 14:17:28,105 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:17:28
+2025-04-07 14:17:28,106 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:17:28,106 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:17:28,111 - INFO - Preço obtido para B5P211: 94.41
+2025-04-07 14:17:28,279 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:17:28,280 - INFO - Preço atualizado para B5P211.SA: R$ 94.41
+2025-04-07 14:17:28,482 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:17:28,508 - INFO - Preço obtido para FIXA11: 16.65
+2025-04-07 14:17:28,585 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:17:28,587 - INFO - Preço atualizado para FIXA11.SA: R$ 16.65
+2025-04-07 14:17:28,788 - INFO - Solicitando cotação para USD/BRL (ULT)
+2025-04-07 14:17:28,791 - ERROR - Erro ao obter cotação para USD/BRL: 404
+2025-04-07 14:17:28,992 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:17:29,015 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:17:29,216 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:17:29,230 - INFO - Preço obtido para BOVA11: 122.92
+2025-04-07 14:17:29,316 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:17:29,317 - INFO - Preço atualizado para BOVA11.SA: R$ 122.92
+2025-04-07 14:17:29,518 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:17:29,536 - INFO - Preço obtido para XFIX11: 11.5
+2025-04-07 14:17:29,609 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:17:29,610 - INFO - Preço atualizado para XFIX11.SA: R$ 11.50
+2025-04-07 14:17:29,811 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:17:29,828 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:17:29,917 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:17:29,918 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:17:30,118 - INFO - Ciclo de atualização concluído em 2.0 segundos
+2025-04-07 14:17:30,119 - INFO - Atualizações recebidas: 5/7
+2025-04-07 14:17:30,119 - INFO - Próxima atualização às 14:18:28 (58.0 segundos)
+2025-04-07 14:18:28,119 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:18:28
+2025-04-07 14:18:28,119 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:18:28,119 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:18:28,126 - INFO - Preço obtido para B5P211: 94.41
+2025-04-07 14:18:28,490 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:18:28,491 - INFO - Preço atualizado para B5P211.SA: R$ 94.41
+2025-04-07 14:18:28,691 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:18:28,695 - INFO - Preço obtido para FIXA11: 16.65
+2025-04-07 14:18:28,764 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:18:28,765 - INFO - Preço atualizado para FIXA11.SA: R$ 16.65
+2025-04-07 14:18:28,966 - INFO - Solicitando cotação para USD/BRL (ULT)
+2025-04-07 14:18:28,987 - ERROR - Erro ao obter cotação para USD/BRL: 404
+2025-04-07 14:18:29,189 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:18:29,192 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:18:29,393 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:18:29,396 - INFO - Preço obtido para BOVA11: 122.93
+2025-04-07 14:18:29,456 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:18:29,457 - INFO - Preço atualizado para BOVA11.SA: R$ 122.93
+2025-04-07 14:18:29,658 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:18:29,660 - INFO - Preço obtido para XFIX11: 11.5
+2025-04-07 14:18:29,734 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:18:29,735 - INFO - Preço atualizado para XFIX11.SA: R$ 11.50
+2025-04-07 14:18:29,936 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:18:29,960 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:18:30,029 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:18:30,030 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:18:30,230 - INFO - Ciclo de atualização concluído em 2.1 segundos
+2025-04-07 14:18:30,230 - INFO - Atualizações recebidas: 5/7
+2025-04-07 14:18:30,230 - INFO - Próxima atualização às 14:19:28 (57.9 segundos)
+2025-04-07 14:18:54,715 - INFO - Interrupção detectada. Finalizando...
+2025-04-07 14:18:54,717 - INFO - Parando atualizador...
+2025-04-07 14:18:54,717 - INFO - Loop de atualização encerrado
+2025-04-07 14:18:54,717 - INFO - Obrigado por usar o atualizador de preços via API RTD!
+2025-04-07 14:18:57,838 - INFO - ============================================================
+2025-04-07 14:18:57,838 - INFO - Iniciando atualizador de preços via API RTD
+2025-04-07 14:18:57,838 - INFO - Intervalo: 60 segundos | Timeout: 20 segundos
+2025-04-07 14:18:57,838 - INFO - API URL: http://localhost:5000/api/MarketData
+2025-04-07 14:18:57,839 - INFO - ============================================================
+2025-04-07 14:18:58,113 - INFO - Conexão com Supabase estabelecida com sucesso.
+2025-04-07 14:18:58,549 - INFO - HTTP Request: GET https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?select=%2A "HTTP/2 200 OK"
+2025-04-07 14:18:58,552 - INFO - Carregados 7 ativos do banco de dados.
+2025-04-07 14:18:58,553 - INFO - Iniciando loop de atualização a cada 60 segundos
+2025-04-07 14:18:58,553 - INFO - Timeout para receber cotações: 20 segundos
+2025-04-07 14:18:58,553 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:18:58
+2025-04-07 14:18:58,553 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:18:58,553 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:18:58,569 - INFO - Preço obtido para B5P211: 94.39
+2025-04-07 14:18:58,649 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:18:58,650 - INFO - Preço atualizado para B5P211.SA: R$ 94.39
+2025-04-07 14:18:58,850 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:18:58,855 - INFO - Preço obtido para FIXA11: 16.65
+2025-04-07 14:18:58,920 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:18:58,921 - INFO - Preço atualizado para FIXA11.SA: R$ 16.65
+2025-04-07 14:18:59,122 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:18:59,144 - INFO - Preço obtido para BOVA11: 122.84
+2025-04-07 14:18:59,207 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:18:59,207 - INFO - Preço atualizado para BOVA11.SA: R$ 122.84
+2025-04-07 14:18:59,408 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:18:59,420 - INFO - Preço obtido para XFIX11: 11.5
+2025-04-07 14:18:59,498 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:18:59,500 - INFO - Preço atualizado para XFIX11.SA: R$ 11.50
+2025-04-07 14:18:59,702 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:18:59,704 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:18:59,793 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:18:59,796 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:18:59,997 - INFO - Solicitando cotação para USD/BRL_O_0 (ULT)
+2025-04-07 14:19:00,021 - ERROR - Erro ao obter cotação para USD/BRL_O_0: 404
+2025-04-07 14:19:00,222 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:19:00,237 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:19:00,438 - INFO - Ciclo de atualização concluído em 1.9 segundos
+2025-04-07 14:19:00,438 - INFO - Atualizações recebidas: 5/7
+2025-04-07 14:19:00,438 - INFO - Próxima atualização às 14:19:58 (58.1 segundos)
+2025-04-07 14:19:44,155 - INFO - Interrupção detectada. Finalizando...
+2025-04-07 14:19:44,155 - INFO - Parando atualizador...
+2025-04-07 14:19:44,156 - INFO - Loop de atualização encerrado
+2025-04-07 14:19:44,156 - INFO - Obrigado por usar o atualizador de preços via API RTD!
+2025-04-07 14:19:50,416 - INFO - ============================================================
+2025-04-07 14:19:50,416 - INFO - Iniciando atualizador de preços via API RTD
+2025-04-07 14:19:50,416 - INFO - Intervalo: 60 segundos | Timeout: 20 segundos
+2025-04-07 14:19:50,416 - INFO - API URL: http://localhost:5000/api/MarketData
+2025-04-07 14:19:50,417 - INFO - ============================================================
+2025-04-07 14:19:50,697 - INFO - Conexão com Supabase estabelecida com sucesso.
+2025-04-07 14:19:51,127 - INFO - HTTP Request: GET https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?select=%2A "HTTP/2 200 OK"
+2025-04-07 14:19:51,131 - INFO - Carregados 7 ativos do banco de dados.
+2025-04-07 14:19:51,131 - INFO - Iniciando loop de atualização a cada 60 segundos
+2025-04-07 14:19:51,132 - INFO - Timeout para receber cotações: 20 segundos
+2025-04-07 14:19:51,132 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:19:51
+2025-04-07 14:19:51,133 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:19:51,133 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:19:51,165 - INFO - Preço obtido para B5P211: 94.39
+2025-04-07 14:19:51,233 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:19:51,235 - INFO - Preço atualizado para B5P211.SA: R$ 94.39
+2025-04-07 14:19:51,436 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:19:51,456 - INFO - Preço obtido para FIXA11: 16.65
+2025-04-07 14:19:51,527 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:19:51,530 - INFO - Preço atualizado para FIXA11.SA: R$ 16.65
+2025-04-07 14:19:51,737 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:19:51,766 - INFO - Preço obtido para BOVA11: 122.96
+2025-04-07 14:19:51,839 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:19:51,840 - INFO - Preço atualizado para BOVA11.SA: R$ 122.96
+2025-04-07 14:19:52,041 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:19:52,044 - INFO - Preço obtido para XFIX11: 11.5
+2025-04-07 14:19:52,108 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:19:52,109 - INFO - Preço atualizado para XFIX11.SA: R$ 11.50
+2025-04-07 14:19:52,310 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:19:52,314 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:19:52,378 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:19:52,379 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:19:52,580 - INFO - Solicitando cotação para USD/BRL_O (ULT)
+2025-04-07 14:19:52,601 - ERROR - Erro ao obter cotação para USD/BRL_O: 404
+2025-04-07 14:19:52,802 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:19:52,833 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:19:53,036 - INFO - Ciclo de atualização concluído em 1.9 segundos
+2025-04-07 14:19:53,037 - INFO - Atualizações recebidas: 5/7
+2025-04-07 14:19:53,037 - INFO - Próxima atualização às 14:20:51 (58.1 segundos)
+2025-04-07 14:20:32,321 - INFO - Interrupção detectada. Finalizando...
+2025-04-07 14:20:32,322 - INFO - Parando atualizador...
+2025-04-07 14:20:32,322 - INFO - Loop de atualização encerrado
+2025-04-07 14:20:32,323 - INFO - Obrigado por usar o atualizador de preços via API RTD!
+2025-04-07 14:20:38,149 - INFO - ============================================================
+2025-04-07 14:20:38,149 - INFO - Iniciando atualizador de preços via API RTD
+2025-04-07 14:20:38,149 - INFO - Intervalo: 60 segundos | Timeout: 20 segundos
+2025-04-07 14:20:38,149 - INFO - API URL: http://localhost:5000/api/MarketData
+2025-04-07 14:20:38,149 - INFO - ============================================================
+2025-04-07 14:20:38,422 - INFO - Conexão com Supabase estabelecida com sucesso.
+2025-04-07 14:20:39,073 - INFO - HTTP Request: GET https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?select=%2A "HTTP/2 200 OK"
+2025-04-07 14:20:39,080 - INFO - Carregados 7 ativos do banco de dados.
+2025-04-07 14:20:39,081 - INFO - Iniciando loop de atualização a cada 60 segundos
+2025-04-07 14:20:39,081 - INFO - Timeout para receber cotações: 20 segundos
+2025-04-07 14:20:39,082 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:20:39
+2025-04-07 14:20:39,082 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:20:39,083 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:20:39,090 - INFO - Preço obtido para B5P211: 94.39
+2025-04-07 14:20:39,164 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:20:39,164 - INFO - Preço atualizado para B5P211.SA: R$ 94.39
+2025-04-07 14:20:39,365 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:20:39,369 - INFO - Preço obtido para FIXA11: 16.65
+2025-04-07 14:20:39,445 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:20:39,446 - INFO - Preço atualizado para FIXA11.SA: R$ 16.65
+2025-04-07 14:20:39,647 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:20:39,675 - INFO - Preço obtido para BOVA11: 122.84
+2025-04-07 14:20:39,739 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:20:39,740 - INFO - Preço atualizado para BOVA11.SA: R$ 122.84
+2025-04-07 14:20:39,941 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:20:39,967 - INFO - Preço obtido para XFIX11: 11.5
+2025-04-07 14:20:40,042 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:20:40,043 - INFO - Preço atualizado para XFIX11.SA: R$ 11.50
+2025-04-07 14:20:40,244 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:20:40,258 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:20:40,323 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:20:40,325 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:20:40,526 - INFO - Solicitando cotação para USD/BRL (ULT)
+2025-04-07 14:20:40,550 - ERROR - Erro ao obter cotação para USD/BRL: 404
+2025-04-07 14:20:40,751 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:20:40,765 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:20:40,967 - INFO - Ciclo de atualização concluído em 1.9 segundos
+2025-04-07 14:20:40,968 - INFO - Atualizações recebidas: 5/7
+2025-04-07 14:20:40,968 - INFO - Próxima atualização às 14:21:39 (58.1 segundos)
+2025-04-07 14:21:39,095 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:21:39
+2025-04-07 14:21:39,095 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:21:39,095 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:21:39,100 - INFO - Preço obtido para B5P211: 94.39
+2025-04-07 14:21:39,284 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:21:39,286 - INFO - Preço atualizado para B5P211.SA: R$ 94.39
+2025-04-07 14:21:39,488 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:21:39,517 - INFO - Preço obtido para FIXA11: 16.65
+2025-04-07 14:21:39,589 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:21:39,590 - INFO - Preço atualizado para FIXA11.SA: R$ 16.65
+2025-04-07 14:21:39,791 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:21:39,802 - INFO - Preço obtido para BOVA11: 122.85
+2025-04-07 14:21:39,880 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:21:39,881 - INFO - Preço atualizado para BOVA11.SA: R$ 122.85
+2025-04-07 14:21:40,081 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:21:40,095 - INFO - Preço obtido para XFIX11: 11.5
+2025-04-07 14:21:40,176 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:21:40,177 - INFO - Preço atualizado para XFIX11.SA: R$ 11.50
+2025-04-07 14:21:40,377 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:21:40,393 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:21:40,473 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:21:40,475 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:21:40,676 - INFO - Solicitando cotação para USD/BRL (ULT)
+2025-04-07 14:21:40,679 - ERROR - Erro ao obter cotação para USD/BRL: 404
+2025-04-07 14:21:40,880 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:21:40,909 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:21:41,110 - INFO - Ciclo de atualização concluído em 2.0 segundos
+2025-04-07 14:21:41,110 - INFO - Atualizações recebidas: 5/7
+2025-04-07 14:21:41,110 - INFO - Próxima atualização às 14:22:39 (58.0 segundos)
+2025-04-07 14:21:54,431 - INFO - Interrupção detectada. Finalizando...
+2025-04-07 14:21:54,432 - INFO - Parando atualizador...
+2025-04-07 14:21:54,432 - INFO - Loop de atualização encerrado
+2025-04-07 14:21:54,433 - INFO - Obrigado por usar o atualizador de preços via API RTD!
+2025-04-07 14:21:58,152 - INFO - ============================================================
+2025-04-07 14:21:58,152 - INFO - Iniciando atualizador de preços via API RTD
+2025-04-07 14:21:58,152 - INFO - Intervalo: 60 segundos | Timeout: 20 segundos
+2025-04-07 14:21:58,154 - INFO - API URL: http://localhost:5000/api/MarketData
+2025-04-07 14:21:58,154 - INFO - ============================================================
+2025-04-07 14:21:58,445 - INFO - Conexão com Supabase estabelecida com sucesso.
+2025-04-07 14:21:58,850 - INFO - HTTP Request: GET https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?select=%2A "HTTP/2 200 OK"
+2025-04-07 14:21:58,853 - INFO - Carregados 7 ativos do banco de dados.
+2025-04-07 14:21:58,853 - INFO - Iniciando loop de atualização a cada 60 segundos
+2025-04-07 14:21:58,853 - INFO - Timeout para receber cotações: 20 segundos
+2025-04-07 14:21:58,854 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:21:58
+2025-04-07 14:21:58,854 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:21:58,854 - INFO - Solicitando cotação para DOLCV (ULT)
+2025-04-07 14:21:58,869 - INFO - Preço obtido para DOLCV: 5.8877
+2025-04-07 14:21:58,937 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.USDBRL%3DX "HTTP/2 200 OK"
+2025-04-07 14:21:58,937 - INFO - Preço atualizado para USDBRL=X: R$ 5.89
+2025-04-07 14:21:59,139 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:21:59,157 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:21:59,358 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:21:59,380 - INFO - Preço obtido para B5P211: 94.39
+2025-04-07 14:21:59,443 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:21:59,444 - INFO - Preço atualizado para B5P211.SA: R$ 94.39
+2025-04-07 14:21:59,646 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:21:59,649 - INFO - Preço obtido para FIXA11: 16.65
+2025-04-07 14:21:59,713 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:21:59,715 - INFO - Preço atualizado para FIXA11.SA: R$ 16.65
+2025-04-07 14:21:59,916 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:21:59,937 - INFO - Preço obtido para BOVA11: 122.85
+2025-04-07 14:22:00,019 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:22:00,020 - INFO - Preço atualizado para BOVA11.SA: R$ 122.85
+2025-04-07 14:22:00,221 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:22:00,247 - INFO - Preço obtido para XFIX11: 11.5
+2025-04-07 14:22:00,332 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:22:00,333 - INFO - Preço atualizado para XFIX11.SA: R$ 11.50
+2025-04-07 14:22:00,534 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:22:00,558 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:22:00,627 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:22:00,628 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:22:00,829 - INFO - Ciclo de atualização concluído em 2.0 segundos
+2025-04-07 14:22:00,829 - INFO - Atualizações recebidas: 6/7
+2025-04-07 14:22:00,829 - INFO - Próxima atualização às 14:22:58 (58.0 segundos)
+2025-04-07 14:22:58,870 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:22:58
+2025-04-07 14:22:58,871 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:22:58,872 - INFO - Solicitando cotação para DOLCV (ULT)
+2025-04-07 14:22:58,903 - INFO - Preço obtido para DOLCV: 5.8877
+2025-04-07 14:22:59,253 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.USDBRL%3DX "HTTP/2 200 OK"
+2025-04-07 14:22:59,254 - INFO - Preço atualizado para USDBRL=X: R$ 5.89
+2025-04-07 14:22:59,455 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:22:59,475 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:22:59,676 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:22:59,692 - INFO - Preço obtido para B5P211: 94.39
+2025-04-07 14:22:59,760 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:22:59,761 - INFO - Preço atualizado para B5P211.SA: R$ 94.39
+2025-04-07 14:22:59,962 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:22:59,966 - INFO - Preço obtido para FIXA11: 16.65
+2025-04-07 14:23:00,042 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:23:00,042 - INFO - Preço atualizado para FIXA11.SA: R$ 16.65
+2025-04-07 14:23:00,243 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:23:00,247 - INFO - Preço obtido para BOVA11: 122.92
+2025-04-07 14:23:00,316 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:23:00,317 - INFO - Preço atualizado para BOVA11.SA: R$ 122.92
+2025-04-07 14:23:00,517 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:23:00,540 - INFO - Preço obtido para XFIX11: 11.5
+2025-04-07 14:23:00,604 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:23:00,605 - INFO - Preço atualizado para XFIX11.SA: R$ 11.50
+2025-04-07 14:23:00,806 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:23:00,835 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:23:00,907 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:23:00,908 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:23:01,109 - INFO - Ciclo de atualização concluído em 2.2 segundos
+2025-04-07 14:23:01,109 - INFO - Atualizações recebidas: 6/7
+2025-04-07 14:23:01,109 - INFO - Próxima atualização às 14:23:58 (57.8 segundos)
+2025-04-07 14:23:58,876 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:23:58
+2025-04-07 14:23:58,876 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:23:58,876 - INFO - Solicitando cotação para DOLCV (ULT)
+2025-04-07 14:23:58,881 - INFO - Preço obtido para DOLCV: 5.8877
+2025-04-07 14:23:59,036 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.USDBRL%3DX "HTTP/2 200 OK"
+2025-04-07 14:23:59,037 - INFO - Preço atualizado para USDBRL=X: R$ 5.89
+2025-04-07 14:23:59,238 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:23:59,242 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:23:59,443 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:23:59,446 - INFO - Preço obtido para B5P211: 94.39
+2025-04-07 14:23:59,518 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:23:59,519 - INFO - Preço atualizado para B5P211.SA: R$ 94.39
+2025-04-07 14:23:59,720 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:23:59,726 - INFO - Preço obtido para FIXA11: 16.65
+2025-04-07 14:23:59,803 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:23:59,805 - INFO - Preço atualizado para FIXA11.SA: R$ 16.65
+2025-04-07 14:24:00,006 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:24:00,009 - INFO - Preço obtido para BOVA11: 122.96
+2025-04-07 14:24:00,080 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:24:00,081 - INFO - Preço atualizado para BOVA11.SA: R$ 122.96
+2025-04-07 14:24:00,282 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:24:00,286 - INFO - Preço obtido para XFIX11: 11.5
+2025-04-07 14:24:00,362 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:24:00,364 - INFO - Preço atualizado para XFIX11.SA: R$ 11.50
+2025-04-07 14:24:00,565 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:24:00,587 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:24:00,662 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:24:00,663 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:24:00,864 - INFO - Ciclo de atualização concluído em 2.0 segundos
+2025-04-07 14:24:00,864 - INFO - Atualizações recebidas: 6/7
+2025-04-07 14:24:00,865 - INFO - Próxima atualização às 14:24:58 (58.0 segundos)
+2025-04-07 14:24:58,893 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:24:58
+2025-04-07 14:24:58,894 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:24:58,894 - INFO - Solicitando cotação para DOLCV (ULT)
+2025-04-07 14:24:58,927 - INFO - Preço obtido para DOLCV: 5.8877
+2025-04-07 14:24:59,285 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.USDBRL%3DX "HTTP/2 200 OK"
+2025-04-07 14:24:59,286 - INFO - Preço atualizado para USDBRL=X: R$ 5.89
+2025-04-07 14:24:59,487 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:24:59,490 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:24:59,692 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:24:59,711 - INFO - Preço obtido para B5P211: 94.39
+2025-04-07 14:24:59,787 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:24:59,787 - INFO - Preço atualizado para B5P211.SA: R$ 94.39
+2025-04-07 14:24:59,988 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:24:59,993 - INFO - Preço obtido para FIXA11: 16.65
+2025-04-07 14:25:00,080 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:25:00,080 - INFO - Preço atualizado para FIXA11.SA: R$ 16.65
+2025-04-07 14:25:00,281 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:25:00,292 - INFO - Preço obtido para BOVA11: 122.99
+2025-04-07 14:25:00,368 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:25:00,369 - INFO - Preço atualizado para BOVA11.SA: R$ 122.99
+2025-04-07 14:25:00,570 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:25:00,590 - INFO - Preço obtido para XFIX11: 11.5
+2025-04-07 14:25:00,660 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:25:00,660 - INFO - Preço atualizado para XFIX11.SA: R$ 11.50
+2025-04-07 14:25:00,861 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:25:00,883 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:25:00,961 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:25:00,962 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:25:01,162 - INFO - Ciclo de atualização concluído em 2.3 segundos
+2025-04-07 14:25:01,162 - INFO - Atualizações recebidas: 6/7
+2025-04-07 14:25:01,162 - INFO - Próxima atualização às 14:25:58 (57.7 segundos)
+2025-04-07 14:25:58,899 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:25:58
+2025-04-07 14:25:58,900 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:25:58,901 - INFO - Solicitando cotação para DOLCV (ULT)
+2025-04-07 14:25:58,937 - INFO - Preço obtido para DOLCV: 5.8877
+2025-04-07 14:25:59,091 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.USDBRL%3DX "HTTP/2 200 OK"
+2025-04-07 14:25:59,092 - INFO - Preço atualizado para USDBRL=X: R$ 5.89
+2025-04-07 14:25:59,293 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:25:59,318 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:25:59,519 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:25:59,535 - INFO - Preço obtido para B5P211: 94.39
+2025-04-07 14:25:59,626 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:25:59,627 - INFO - Preço atualizado para B5P211.SA: R$ 94.39
+2025-04-07 14:25:59,827 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:25:59,837 - INFO - Preço obtido para FIXA11: 16.65
+2025-04-07 14:25:59,903 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:25:59,903 - INFO - Preço atualizado para FIXA11.SA: R$ 16.65
+2025-04-07 14:26:00,105 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:26:00,120 - INFO - Preço obtido para BOVA11: 123.02
+2025-04-07 14:26:00,187 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:26:00,188 - INFO - Preço atualizado para BOVA11.SA: R$ 123.02
+2025-04-07 14:26:00,389 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:26:00,418 - INFO - Preço obtido para XFIX11: 11.5
+2025-04-07 14:26:00,504 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:26:00,505 - INFO - Preço atualizado para XFIX11.SA: R$ 11.50
+2025-04-07 14:26:00,705 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:26:00,726 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:26:00,806 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:26:00,806 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:26:01,008 - INFO - Ciclo de atualização concluído em 2.1 segundos
+2025-04-07 14:26:01,008 - INFO - Atualizações recebidas: 6/7
+2025-04-07 14:26:01,008 - INFO - Próxima atualização às 14:26:58 (57.9 segundos)
+2025-04-07 14:26:58,912 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:26:58
+2025-04-07 14:26:58,912 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:26:58,912 - INFO - Solicitando cotação para DOLCV (ULT)
+2025-04-07 14:26:58,928 - INFO - Preço obtido para DOLCV: 5.8877
+2025-04-07 14:26:59,087 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.USDBRL%3DX "HTTP/2 200 OK"
+2025-04-07 14:26:59,088 - INFO - Preço atualizado para USDBRL=X: R$ 5.89
+2025-04-07 14:26:59,289 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:26:59,315 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:26:59,516 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:26:59,520 - INFO - Preço obtido para B5P211: 94.39
+2025-04-07 14:26:59,809 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:26:59,811 - INFO - Preço atualizado para B5P211.SA: R$ 94.39
+2025-04-07 14:27:00,012 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:27:00,016 - INFO - Preço obtido para FIXA11: 16.65
+2025-04-07 14:27:00,084 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:27:00,084 - INFO - Preço atualizado para FIXA11.SA: R$ 16.65
+2025-04-07 14:27:00,285 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:27:00,293 - INFO - Preço obtido para BOVA11: 122.99
+2025-04-07 14:27:00,365 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:27:00,366 - INFO - Preço atualizado para BOVA11.SA: R$ 122.99
+2025-04-07 14:27:00,567 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:27:00,591 - INFO - Preço obtido para XFIX11: 11.5
+2025-04-07 14:27:00,663 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:27:00,663 - INFO - Preço atualizado para XFIX11.SA: R$ 11.50
+2025-04-07 14:27:00,865 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:27:00,868 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:27:00,933 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:27:00,937 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:27:01,138 - INFO - Ciclo de atualização concluído em 2.2 segundos
+2025-04-07 14:27:01,138 - INFO - Atualizações recebidas: 6/7
+2025-04-07 14:27:01,138 - INFO - Próxima atualização às 14:27:58 (57.8 segundos)
+2025-04-07 14:27:58,916 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:27:58
+2025-04-07 14:27:58,916 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:27:58,916 - INFO - Solicitando cotação para DOLCV (ULT)
+2025-04-07 14:27:58,944 - INFO - Preço obtido para DOLCV: 5.8877
+2025-04-07 14:27:59,087 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.USDBRL%3DX "HTTP/2 200 OK"
+2025-04-07 14:27:59,088 - INFO - Preço atualizado para USDBRL=X: R$ 5.89
+2025-04-07 14:27:59,289 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:27:59,305 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:27:59,506 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:27:59,509 - INFO - Preço obtido para B5P211: 94.42
+2025-04-07 14:27:59,588 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:27:59,588 - INFO - Preço atualizado para B5P211.SA: R$ 94.42
+2025-04-07 14:27:59,790 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:27:59,811 - INFO - Preço obtido para FIXA11: 16.65
+2025-04-07 14:27:59,895 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:27:59,895 - INFO - Preço atualizado para FIXA11.SA: R$ 16.65
+2025-04-07 14:28:00,097 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:28:00,118 - INFO - Preço obtido para BOVA11: 122.95
+2025-04-07 14:28:00,196 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:28:00,198 - INFO - Preço atualizado para BOVA11.SA: R$ 122.95
+2025-04-07 14:28:00,398 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:28:00,412 - INFO - Preço obtido para XFIX11: 11.58
+2025-04-07 14:28:00,512 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:28:00,512 - INFO - Preço atualizado para XFIX11.SA: R$ 11.58
+2025-04-07 14:28:00,713 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:28:00,716 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:28:00,786 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:28:00,787 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:28:00,988 - INFO - Ciclo de atualização concluído em 2.1 segundos
+2025-04-07 14:28:00,988 - INFO - Atualizações recebidas: 6/7
+2025-04-07 14:28:00,988 - INFO - Próxima atualização às 14:28:58 (57.9 segundos)
+2025-04-07 14:28:58,919 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:28:58
+2025-04-07 14:28:58,920 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:28:58,920 - INFO - Solicitando cotação para DOLCV (ULT)
+2025-04-07 14:28:58,951 - INFO - Preço obtido para DOLCV: 5.8877
+2025-04-07 14:28:59,092 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.USDBRL%3DX "HTTP/2 200 OK"
+2025-04-07 14:28:59,094 - INFO - Preço atualizado para USDBRL=X: R$ 5.89
+2025-04-07 14:28:59,295 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:28:59,326 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:28:59,527 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:28:59,538 - INFO - Preço obtido para B5P211: 94.42
+2025-04-07 14:28:59,805 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:28:59,806 - INFO - Preço atualizado para B5P211.SA: R$ 94.42
+2025-04-07 14:29:00,007 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:29:00,012 - INFO - Preço obtido para FIXA11: 16.65
+2025-04-07 14:29:00,074 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:29:00,075 - INFO - Preço atualizado para FIXA11.SA: R$ 16.65
+2025-04-07 14:29:00,276 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:29:00,305 - INFO - Preço obtido para BOVA11: 122.98
+2025-04-07 14:29:00,384 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:29:00,385 - INFO - Preço atualizado para BOVA11.SA: R$ 122.98
+2025-04-07 14:29:00,585 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:29:00,612 - INFO - Preço obtido para XFIX11: 11.58
+2025-04-07 14:29:00,686 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:29:00,686 - INFO - Preço atualizado para XFIX11.SA: R$ 11.58
+2025-04-07 14:29:00,887 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:29:00,892 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:29:00,972 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:29:00,973 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:29:01,174 - INFO - Ciclo de atualização concluído em 2.3 segundos
+2025-04-07 14:29:01,174 - INFO - Atualizações recebidas: 6/7
+2025-04-07 14:29:01,174 - INFO - Próxima atualização às 14:29:58 (57.7 segundos)
+2025-04-07 14:29:58,933 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:29:58
+2025-04-07 14:29:58,934 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:29:58,934 - INFO - Solicitando cotação para DOLCV (ULT)
+2025-04-07 14:29:58,966 - INFO - Preço obtido para DOLCV: 5.8877
+2025-04-07 14:29:59,114 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.USDBRL%3DX "HTTP/2 200 OK"
+2025-04-07 14:29:59,115 - INFO - Preço atualizado para USDBRL=X: R$ 5.89
+2025-04-07 14:29:59,317 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:29:59,319 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:29:59,520 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:29:59,523 - INFO - Preço obtido para B5P211: 94.42
+2025-04-07 14:29:59,597 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:29:59,598 - INFO - Preço atualizado para B5P211.SA: R$ 94.42
+2025-04-07 14:29:59,799 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:29:59,830 - INFO - Preço obtido para FIXA11: 16.65
+2025-04-07 14:29:59,904 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:29:59,905 - INFO - Preço atualizado para FIXA11.SA: R$ 16.65
+2025-04-07 14:30:00,106 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:30:00,125 - INFO - Preço obtido para BOVA11: 123.15
+2025-04-07 14:30:00,196 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:30:00,197 - INFO - Preço atualizado para BOVA11.SA: R$ 123.15
+2025-04-07 14:30:00,398 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:30:00,422 - INFO - Preço obtido para XFIX11: 11.58
+2025-04-07 14:30:00,503 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:30:00,504 - INFO - Preço atualizado para XFIX11.SA: R$ 11.58
+2025-04-07 14:30:00,704 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:30:00,710 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:30:00,779 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:30:00,780 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:30:00,980 - INFO - Ciclo de atualização concluído em 2.0 segundos
+2025-04-07 14:30:00,981 - INFO - Atualizações recebidas: 6/7
+2025-04-07 14:30:00,982 - INFO - Próxima atualização às 14:30:58 (58.0 segundos)
+2025-04-07 14:30:58,943 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:30:58
+2025-04-07 14:30:58,943 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:30:58,944 - INFO - Solicitando cotação para DOLCV (ULT)
+2025-04-07 14:30:58,956 - INFO - Preço obtido para DOLCV: 5.8877
+2025-04-07 14:30:59,324 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.USDBRL%3DX "HTTP/2 200 OK"
+2025-04-07 14:30:59,325 - INFO - Preço atualizado para USDBRL=X: R$ 5.89
+2025-04-07 14:30:59,526 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:30:59,548 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:30:59,749 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:30:59,764 - INFO - Preço obtido para B5P211: 94.39
+2025-04-07 14:30:59,830 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:30:59,831 - INFO - Preço atualizado para B5P211.SA: R$ 94.39
+2025-04-07 14:31:00,032 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:31:00,058 - INFO - Preço obtido para FIXA11: 16.65
+2025-04-07 14:31:00,123 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:31:00,124 - INFO - Preço atualizado para FIXA11.SA: R$ 16.65
+2025-04-07 14:31:00,325 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:31:00,350 - INFO - Preço obtido para BOVA11: 123.13
+2025-04-07 14:31:00,413 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:31:00,414 - INFO - Preço atualizado para BOVA11.SA: R$ 123.13
+2025-04-07 14:31:00,615 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:31:00,632 - INFO - Preço obtido para XFIX11: 11.58
+2025-04-07 14:31:00,719 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:31:00,720 - INFO - Preço atualizado para XFIX11.SA: R$ 11.58
+2025-04-07 14:31:00,921 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:31:00,944 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:31:01,022 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:31:01,022 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:31:01,223 - INFO - Ciclo de atualização concluído em 2.3 segundos
+2025-04-07 14:31:01,223 - INFO - Atualizações recebidas: 6/7
+2025-04-07 14:31:01,223 - INFO - Próxima atualização às 14:31:58 (57.7 segundos)
+2025-04-07 14:31:58,945 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:31:58
+2025-04-07 14:31:58,945 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:31:58,945 - INFO - Solicitando cotação para DOLCV (ULT)
+2025-04-07 14:31:58,962 - INFO - Preço obtido para DOLCV: 5.8877
+2025-04-07 14:31:59,122 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.USDBRL%3DX "HTTP/2 200 OK"
+2025-04-07 14:31:59,124 - INFO - Preço atualizado para USDBRL=X: R$ 5.89
+2025-04-07 14:31:59,325 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:31:59,328 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:31:59,529 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:31:59,549 - INFO - Preço obtido para B5P211: 94.39
+2025-04-07 14:31:59,626 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:31:59,627 - INFO - Preço atualizado para B5P211.SA: R$ 94.39
+2025-04-07 14:31:59,828 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:31:59,856 - INFO - Preço obtido para FIXA11: 16.65
+2025-04-07 14:31:59,927 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:31:59,928 - INFO - Preço atualizado para FIXA11.SA: R$ 16.65
+2025-04-07 14:32:00,129 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:32:00,133 - INFO - Preço obtido para BOVA11: 123.07
+2025-04-07 14:32:00,207 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:32:00,209 - INFO - Preço atualizado para BOVA11.SA: R$ 123.07
+2025-04-07 14:32:00,410 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:32:00,431 - INFO - Preço obtido para XFIX11: 11.55
+2025-04-07 14:32:00,508 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:32:00,509 - INFO - Preço atualizado para XFIX11.SA: R$ 11.55
+2025-04-07 14:32:00,709 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:32:00,725 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:32:00,799 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:32:00,802 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:32:01,003 - INFO - Ciclo de atualização concluído em 2.1 segundos
+2025-04-07 14:32:01,003 - INFO - Atualizações recebidas: 6/7
+2025-04-07 14:32:01,004 - INFO - Próxima atualização às 14:32:58 (57.9 segundos)
+2025-04-07 14:32:58,958 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:32:58
+2025-04-07 14:32:58,958 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:32:58,958 - INFO - Solicitando cotação para DOLCV (ULT)
+2025-04-07 14:32:58,964 - INFO - Preço obtido para DOLCV: 5.8877
+2025-04-07 14:32:59,310 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.USDBRL%3DX "HTTP/2 200 OK"
+2025-04-07 14:32:59,310 - INFO - Preço atualizado para USDBRL=X: R$ 5.89
+2025-04-07 14:32:59,512 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:32:59,532 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:32:59,733 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:32:59,736 - INFO - Preço obtido para B5P211: 94.39
+2025-04-07 14:32:59,807 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:32:59,809 - INFO - Preço atualizado para B5P211.SA: R$ 94.39
+2025-04-07 14:33:00,010 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:33:00,014 - INFO - Preço obtido para FIXA11: 16.65
+2025-04-07 14:33:00,079 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:33:00,081 - INFO - Preço atualizado para FIXA11.SA: R$ 16.65
+2025-04-07 14:33:00,282 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:33:00,304 - INFO - Preço obtido para BOVA11: 123.04
+2025-04-07 14:33:00,378 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:33:00,379 - INFO - Preço atualizado para BOVA11.SA: R$ 123.04
+2025-04-07 14:33:00,580 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:33:00,610 - INFO - Preço obtido para XFIX11: 11.55
+2025-04-07 14:33:00,672 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:33:00,673 - INFO - Preço atualizado para XFIX11.SA: R$ 11.55
+2025-04-07 14:33:00,874 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:33:00,879 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:33:00,946 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:33:00,947 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:33:01,148 - INFO - Ciclo de atualização concluído em 2.2 segundos
+2025-04-07 14:33:01,148 - INFO - Atualizações recebidas: 6/7
+2025-04-07 14:33:01,148 - INFO - Próxima atualização às 14:33:58 (57.8 segundos)
+2025-04-07 14:33:58,961 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:33:58
+2025-04-07 14:33:58,961 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:33:58,962 - INFO - Solicitando cotação para DOLCV (ULT)
+2025-04-07 14:33:58,978 - INFO - Preço obtido para DOLCV: 5.8877
+2025-04-07 14:33:59,125 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.USDBRL%3DX "HTTP/2 200 OK"
+2025-04-07 14:33:59,126 - INFO - Preço atualizado para USDBRL=X: R$ 5.89
+2025-04-07 14:33:59,328 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:33:59,330 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:33:59,532 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:33:59,535 - INFO - Preço obtido para B5P211: 94.39
+2025-04-07 14:33:59,612 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:33:59,614 - INFO - Preço atualizado para B5P211.SA: R$ 94.39
+2025-04-07 14:33:59,816 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:33:59,845 - INFO - Preço obtido para FIXA11: 16.65
+2025-04-07 14:33:59,927 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:33:59,928 - INFO - Preço atualizado para FIXA11.SA: R$ 16.65
+2025-04-07 14:34:00,129 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:34:00,132 - INFO - Preço obtido para BOVA11: 123.09
+2025-04-07 14:34:00,209 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:34:00,209 - INFO - Preço atualizado para BOVA11.SA: R$ 123.09
+2025-04-07 14:34:00,410 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:34:00,435 - INFO - Preço obtido para XFIX11: 11.55
+2025-04-07 14:34:00,510 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:34:00,513 - INFO - Preço atualizado para XFIX11.SA: R$ 11.55
+2025-04-07 14:34:00,714 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:34:00,730 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:34:00,803 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:34:00,804 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:34:01,005 - INFO - Ciclo de atualização concluído em 2.0 segundos
+2025-04-07 14:34:01,005 - INFO - Atualizações recebidas: 6/7
+2025-04-07 14:34:01,005 - INFO - Próxima atualização às 14:34:58 (58.0 segundos)
+2025-04-07 14:34:58,971 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:34:58
+2025-04-07 14:34:58,971 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:34:58,971 - INFO - Solicitando cotação para DOLCV (ULT)
+2025-04-07 14:34:58,976 - INFO - Preço obtido para DOLCV: 5.8877
+2025-04-07 14:34:59,334 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.USDBRL%3DX "HTTP/2 200 OK"
+2025-04-07 14:34:59,335 - INFO - Preço atualizado para USDBRL=X: R$ 5.89
+2025-04-07 14:34:59,537 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:34:59,541 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:34:59,742 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:34:59,746 - INFO - Preço obtido para B5P211: 94.39
+2025-04-07 14:34:59,833 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:34:59,834 - INFO - Preço atualizado para B5P211.SA: R$ 94.39
+2025-04-07 14:35:00,035 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:35:00,056 - INFO - Preço obtido para FIXA11: 16.65
+2025-04-07 14:35:00,123 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:35:00,123 - INFO - Preço atualizado para FIXA11.SA: R$ 16.65
+2025-04-07 14:35:00,325 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:35:00,339 - INFO - Preço obtido para BOVA11: 123.14
+2025-04-07 14:35:00,410 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:35:00,410 - INFO - Preço atualizado para BOVA11.SA: R$ 123.14
+2025-04-07 14:35:00,611 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:35:00,614 - INFO - Preço obtido para XFIX11: 11.55
+2025-04-07 14:35:00,678 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:35:00,678 - INFO - Preço atualizado para XFIX11.SA: R$ 11.55
+2025-04-07 14:35:00,879 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:35:01,038 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:35:01,107 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:35:01,108 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:35:01,309 - INFO - Ciclo de atualização concluído em 2.3 segundos
+2025-04-07 14:35:01,309 - INFO - Atualizações recebidas: 6/7
+2025-04-07 14:35:01,309 - INFO - Próxima atualização às 14:35:58 (57.7 segundos)
+2025-04-07 14:35:58,975 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:35:58
+2025-04-07 14:35:58,975 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:35:58,975 - INFO - Solicitando cotação para DOLCV (ULT)
+2025-04-07 14:35:58,980 - INFO - Preço obtido para DOLCV: 5.8877
+2025-04-07 14:35:59,114 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.USDBRL%3DX "HTTP/2 200 OK"
+2025-04-07 14:35:59,115 - INFO - Preço atualizado para USDBRL=X: R$ 5.89
+2025-04-07 14:35:59,316 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:35:59,320 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:35:59,522 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:35:59,525 - INFO - Preço obtido para B5P211: 94.39
+2025-04-07 14:35:59,604 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:35:59,605 - INFO - Preço atualizado para B5P211.SA: R$ 94.39
+2025-04-07 14:35:59,807 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:35:59,819 - INFO - Preço obtido para FIXA11: 16.66
+2025-04-07 14:35:59,879 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:35:59,880 - INFO - Preço atualizado para FIXA11.SA: R$ 16.66
+2025-04-07 14:36:00,080 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:36:00,103 - INFO - Preço obtido para BOVA11: 123.15
+2025-04-07 14:36:00,171 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:36:00,172 - INFO - Preço atualizado para BOVA11.SA: R$ 123.15
+2025-04-07 14:36:00,373 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:36:00,394 - INFO - Preço obtido para XFIX11: 11.55
+2025-04-07 14:36:00,486 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:36:00,487 - INFO - Preço atualizado para XFIX11.SA: R$ 11.55
+2025-04-07 14:36:00,688 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:36:00,706 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:36:00,784 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:36:00,784 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:36:00,987 - INFO - Ciclo de atualização concluído em 2.0 segundos
+2025-04-07 14:36:00,987 - INFO - Atualizações recebidas: 6/7
+2025-04-07 14:36:00,988 - INFO - Próxima atualização às 14:36:58 (58.0 segundos)
+2025-04-07 14:36:58,984 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:36:58
+2025-04-07 14:36:58,984 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:36:58,984 - INFO - Solicitando cotação para DOLCV (ULT)
+2025-04-07 14:36:59,002 - INFO - Preço obtido para DOLCV: 5.8877
+2025-04-07 14:36:59,357 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.USDBRL%3DX "HTTP/2 200 OK"
+2025-04-07 14:36:59,357 - INFO - Preço atualizado para USDBRL=X: R$ 5.89
+2025-04-07 14:36:59,558 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:36:59,574 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:36:59,775 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:36:59,778 - INFO - Preço obtido para B5P211: 94.39
+2025-04-07 14:36:59,853 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:36:59,854 - INFO - Preço atualizado para B5P211.SA: R$ 94.39
+2025-04-07 14:37:00,055 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:37:00,058 - INFO - Preço obtido para FIXA11: 16.66
+2025-04-07 14:37:00,126 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:37:00,127 - INFO - Preço atualizado para FIXA11.SA: R$ 16.66
+2025-04-07 14:37:00,328 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:37:00,345 - INFO - Preço obtido para BOVA11: 123.29
+2025-04-07 14:37:00,417 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:37:00,417 - INFO - Preço atualizado para BOVA11.SA: R$ 123.29
+2025-04-07 14:37:00,619 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:37:00,634 - INFO - Preço obtido para XFIX11: 11.55
+2025-04-07 14:37:00,712 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:37:00,716 - INFO - Preço atualizado para XFIX11.SA: R$ 11.55
+2025-04-07 14:37:00,917 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:37:00,944 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:37:01,013 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:37:01,014 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:37:01,215 - INFO - Ciclo de atualização concluído em 2.2 segundos
+2025-04-07 14:37:01,215 - INFO - Atualizações recebidas: 6/7
+2025-04-07 14:37:01,215 - INFO - Próxima atualização às 14:37:58 (57.8 segundos)
+2025-04-07 14:37:58,987 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:37:58
+2025-04-07 14:37:58,987 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:37:58,988 - INFO - Solicitando cotação para DOLCV (ULT)
+2025-04-07 14:37:59,004 - INFO - Preço obtido para DOLCV: 5.8877
+2025-04-07 14:37:59,161 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.USDBRL%3DX "HTTP/2 200 OK"
+2025-04-07 14:37:59,162 - INFO - Preço atualizado para USDBRL=X: R$ 5.89
+2025-04-07 14:37:59,363 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:37:59,387 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:37:59,588 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:37:59,618 - INFO - Preço obtido para B5P211: 94.39
+2025-04-07 14:37:59,688 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:37:59,690 - INFO - Preço atualizado para B5P211.SA: R$ 94.39
+2025-04-07 14:37:59,891 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:37:59,913 - INFO - Preço obtido para FIXA11: 16.66
+2025-04-07 14:37:59,981 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:37:59,982 - INFO - Preço atualizado para FIXA11.SA: R$ 16.66
+2025-04-07 14:38:00,183 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:38:00,187 - INFO - Preço obtido para BOVA11: 123.14
+2025-04-07 14:38:00,258 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:38:00,259 - INFO - Preço atualizado para BOVA11.SA: R$ 123.14
+2025-04-07 14:38:00,459 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:38:00,463 - INFO - Preço obtido para XFIX11: 11.55
+2025-04-07 14:38:00,538 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:38:00,538 - INFO - Preço atualizado para XFIX11.SA: R$ 11.55
+2025-04-07 14:38:00,739 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:38:00,742 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:38:00,809 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:38:00,810 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:38:01,011 - INFO - Ciclo de atualização concluído em 2.0 segundos
+2025-04-07 14:38:01,011 - INFO - Atualizações recebidas: 6/7
+2025-04-07 14:38:01,011 - INFO - Próxima atualização às 14:38:58 (58.0 segundos)
+2025-04-07 14:38:59,001 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:38:59
+2025-04-07 14:38:59,002 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:38:59,002 - INFO - Solicitando cotação para DOLCV (ULT)
+2025-04-07 14:38:59,015 - INFO - Preço obtido para DOLCV: 5.8877
+2025-04-07 14:38:59,377 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.USDBRL%3DX "HTTP/2 200 OK"
+2025-04-07 14:38:59,378 - INFO - Preço atualizado para USDBRL=X: R$ 5.89
+2025-04-07 14:38:59,579 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:38:59,582 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:38:59,783 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:38:59,803 - INFO - Preço obtido para B5P211: 94.39
+2025-04-07 14:38:59,870 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:38:59,871 - INFO - Preço atualizado para B5P211.SA: R$ 94.39
+2025-04-07 14:39:00,072 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:39:00,096 - INFO - Preço obtido para FIXA11: 16.66
+2025-04-07 14:39:00,186 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:39:00,187 - INFO - Preço atualizado para FIXA11.SA: R$ 16.66
+2025-04-07 14:39:00,388 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:39:00,392 - INFO - Preço obtido para BOVA11: 123.11
+2025-04-07 14:39:00,460 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:39:00,461 - INFO - Preço atualizado para BOVA11.SA: R$ 123.11
+2025-04-07 14:39:00,662 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:39:00,667 - INFO - Preço obtido para XFIX11: 11.57
+2025-04-07 14:39:00,749 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:39:00,750 - INFO - Preço atualizado para XFIX11.SA: R$ 11.57
+2025-04-07 14:39:00,951 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:39:00,955 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:39:01,022 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:39:01,022 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:39:01,223 - INFO - Ciclo de atualização concluído em 2.2 segundos
+2025-04-07 14:39:01,223 - INFO - Atualizações recebidas: 6/7
+2025-04-07 14:39:01,223 - INFO - Próxima atualização às 14:39:59 (57.8 segundos)
+2025-04-07 14:39:59,003 - INFO - Iniciando ciclo de atualização em 2025-04-07 14:39:59
+2025-04-07 14:39:59,003 - INFO - Iniciando solicitação de cotações via API RTD
+2025-04-07 14:39:59,004 - INFO - Solicitando cotação para DOLCV (ULT)
+2025-04-07 14:39:59,007 - INFO - Preço obtido para DOLCV: 5.8877
+2025-04-07 14:39:59,158 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.USDBRL%3DX "HTTP/2 200 OK"
+2025-04-07 14:39:59,161 - INFO - Preço atualizado para USDBRL=X: R$ 5.89
+2025-04-07 14:39:59,362 - INFO - Solicitando cotação para CDI (ULT)
+2025-04-07 14:39:59,391 - WARNING - Valor não numérico recebido para CDI: Ativo Inválido
+2025-04-07 14:39:59,592 - INFO - Solicitando cotação para B5P211 (ULT)
+2025-04-07 14:39:59,596 - INFO - Preço obtido para B5P211: 94.39
+2025-04-07 14:39:59,670 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.B5P211.SA "HTTP/2 200 OK"
+2025-04-07 14:39:59,673 - INFO - Preço atualizado para B5P211.SA: R$ 94.39
+2025-04-07 14:39:59,874 - INFO - Solicitando cotação para FIXA11 (ULT)
+2025-04-07 14:39:59,899 - INFO - Preço obtido para FIXA11: 16.66
+2025-04-07 14:39:59,975 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.FIXA11.SA "HTTP/2 200 OK"
+2025-04-07 14:39:59,976 - INFO - Preço atualizado para FIXA11.SA: R$ 16.66
+2025-04-07 14:40:00,177 - INFO - Solicitando cotação para BOVA11 (ULT)
+2025-04-07 14:40:00,189 - INFO - Preço obtido para BOVA11: 123.18
+2025-04-07 14:40:00,260 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.BOVA11.SA "HTTP/2 200 OK"
+2025-04-07 14:40:00,261 - INFO - Preço atualizado para BOVA11.SA: R$ 123.18
+2025-04-07 14:40:00,462 - INFO - Solicitando cotação para XFIX11 (ULT)
+2025-04-07 14:40:00,465 - INFO - Preço obtido para XFIX11: 11.57
+2025-04-07 14:40:00,547 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.XFIX11.SA "HTTP/2 200 OK"
+2025-04-07 14:40:00,548 - INFO - Preço atualizado para XFIX11.SA: R$ 11.57
+2025-04-07 14:40:00,749 - INFO - Solicitando cotação para IB5M11 (ULT)
+2025-04-07 14:40:00,753 - INFO - Preço obtido para IB5M11: 109.59
+2025-04-07 14:40:00,824 - INFO - HTTP Request: PATCH https://dxwebxduuazebqtkumtv.supabase.co/rest/v1/ativos?ticker=eq.IB5M11.SA "HTTP/2 200 OK"
+2025-04-07 14:40:00,825 - INFO - Preço atualizado para IB5M11.SA: R$ 109.59
+2025-04-07 14:40:01,026 - INFO - Ciclo de atualização concluído em 2.0 segundos
+2025-04-07 14:40:01,026 - INFO - Atualizações recebidas: 6/7
+2025-04-07 14:40:01,026 - INFO - Próxima atualização às 14:40:59 (58.0 segundos)
+2025-04-07 14:40:30,553 - INFO - Interrupção detectada. Finalizando...
+2025-04-07 14:40:30,553 - INFO - Parando atualizador...
+2025-04-07 14:40:30,553 - INFO - Loop de atualização encerrado
+2025-04-07 14:40:30,553 - INFO - Obrigado por usar o atualizador de preços via API RTD!

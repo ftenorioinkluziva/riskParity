@@ -1,11 +1,10 @@
 import threading
 import time
-from queue import Queue, Empty
-import cd3_connector
 import logging
 import sys
 import os
 import argparse
+import requests
 from datetime import datetime
 from supabase import create_client
 from dotenv import load_dotenv
@@ -17,14 +16,13 @@ load_dotenv()
 SUPABASE_URL = os.environ.get('SUPABASE_URL', 'https://dxwebxduuazebqtkumtv.supabase.co')
 SUPABASE_KEY = os.environ.get('SUPABASE_KEY', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4d2VieGR1dWF6ZWJxdGt1bXR2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE1OTMxMzcsImV4cCI6MjA1NzE2OTEzN30.v53W6iz_BJup66qst03jWqjHzJ0DGKmUC6WrVGLpt-Y')
 
-# Credenciais para o CD3 Connector
-CD3_USERNAME = os.environ.get('CD3_USERNAME', 'fernando_cd3_python')
-CD3_PASSWORD = os.environ.get('CD3_PASSWORD', 'c3&Rss')
+# Configurações da API RTD
+RTD_API_URL = os.environ.get('RTD_API_URL', 'http://localhost:5000/api/MarketData')
 
 # Configuração de logging
-LOG_FILENAME = "preco_update.log"
+LOG_FILENAME = "rtd_price_update.log"
 logging.basicConfig(
-    level=logging.DEBUG,  # Alterado para DEBUG para obter mais informações
+    level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
         # Usar encoding utf-8 para o arquivo de log
@@ -33,40 +31,29 @@ logging.basicConfig(
         logging.StreamHandler(sys.stdout)
     ]
 )
-logger = logging.getLogger("atualizador_precos")
+logger = logging.getLogger("atualizador_precos_rtd")
 
 
-class CedroUpdater:
-    def __init__(self, user, password, interval_seconds=60, timeout=20):
+class RTDUpdater:
+    def __init__(self, interval_seconds=60, timeout=20):
         """
-        Inicializa o atualizador de preços usando o CD3 Connector
+        Inicializa o atualizador de preços usando a API RTD
         
         Args:
-            user (str): Nome de usuário da Cedro
-            password (str): Senha da Cedro
             interval_seconds (int): Intervalo entre atualizações em segundos
             timeout (int): Tempo máximo para receber cotações em segundos
         """
-        self.user = user
-        self.password = password
         self.interval_seconds = interval_seconds
         self.timeout = timeout
-        
-        # Configurar log path
-        self.log_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs_cd3")
-        os.makedirs(self.log_path, exist_ok=True)
+        self.api_url = RTD_API_URL
         
         # Inicializar variáveis
-        self._conn = None
-        self._queue = Queue()
         self._running = False
         self._signal = threading.Event()
         self._atualizacoes_recebidas = 0
         self._atualizacoes_esperadas = 0
         self._tempo_inicio = 0
         self._ultima_atualizacao = 0
-        self._connected = False
-        self._syn_sent = False  # Flag para garantir que o comando SYN seja enviado apenas uma vez
 
         # Conexão com Supabase
         try:
@@ -76,12 +63,12 @@ class CedroUpdater:
             logger.error(f"Erro ao conectar com o Supabase: {str(e)}")
             self.supabase = None
             
-        # Dicionário para armazenar a correspondência entre símbolos da Cedro e tickers da B3
+        # Dicionário para armazenar a correspondência entre tickers
         self.ticker_map = {}
         
         # Carregar lista de ativos do banco de dados
         self.ativos = []
-        self.tickers_cedro = []
+        self.tickers_rtd = []
         self._load_ativos()
     
     def _load_ativos(self):
@@ -94,14 +81,14 @@ class CedroUpdater:
             response = self.supabase.table('ativos').select('*').execute()
             self.ativos = response.data
             
-            # Tabela de equivalência específica entre tickers do banco e tickers Cedro
+            # Tabela de equivalência específica entre tickers do banco e tickers da API RTD
             equivalencia_tickers = {
                 'BOVA11.SA': 'BOVA11',
                 'XFIX11.SA': 'XFIX11',
                 'IB5M11.SA': 'IB5M11',
                 'B5P211.SA': 'B5P211',
                 'FIXA11.SA': 'FIXA11',
-                'USDBRL=X': 'USDBRL'
+                'USDBRL=X': 'DOLCV'
             }
             
             # Criar mapeamento para os tickers
@@ -109,24 +96,21 @@ class CedroUpdater:
                 ticker_banco = ativo['ticker']
                 # Usar a tabela de equivalência, se disponível
                 if ticker_banco in equivalencia_tickers:
-                    ticker_cedro = equivalencia_tickers[ticker_banco]
+                    ticker_rtd = equivalencia_tickers[ticker_banco]
                 else:
                     # Para outros casos, aplicar a regra geral (remover sufixos)
-                    ticker_cedro = ticker_banco.split('.')[0].replace('=', '')
+                    ticker_rtd = ticker_banco.split('.')[0].replace('=', '')
                 
                 # Armazenar o mapeamento nos dois sentidos
-                self.ticker_map[ticker_cedro] = ticker_banco
+                self.ticker_map[ticker_rtd] = ticker_banco
                 
-                logger.debug(f"Mapeamento: {ticker_banco} -> {ticker_cedro}")
+                logger.debug(f"Mapeamento: {ticker_banco} -> {ticker_rtd}")
                 
             logger.info(f"Carregados {len(self.ativos)} ativos do banco de dados.")
             
-            # Filtrar tickers disponíveis na Cedro (excluir CDI e USDBRL)
-            self.tickers_cedro = [
-                cedro for cedro, _ in self.ticker_map.items() 
-                if cedro not in ['CDI', 'USDBRL']
-            ]
-            self._atualizacoes_esperadas = len(self.tickers_cedro)
+            # Filtrar tickers disponíveis (excluir CDI e USDBRL se necessário)
+            self.tickers_rtd = list(self.ticker_map.keys())
+            self._atualizacoes_esperadas = len(self.tickers_rtd)
             
         except Exception as e:
             logger.error(f"Erro ao carregar ativos: {str(e)}")
@@ -160,15 +144,8 @@ class CedroUpdater:
                 logger.info(f"Iniciando ciclo de atualização em {now}")
                 
                 self._atualizacoes_recebidas = 0
-                self._queue = Queue()
-                
-                if not self._iniciar_conexao():
-                    logger.error("Falha ao estabelecer conexão. Abortando atualização.")
-                    break
                 
                 self._solicitar_cotacoes()
-                self._aguardar_cotacoes()
-                self._finalizar_conexao()
                 
                 elapsed = time.time() - self._tempo_inicio
                 logger.info(f"Ciclo de atualização concluído em {elapsed:.1f} segundos")
@@ -189,173 +166,56 @@ class CedroUpdater:
         finally:
             logger.info("Loop de atualização encerrado")
     
-    def _iniciar_conexao(self):
-        """Inicia a conexão com o servidor CD3"""
-        try:
-            self._conn = cd3_connector.CD3Connector(
-                self.user, self.password, 
-                self._on_disconnect, 
-                self._on_message, 
-                self._on_connect,
-                log_level=logging.DEBUG,  # Aumentado para DEBUG
-                log_path=self.log_path
-            )
-            
-            self._conn.start()
-            
-            start_time = time.time()
-            while not self._connected and time.time() - start_time < 10:
-                time.sleep(0.1)
-            
-            if not self._connected:
-                logger.error("Falha ao estabelecer conexão com o CD3 Connector.")
-                self._conn = None
-                return False
-                
-            time.sleep(1)
-            return True
-        except Exception as e:
-            logger.error(f"Erro ao iniciar conexão CD3: {str(e)}")
-            self._conn = None
-            return False
-    
-    def _finalizar_conexao(self):
-        """Finaliza a conexão com o servidor CD3"""
-        try:
-            if self._conn:
-                self._conn.stop()
-                self._conn = None
-                logger.info("Conexão CD3 encerrada")
-        except Exception as e:
-            logger.error(f"Erro ao finalizar conexão CD3: {str(e)}")
-    
     def _solicitar_cotacoes(self):
-        """Solicita cotações para todos os ativos usando o modo snapshot (N)"""
-        logger.info("Iniciando envio de comandos para obter cotações")
-
-        if not self._conn:
-            logger.error("Não foi possível solicitar cotações - conexão CD3 não estabelecida")
-            return
+        """Solicita cotações para todos os ativos usando a API RTD"""
+        logger.info("Iniciando solicitação de cotações via API RTD")
             
         try:
-            for ticker_cedro in self.tickers_cedro:
+            for ticker_rtd in self.tickers_rtd:
                 try:
-                    logger.info(f"Solicitando snapshot para {ticker_cedro}")
-                    self._conn.send_command(f"SQT {ticker_cedro} N")
-                    time.sleep(0.3)
+                    # Tipo de dado fixo como 'ULT' para o último preço
+                    data_type = "ULT"
+                    logger.info(f"Solicitando cotação para {ticker_rtd} ({data_type})")
+                    
+                    # Fazer requisição HTTP para a API RTD
+                    url = f"{self.api_url}/{ticker_rtd}/{data_type}"
+                    response = requests.get(url, timeout=self.timeout)
+                    
+                    if response.status_code == 200:
+                        data = response.json()
+                        price_str = data.get('value', '')
+                        
+                        # Converter o valor para float, substituindo a vírgula por ponto se necessário
+                        price_str = price_str.replace(',', '.')
+                        
+                        try:
+                            price = float(price_str)
+                            logger.info(f"Preço obtido para {ticker_rtd}: {price}")
+                            
+                            # Obter o ticker original do banco de dados
+                            original_ticker = self.ticker_map.get(ticker_rtd)
+                            if original_ticker:
+                                # Atualizar no banco de dados
+                                self._update_price(original_ticker, price)
+                                self._atualizacoes_recebidas += 1
+                            else:
+                                logger.warning(f"Ticker não encontrado no mapeamento: {ticker_rtd}")
+                        except ValueError:
+                            logger.warning(f"Valor não numérico recebido para {ticker_rtd}: {price_str}")
+                    else:
+                        logger.error(f"Erro ao obter cotação para {ticker_rtd}: {response.status_code}")
+                        
+                except requests.RequestException as e:
+                    logger.error(f"Erro na requisição para {ticker_rtd}: {str(e)}")
                 except Exception as e:
-                    logger.error(f"Erro ao solicitar cotação para {ticker_cedro}: {str(e)}")
+                    logger.error(f"Erro ao processar cotação para {ticker_rtd}: {str(e)}")
+                
+                # Pequeno delay entre requisições para não sobrecarregar a API
+                time.sleep(0.2)
+                
         except Exception as e:
             logger.error(f"Erro ao solicitar cotações: {str(e)}")
     
-    def _aguardar_cotacoes(self):
-        """Aguarda o recebimento das cotações por um tempo máximo de timeout"""
-        try:
-            timeout_time = time.time() + self.timeout
-            
-            while time.time() < timeout_time and self._atualizacoes_recebidas < self._atualizacoes_esperadas:
-                try:
-                    msg = self._queue.get(timeout=0.5)
-                    self._process_message(msg)
-                    self._queue.task_done()
-                except Empty:
-                    if time.time() >= timeout_time:
-                        logger.warning(f"Timeout atingido ao aguardar cotações")
-                        break
-                except Exception as e:
-                    logger.error(f"Erro ao processar mensagem da fila: {str(e)}")
-            
-            if self._atualizacoes_recebidas < self._atualizacoes_esperadas:
-                logger.warning(f"Não recebemos todas as cotações esperadas: {self._atualizacoes_recebidas}/{self._atualizacoes_esperadas}")
-                
-        except Exception as e:
-            logger.error(f"Erro ao aguardar cotações: {str(e)}")
-    
-    def _on_connect(self):
-        """Callback executado quando a conexão com CD3 é estabelecida"""
-        logger.info("Conectado ao servidor CD3")
-        self._connected = True
-       
-        # Solicitar as cotações após a conexão ser estabelecida
-        self._solicitar_cotacoes()
-    
-    def _on_disconnect(self):
-        """Callback executado quando a conexão com CD3 é perdida"""
-        logger.warning("Desconectado do servidor CD3")
-        self._connected = False
-    
-    def _on_message(self, msg: str):
-        """Callback executado quando uma mensagem é recebida do CD3"""
-        if msg and msg.strip():
-            self._queue.put(msg)
-    
-    def _process_message(self, msg: str):
-        """Processa uma mensagem recebida do CD3"""
-        try:
-            if msg.startswith("E:"):
-                logger.warning(f"Erro na cotação: {msg}")
-                return
-            self._process_quote_message(msg)
-        except Exception as e:
-            logger.error(f"Erro ao processar mensagem: {str(e)}")
-            logger.error(f"Mensagem: {msg}")
-    
-    def _process_quote_message(self, msg: str):
-        """Processa uma mensagem de cotação do CD3 e atualiza o banco de dados"""
-        try:
-            # Verifica se a mensagem contém dados de cotação
-            if not msg or len(msg) < 10:
-                return
-
-            # Verificar se é uma resposta no formato T: (Tick) conforme documentação Cedro
-            if msg.startswith("T:"):
-                # Dividir a mensagem por :
-                parts = msg.split(":")
-                if len(parts) < 2:
-                    return
-
-                symbol = parts[1]  # Ticker do ativo
-
-                # Procuramos pelo campo ":2:" na mensagem que é o preço de venda
-                if ":2:" in msg:
-                    field_marker = ":2:"
-                    idx = msg.find(field_marker)
-                    if idx == -1:
-                        return
-
-                    # O valor começa após ":2:"
-                    idx += len(field_marker)
-                    
-                    # O valor termina no próximo ":"
-                    end_idx = msg.find(":", idx)
-                    if end_idx == -1:
-                        end_idx = len(msg)
-                    
-                    # Extrair e converter o valor
-                    try:
-                        price_str = msg[idx:end_idx]
-                        last_price = float(price_str)
-
-                        # Verificar se o preço é válido
-                        if last_price <= 0:
-                            logger.warning(f"Preço inválido para {symbol}: {last_price}")
-                            return
-
-                        original_ticker = self.ticker_map.get(symbol)
-                        if not original_ticker:
-                            logger.warning(f"Ticker não encontrado no mapeamento: {symbol}")
-                            return
-                        
-                        # Chama a função de atualização de preço
-                        logger.info(f"Preço de {symbol} ({original_ticker}): R$ {last_price:.2f}")
-                        self._update_price(original_ticker, last_price)
-                        self._atualizacoes_recebidas += 1
-                    except ValueError:
-                        logger.warning(f"Não foi possível converter o preço: {msg[idx:end_idx]}")
-        except Exception as e:
-            logger.error(f"Erro ao processar mensagem de cotação: {str(e)}")
-            logger.error(f"Mensagem: {msg}")
-
     def _update_price(self, ticker: str, price: float):
         """Atualiza o preço de um ativo no banco de dados"""
         if not self.supabase:
@@ -388,7 +248,7 @@ class CedroUpdater:
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Atualizador de preços via Cedro CD3')
+    parser = argparse.ArgumentParser(description='Atualizador de preços via API RTD')
     parser.add_argument('--interval', type=int, default=60,
                       help='Intervalo entre atualizações em segundos (padrão: 60)')
     parser.add_argument('--timeout', type=int, default=20,
@@ -403,28 +263,20 @@ def main():
     SINGLE_RUN = args.single_run
     
     logger.info("=" * 60)
-    logger.info(f"Iniciando atualizador de preços via Cedro CD3")
+    logger.info(f"Iniciando atualizador de preços via API RTD")
     if SINGLE_RUN:
         logger.info(f"Modo: Execução única")
     else:
         logger.info(f"Intervalo: {INTERVALO} segundos | Timeout: {TIMEOUT} segundos")
-    logger.info(f"Usuário: {CD3_USERNAME}")
+    logger.info(f"API URL: {RTD_API_URL}")
     logger.info("=" * 60)
     
-    logger.info("Aviso: CDI e USDBRL não estão disponíveis na Cedro e serão ignorados")
-    
-    updater = CedroUpdater(CD3_USERNAME, CD3_PASSWORD, interval_seconds=INTERVALO, timeout=TIMEOUT)
+    updater = RTDUpdater(interval_seconds=INTERVALO, timeout=TIMEOUT)
     
     if SINGLE_RUN:
         logger.info("Executando atualização única...")
-        updater._iniciar_conexao()
-        if updater._conn:
-            updater._solicitar_cotacoes()
-            updater._aguardar_cotacoes()
-            updater._finalizar_conexao()
-            logger.info("Atualização única completada!")
-        else:
-            logger.error("Falha ao estabelecer conexão. Atualização cancelada.")
+        updater._solicitar_cotacoes()
+        logger.info("Atualização única completada!")
     else:
         updater.start()
         try:
@@ -435,7 +287,7 @@ def main():
         finally:
             updater.stop()
 
-    logger.info("Obrigado por usar o atualizador de preços via Cedro CD3!")
+    logger.info("Obrigado por usar o atualizador de preços via API RTD!")
 
 
 if __name__ == "__main__":
