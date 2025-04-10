@@ -1319,7 +1319,7 @@ def atualizar_precos_rtd(supabase, api_url="http://localhost:5000/api/MarketData
         'IB5M11.SA': 'IB5M11',
         'B5P211.SA': 'B5P211',
         'FIXA11.SA': 'FIXA11',
-        'USDBRL=X': 'DOLCV'
+        'USDBRL=X': 'WDOFUT'
     }
     
     # Carregar ativos do banco de dados
@@ -1363,6 +1363,10 @@ def atualizar_precos_rtd(supabase, api_url="http://localhost:5000/api/MarketData
                 try:
                     price = float(price_str)
                     #print(f"Preço obtido para {ticker_rtd} ({ticker_banco}): {price}")
+                    if ticker_banco == 'USDBRL=X':
+                        price = price / 1000
+                        #print(f"Preço ajustado para {ticker_banco}: {price} (original: {float(price_str)})")
+          
                     
                     # Atualizar no banco de dados
                     update_data = {
