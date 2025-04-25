@@ -17,7 +17,7 @@ SUPABASE_URL = os.environ.get('SUPABASE_URL', 'https://dxwebxduuazebqtkumtv.supa
 SUPABASE_KEY = os.environ.get('SUPABASE_KEY', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4d2VieGR1dWF6ZWJxdGt1bXR2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE1OTMxMzcsImV4cCI6MjA1NzE2OTEzN30.v53W6iz_BJup66qst03jWqjHzJ0DGKmUC6WrVGLpt-Y')
 
 # Configurações da API RTD
-RTD_API_URL = os.environ.get('RTD_API_URL', 'http://localhost:5000/api/MarketData')
+RTD_API_URL = os.environ.get('RTD_API_URL', 'https://5831b94a860f.ngrok.app/api/MarketData')
 
 # Configuração de logging
 LOG_FILENAME = "rtd_price_update.log"
