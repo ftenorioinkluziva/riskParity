@@ -380,7 +380,7 @@ def obter_comparativo():
         
         for ticker in tickers_lista:
             response = supabase.table('dados_historicos') \
-                .select('data,fechamento_ajustado') \
+                .select('data,fechamento') \
                 .eq('ticker', ticker) \
                 .gte('data', data_limite) \
                 .order('data', desc=False) \
@@ -389,12 +389,12 @@ def obter_comparativo():
             # Normalizar para base 100
             if response.data:
                 dados = response.data
-                primeiro_valor = dados[0]['fechamento_ajustado']
+                primeiro_valor = dados[0]['fechamento']  # Changed from 'fechamento_ajustado'
                 if primeiro_valor:  # Verificar se não é None ou 0
                     dados_normalizados = [
                         {
                             'data': item['data'],
-                            'valor': (item['fechamento_ajustado'] / primeiro_valor) * 100 if item['fechamento_ajustado'] else None
+                            'valor': (item['fechamento'] / primeiro_valor) * 100 if item['fechamento'] else None  # Changed from 'fechamento_ajustado'
                         }
                         for item in dados
                     ]
@@ -403,7 +403,7 @@ def obter_comparativo():
         return jsonify(resultado)
     except Exception as e:
         return jsonify({"erro": str(e)}), 500
-
+    
 # =========================
 # Novas rotas para cálculos
 # =========================
@@ -1295,6 +1295,84 @@ def update_prices_rtd():
         print(f"Erro ao iniciar atualização de preços via RTD: {str(e)}")
         return jsonify({"erro": str(e)}), 500
 
+# Modificação para a rota historico-range para lidar com mais de 1000 registros
+
+@app.route('/api/historico-range/<ticker>', methods=['GET'])
+def obter_historico_por_datas(ticker):
+    """Endpoint para obter o histórico de preços de um ativo por período de data específico"""
+    if not supabase:
+        return jsonify({"erro": "Conexão com Supabase não estabelecida"}), 500
+    
+    try:
+        # Obter datas do request
+        data_inicio = request.args.get('dataInicio', default=None)
+        data_fim = request.args.get('dataFim', default=None)
+        
+        # Validar datas
+        if not data_inicio or not data_fim:
+            return jsonify({"erro": "Parâmetros dataInicio e dataFim são obrigatórios"}), 400
+            
+        # Validar formato das datas
+        try:
+            # Converter para objetos datetime para validação
+            data_inicio_dt = datetime.strptime(data_inicio, '%Y-%m-%d')
+            data_fim_dt = datetime.strptime(data_fim, '%Y-%m-%d')
+            
+            # Limitar a data final para hoje
+            hoje = datetime.now()
+            if data_fim_dt > hoje:
+                data_fim_dt = hoje
+                data_fim = hoje.strftime('%Y-%m-%d')
+                
+            # Limitar a data inicial para 10 anos atrás (para evitar consultas muito grandes)
+            data_max_passado = hoje - timedelta(days=365*10)
+            if data_inicio_dt < data_max_passado:
+                data_inicio_dt = data_max_passado
+                data_inicio = data_max_passado.strftime('%Y-%m-%d')
+                
+        except ValueError:
+            return jsonify({"erro": "Formato de data inválido. Use YYYY-MM-DD"}), 400
+        
+        print(f"Buscando dados para {ticker} de {data_inicio} até {data_fim}")
+        
+        # Estratégia para obter todos os registros (além do limite de 1000)
+        todos_registros = []
+        offset = 0
+        limite = 1000  # Limite padrão do Supabase
+        
+        while True:
+            # Buscar dados no banco com paginação
+            response = supabase.table('dados_historicos') \
+                .select('*') \
+                .eq('ticker', ticker) \
+                .gte('data', data_inicio) \
+                .lte('data', data_fim) \
+                .order('data', desc=False) \
+                .range(offset, offset + limite - 1) \
+                .execute()
+            
+            # Verificar se obteve registros
+            if not response.data or len(response.data) == 0:
+                break
+                
+            # Adicionar registros à lista
+            todos_registros.extend(response.data)
+            
+            # Verificar se obteve menos registros que o limite (chegou ao fim)
+            if len(response.data) < limite:
+                break
+                
+            # Incrementar o offset para a próxima página
+            offset += limite
+            
+        print(f"Encontrados {len(todos_registros)} registros")
+        
+        return jsonify(todos_registros)
+    except Exception as e:
+        print(f"⚠️ Erro ao obter histórico por datas para {ticker}: {str(e)}")
+        return jsonify({"erro": str(e)}), 500
+    
+    
 # Função para atualizar preços usando a API RTD
 def atualizar_precos_rtd(supabase, api_url="https://5831b94a860f.ngrok.app/api/MarketData", single_run=True, interval_seconds=60):
     """

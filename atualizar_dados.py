@@ -271,16 +271,6 @@ def preparar_dados_historicos(dados_multi, ticker, nome):
         colunas_para_renomear = {k: v for k, v in colunas_renomeadas.items() if k in dados.columns}
         dados = dados.rename(columns=colunas_para_renomear)
         
-        # Para manter compatibilidade, usamos o campo fechamento para fechamento_ajustado
-        if 'fechamento' in dados.columns:
-            dados['fechamento_ajustado'] = dados['fechamento']
-        
-        # Garantir que todas as colunas existam
-        for coluna in ['abertura', 'maxima', 'minima', 'fechamento', 'fechamento_ajustado', 
-                     'volume', 'retorno_diario']:
-            if coluna not in dados.columns:
-                dados[coluna] = None
-        
         # Adicionar colunas de identificação
         dados['ticker'] = ticker
         dados['nome_ativo'] = nome
@@ -289,6 +279,9 @@ def preparar_dados_historicos(dados_multi, ticker, nome):
         if isinstance(dados['data'].iloc[0], pd.Timestamp):
             dados['data'] = dados['data'].dt.strftime('%Y-%m-%d')
 
+        # NOVO: Calcular indicadores técnicos
+        dados = calcular_indicadores_tecnicos(dados)
+        
         # ✅ Converter NaN e NaT para None para evitar erro no Supabase
         dados = dados.replace({np.nan: None})
         
@@ -325,8 +318,40 @@ def upsert_ativo(info_ativo):
         print("Verifique se a tabela 'ativos' existe e tem a estrutura correta.")
         return False
 
-# Inserir dados históricos - versão otimizada usando upsert em lotes
-def inserir_dados_historicos(dados_historicos, ticker):
+# Função para inserir ou atualizar dados históricos
+def calcular_indicadores_tecnicos(df):
+    """
+    Calcula indicadores técnicos para um DataFrame de preços:
+    - mm20: Média móvel de 20 períodos
+    - bb2s: Banda de Bollinger superior (2 desvios padrão)
+    - bb2i: Banda de Bollinger inferior (2 desvios padrão)
+    
+    Args:
+        df (pandas.DataFrame): DataFrame com dados históricos ordenados por data
+        
+    Returns:
+        pandas.DataFrame: DataFrame original com indicadores adicionados
+    """
+    if df.empty:
+        return df
+    
+    # Garantir que o DataFrame está ordenado por data
+    if 'data' in df.columns:
+        df = df.sort_values('data')
+    
+    # Calcular Média Móvel de 20 períodos
+    df['mm20'] = df['fechamento'].rolling(window=20).mean()
+    
+    # Calcular desvio padrão para as Bandas de Bollinger
+    std_20 = df['fechamento'].rolling(window=20).std()
+    
+    # Calcular Bandas de Bollinger (2 desvios padrão)
+    df['bb2s'] = df['mm20'] + (std_20 * 2)  # Banda superior
+    df['bb2i'] = df['mm20'] - (std_20 * 2)  # Banda inferior
+    
+    return df
+
+
     if not dados_historicos:
         return False
     
@@ -378,6 +403,60 @@ def inserir_dados_historicos(dados_historicos, ticker):
     except Exception as e:
         print(f"⚠️ Erro ao inserir dados históricos de {ticker}: {str(e)}")
         return False
+
+def inserir_dados_historicos(dados_historicos, ticker):
+    if not dados_historicos:
+        return False
+    
+    try:
+        print(f"Inserindo dados históricos para {ticker}...")
+        print(f"Total de registros a processar: {len(dados_historicos)}")
+        
+        # Imprimir exemplo de registro para depuração
+        if len(dados_historicos) > 0:
+            print("Amostra de registro a ser inserido:")
+            print({k: str(v) if v is not None else None for k, v in dados_historicos[0].items()})
+        
+        # Processar em lotes para melhor performance
+        tamanho_lote = 100
+        total_lotes = (len(dados_historicos) - 1) // tamanho_lote + 1
+        
+        for i in range(0, len(dados_historicos), tamanho_lote):
+            lote = dados_historicos[i:i+tamanho_lote]
+            
+            # Garantir que cada registro tenha apenas as colunas existentes na tabela
+            lote_filtrado = []
+            for registro in lote:
+                registro_filtrado = {
+                    'ticker': registro.get('ticker'),
+                    'nome_ativo': registro.get('nome_ativo'),
+                    'data': registro.get('data'),
+                    'abertura': registro.get('abertura'),
+                    'maxima': registro.get('maxima'),
+                    'minima': registro.get('minima'),
+                    'fechamento': registro.get('fechamento'),
+                    'volume': registro.get('volume'),
+                    'retorno_diario': registro.get('retorno_diario'),
+                    'mm20': registro.get('mm20'),
+                    'bb2s': registro.get('bb2s'),
+                    'bb2i': registro.get('bb2i')
+                }
+                lote_filtrado.append(registro_filtrado)
+            
+            # Usar upsert com as colunas de conflito corretas
+            supabase.table('dados_historicos').upsert(
+                lote_filtrado, 
+                on_conflict='ticker,data'
+            ).execute()
+            
+            print(f"  Processado lote {i//tamanho_lote + 1}/{total_lotes}")
+        
+        print(f"✅ Dados históricos processados para {ticker}")
+        return True
+    except Exception as e:
+        print(f"⚠️ Erro ao inserir dados históricos de {ticker}: {str(e)}")
+        return False
+
 # Processar dados do CDI do Banco Central
 def processar_cdi():
     """
@@ -397,13 +476,13 @@ def processar_cdi():
             # Buscar o último valor para usar como base de continuidade
             try:
                 response = supabase.table('dados_historicos') \
-                    .select('fechamento_ajustado') \
+                    .select('fechamento') \
                     .eq('ticker', 'CDI') \
                     .eq('data', ultima_data) \
                     .execute()
                 
                 if response.data and len(response.data) > 0:
-                    ultimo_valor = response.data[0]['fechamento_ajustado']
+                    ultimo_valor = response.data[0]['fechamento']
                     print(f"  Último valor do CDI no banco: {ultimo_valor} em {ultima_data}")
             except Exception as e:
                 print(f"  ⚠️ Erro ao buscar último valor do CDI: {str(e)}")
@@ -468,6 +547,7 @@ def processar_cdi():
     except Exception as e:
         print(f"⚠️ Erro ao obter dados do CDI: {str(e)}")
         return None
+
 # Função principal para atualizar dados
 def atualizar_dados():
     """Função principal que coordena a atualização de todos os dados"""

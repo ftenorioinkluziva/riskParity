@@ -85,8 +85,8 @@ def calcular_retorno_acumulado(ticker, periodo_anos=5):
         return None
     
     try:
-        preco_inicial = dados['fechamento'].iloc[0]
-        preco_final = dados['fechamento'].iloc[-1]
+        preco_inicial = dados['fechamento'].iloc[0]  
+        preco_final = dados['fechamento'].iloc[-1]   
         
         retorno_acumulado = ((preco_final / preco_inicial) - 1) * 100
         return round(retorno_acumulado, 2)
@@ -111,8 +111,8 @@ def calcular_retorno_anualizado(ticker, periodo_anos=5):
         return None
     
     try:
-        preco_inicial = dados['fechamento'].iloc[0]
-        preco_final = dados['fechamento'].iloc[-1]
+        preco_inicial = dados['fechamento'].iloc[0]  # Changed from 'fechamento_ajustado'
+        preco_final = dados['fechamento'].iloc[-1]   # Changed from 'fechamento_ajustado'
         
         # Calcular o número de anos decorridos
         dias_totais = (dados.index[-1] - dados.index[0]).days
@@ -171,8 +171,8 @@ def calcular_max_drawdown(ticker, periodo_anos=5):
     
     try:
         # Calcular pico e drawdown
-        dados['pico'] = dados['fechamento'].cummax()
-        dados['drawdown'] = (dados['fechamento'] / dados['pico'] - 1) * 100
+        dados['pico'] = dados['fechamento'].cummax()  # Changed from 'fechamento_ajustado'
+        dados['drawdown'] = (dados['fechamento'] / dados['pico'] - 1) * 100  # Changed from 'fechamento_ajustado'
         
         # Obter o mínimo drawdown (valor mais negativo)
         max_drawdown = dados['drawdown'].min()

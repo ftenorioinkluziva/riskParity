@@ -106,6 +106,31 @@ def api_resumo_ativo(ticker):
     
     return jsonify(resultado)
 
+@app.route('/api/indicadores-tecnicos/<ticker>', methods=['GET'])
+def obter_indicadores_tecnicos(ticker):
+    """Endpoint para obter indicadores técnicos de um ativo"""
+    if not supabase:
+        return jsonify({"erro": "Conexão com Supabase não estabelecida"}), 500
+    
+    try:
+        # Obtém últimos 30 dias como padrão
+        dias = request.args.get('dias', default=30, type=int)
+        data_limite = (datetime.now() - timedelta(days=dias)).strftime('%Y-%m-%d')
+        
+        response = supabase.table('dados_historicos') \
+            .select('data,fechamento,mm20,bb2s,bb2i') \
+            .eq('ticker', ticker) \
+            .gte('data', data_limite) \
+            .order('data', desc=False) \
+            .execute()
+            
+        if not response.data:
+            return jsonify({"erro": f"Nenhum dado encontrado para {ticker}"}), 404
+            
+        return jsonify(response.data)
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+
 # Rota para obter resumo de múltiplos ativos
 @app.route('/api/resumo-varios', methods=['GET'])
 def api_resumo_varios():
