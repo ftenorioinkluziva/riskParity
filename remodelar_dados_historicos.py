@@ -46,10 +46,10 @@ def remodelar_tabela_dados_historicos():
         print("✅ Conexão estabelecida com sucesso.")
         
         # Passo 1: Informar ao usuário que ele precisa criar a tabela temporária manualmente
-        print("\n⚠️ AVISO: Primeiro você precisa criar manualmente a tabela temporária 'dados_historicos_temp'.")
+        print("\n⚠️ AVISO: Primeiro você precisa criar manualmente a tabela temporária 'dados_historico'.")
         print("Execute a seguinte query SQL no SQL Editor do Supabase:")
         print("""
-CREATE TABLE IF NOT EXISTS public.dados_historicos_temp (
+CREATE TABLE IF NOT EXISTS public.dados_historico (
     id serial NOT NULL,
     ticker text NOT NULL,
     nome_ativo text NOT NULL,
@@ -62,8 +62,8 @@ CREATE TABLE IF NOT EXISTS public.dados_historicos_temp (
     mm20 numeric NULL,
     bb2s numeric NULL,
     bb2i numeric NULL,
-    CONSTRAINT dados_historicos_temp_pkey PRIMARY KEY (id),
-    CONSTRAINT dados_historicos_temp_ticker_data_key UNIQUE (ticker, data)
+    CONSTRAINT dados_historico_pkey PRIMARY KEY (id),
+    CONSTRAINT dados_historico_ticker_data_key UNIQUE (ticker, data)
 );
         """)
         input("Pressione Enter quando a tabela estiver criada para continuar...")
@@ -155,14 +155,14 @@ CREATE TABLE IF NOT EXISTS public.dados_historicos_temp (
             
             # Verificar se a tabela temporária existe
             try:
-                supabase.table("dados_historicos_temp").select("*").limit(1).execute()
+                supabase.table("dados_historicos").select("*").limit(1).execute()
                 print("✅ Tabela temporária encontrada. Iniciando inserção de dados...")
                 
                 for i in range(0, len(registros), tamanho_lote):
                     lote = registros[i:i+tamanho_lote]
                     try:
                         # Usar upsert para inserir ou atualizar registros
-                        response = supabase.table("dados_historicos_temp").upsert(
+                        response = supabase.table("dados_historicos").upsert(
                             lote,
                             on_conflict="ticker,data"
                         ).execute()
@@ -173,7 +173,7 @@ CREATE TABLE IF NOT EXISTS public.dados_historicos_temp (
                 
                 # Passo 4: Verificar se a migração foi bem-sucedida
                 print("\nVerificando migração dos dados...")
-                response = supabase.table("dados_historicos_temp").select("*", count="exact").execute()
+                response = supabase.table("dados_historicos").select("*", count="exact").execute()
                 count_temp = response.count if hasattr(response, 'count') else len(response.data)
                 
                 print(f"  Registros na tabela temporária: {count_temp}")
@@ -185,14 +185,14 @@ CREATE TABLE IF NOT EXISTS public.dados_historicos_temp (
                 print("1. Fazer backup da tabela original:")
                 print("   ALTER TABLE public.dados_historicos RENAME TO dados_historicos_backup;")
                 print("2. Renomear a tabela temporária para se tornar a tabela principal:")
-                print("   ALTER TABLE public.dados_historicos_temp RENAME TO dados_historicos;")
+                print("   ALTER TABLE public.dados_historico RENAME TO dados_historicos;")
                 print("3. Verificar se tudo está correto e então você pode excluir o backup:")
                 print("   DROP TABLE public.dados_historicos_backup;")
                 
                 print("\n✅ Processo de remodelagem completado com sucesso!")
                 
             except Exception as e:
-                print(f"⚠️ A tabela temporária 'dados_historicos_temp' não existe ou não está acessível.")
+                print(f"⚠️ A tabela temporária 'dados_historico' não existe ou não está acessível.")
                 print(f"⚠️ Erro: {str(e)}")
                 print("\nPor favor, crie a tabela conforme instruído acima e tente novamente.")
                 return False

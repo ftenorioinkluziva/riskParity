@@ -435,7 +435,6 @@ def inserir_dados_historicos(dados_historicos, ticker):
                     'maxima': registro.get('maxima'),
                     'minima': registro.get('minima'),
                     'fechamento': registro.get('fechamento'),
-                    'volume': registro.get('volume'),
                     'retorno_diario': registro.get('retorno_diario'),
                     'mm20': registro.get('mm20'),
                     'bb2s': registro.get('bb2s'),
@@ -492,8 +491,8 @@ def processar_cdi():
             data_inicial = datetime.strptime(ultima_data, '%Y-%m-%d') + timedelta(days=1)
             print(f"  Buscando CDI a partir de {data_inicial.strftime('%Y-%m-%d')}")
         else:
-            data_inicial = datetime.now() - relativedelta(years=5)
-            print(f"  Buscando histórico completo do CDI (5 anos)")
+            data_inicial = datetime.now() - relativedelta(years=9)
+            print(f"  Buscando histórico completo do CDI (9 anos)")
         
         data_final = datetime.now()
         
